@@ -6,22 +6,72 @@
 		<title></title>
 
 		<!--put your external stylesheet links here-->
-		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 
 	<body>
-
 		<!--put your external script links here-->
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
  		<script type="text/javascript" src="lib/topojson.v2.min.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
  		<!-- main js links-->
 		<script type="text/javascript" src="js/main.js"></script>
 
-		<nav class = "navbar navbar-default"
-		
+		<nav class="navbar-default">
+			
+		</nav>
+
+
+		<div class="container-fluid"></div>
+		<div class="container-fluid main">
+
+				<div class = "col-md-2 barWrap">
+							<!-- <div class="col-md-2 container"></div> -->
+					<div class ="col-md-12 title well">
+						<div class ="col-md-12 search"></div>
+						<div class ="col-md-4 type"></div>
+						<div class ="col-md-8 normalize"></div>
+						<div class ="col-md-4 agg"></div>
+	         	 		<div class ="col-md-8 resetter"></div>
+					</div>
+					
+					<div class="col-md-12 space"></div>					
+					
+					<div class="col-md-12 well">
+						<div class="col-md-12 icicle"></div>
+						<div class="col-md-12 filterDiv"></div>
+						<div class="col-md-12 mapDisplayShell"></div>
+						<div class="col-md-12 descriptionsShell"></div>
+						<div class="col-md-12 filterSelector">
+							<div class="col-md-6 yearDiv"></div>
+							<div class="col-md-6 showDiv"></div>
+						</div>
+					</div>
+       
+				</div> 
+
+				<div class="left col-md-10">
+
+					<div class="map"></div>
+					<div class="container zoomBox">
+						<div class="col-md-12 zoomIn well"></div>
+					    <div class="col-md-12 zoomOut well"></div>
+	    			</div>		
+					<div class = "col-md-3" id="viewShowHide" style="display:none">
+						<div class="col-md-12 viewer well"></div>
+					</div> 
+				</div>
+
+		</div>
+	   <footer class="footer">
+	      <div class="container">
+
+	      </div>
+	    </footer>
+
 	</body>
+
 </html>
