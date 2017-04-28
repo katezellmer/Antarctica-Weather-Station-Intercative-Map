@@ -1,4 +1,4 @@
-window.onload = initialize();
+//window.onload = initialize();
 
 // this script will add the basemap and the data points on map
 
@@ -38,15 +38,17 @@ function setMap(){
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly.topojson")
+		.defer(d3.json,"data/iceshelf.topojson")
 		.await(callback);
 
 
-	function callback(error,allCoords,uwCoords,seamask,coastline){
-		console.log(error);
+	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
+		/*console.log(error);
 		console.log(allCoords);
 		console.log(uwCoords);
 		console.log(seamask);
 		console.log(coastline);
+		console.log(iceshelf);*/
 
 
 		var graticule = d3.geoGraticule()
@@ -67,31 +69,21 @@ function setMap(){
             .attr("d", path); //project graticule lines
 		
 		console.log(graticule.outline());
-
 		
 
-		
+		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
+			land=topojson.feature(coastline,coastline.objects.ne_50m_land).features,
+			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
 
-
-		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean), 
-			land=topojson.feature(coastline,coastline.objects.ne_50m_land).features;
-
-		console.log(land);
+		console.log(ice);
 		//console.log(sea);
 		
 
 		var seaArea=map.append("path")
 			.datum(sea)
-			.attr("class","seaArea")
-			.attr("d",path);
-
-		var landArea=map.selectAll(".land")
-			.data(land)
 			.enter()
-			.append("path")
 			.attr("class",function(d){
-				//console.log(d);
-				return d.arcs;
+				return "sea "+ d.arcs;
 			})
 			.attr("d",function(d){
 				if (d.geometry){
@@ -99,6 +91,37 @@ function setMap(){
 					return path(d);
 				};
 			});
+			//.attr("fill","#1a3757");
+
+		var landArea=map.selectAll(".land")
+			.data(land)
+			.enter()
+			.append("path")
+			.attr("class",function(d){
+				//console.log(d);
+				return "land "+ d.arcs;
+			})
+			.attr("d",function(d){
+				if (d.geometry){
+					//console.log(d,path(d));
+					return path(d);
+				};
+			});
+
+		var iceArea=map.selectAll(".ice")
+			.data(ice)
+			.enter()
+			.append("path")
+			.attr("class",function(d){
+				return "ice "+d.arcs;
+			})
+			.attr("d",function(d){
+				if (d.geometry){
+					//console.log(d,path(d));
+					return path(d);
+				};
+			});
+
 
 		//var x=projection(function(d))
 
@@ -117,9 +140,8 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
-			.attr("r","8px")
-			.attr("fill","#900")
-			.attr("stroke","#999")
+			.attr("r","6px")
+			
 			//.attr("d",path);
 			//.attr("class","station");
 		//console.log(aws);
@@ -214,5 +236,5 @@ function createLineGraph(csvData) {
           .attr("d", line);
     });
 }
->>>>>>> origin/master
+
 
