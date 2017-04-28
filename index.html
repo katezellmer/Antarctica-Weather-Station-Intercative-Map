@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width">
 
 		<title>UW Automatic Weather Station Data Portal</title>
 		<link rel="shortcut icon" href="assets/aws-logo.png">
 
 		<!--put your external stylesheet links here-->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet"> 
 	</head>
 
 	<body>
 		<!--put your external script links here-->
 
 		<script src="data/aws_coords_2017.geojson"></script>
-		<script type="text/javascript" src="lib/d3.js"></script>
  		<script type="text/javascript" src="lib/topojson.js"></script>
 
 
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
- 		<script type="text/javascript" src="lib/topojson.v2.min.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 
  		<!-- main js links-->
+
+ 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
+		<script type="text/javascript" src="js/stackedBar.js"></script>
+
 		<script type="text/javascript" src="js/main.js"></script>
 
-		<nav class="navbar-default">
-			
-		</nav>
+		<nav class="navbar navbar-default navbar-fixed-top main-navbar"> <!--creates navbar-->
+						<div class="navbar-header"> <!--creates the navbar header-->
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+										<span class="sr-only">Toggle navigation</span><!--used for screen readers for accessibility-->
+										<span class="glyphicon glyphicon-menu-hamburger"></span>
+										<span class="menu">Menu</span>
+								</button> <!--hamburger button for smaller devices-->
+								<a class="navbar-brand" href="index.html">Antarctica Weather Stations</a><!--our website brand name-->
+								<h6 class="navbar-text"><font color="#cccccc">A Data Portal for Antarctica<br> 2002-2017</font></h6>
+						</div>
+						
+						<!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="nav1">
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Keyword">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div><!-- /.navbar-collapse -->
 
+		</nav><!--end navigation bar-->
 
 		<div class="container-fluid"></div>
 		<div class="container-fluid main">
@@ -53,11 +75,13 @@
 						<div class="col-md-12 icicle"></div>
 						<div class="col-md-12 filterDiv"></div>
 						<div class="col-md-12 mapDisplayShell"></div>
+
 						<div class="col-md-12 descriptionsShell"></div>
 						<div class="col-md-12 filterSelector">
 							<div class="col-md-6 yearDiv"></div>
 							<div class="col-md-6 showDiv"></div>
 						</div>
+
 					</div>
        
 				</div> 
@@ -77,10 +101,10 @@
 		</div>
 	   <footer class="footer">
 	      <div class="container">
-
+	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	        <a id="foot" href="abouts/help.html" target="_blank">Help</a>
 	      </div>
-	    </footer>
-
+		</footer>
 	</body>
 
 </html>
