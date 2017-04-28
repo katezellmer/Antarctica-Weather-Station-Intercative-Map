@@ -1,5 +1,5 @@
+window.onload = initialize();
 
-//window.onload = initialize();
 d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
   if (error) throw error;
 });
