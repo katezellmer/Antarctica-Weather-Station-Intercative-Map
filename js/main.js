@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-console.log('hello');
 function createLineGraph(csvData) {
     var height = 200;
     var width = 500;
@@ -59,5 +56,5 @@ function createLineGraph(csvData) {
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-    }
->>>>>>> origin/Laura
+}
+
