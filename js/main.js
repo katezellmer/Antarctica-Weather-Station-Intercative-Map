@@ -1,3 +1,4 @@
+
 // this script will add the basemap and the data points on map
 
 window.load=setMap();
