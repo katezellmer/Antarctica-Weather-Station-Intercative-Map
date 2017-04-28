@@ -1,0 +1,81 @@
+
+.map{
+	float: right;
+}
+
+.land {
+	fill:#1a3757;  /*this is styling the land*, with white background and grey line*/
+	stroke:white;
+	stroke-width:0.5px;
+}
+
+
+.sea {
+	fill:white;
+	stroke: white;
+	stroke-width:2px;
+}
+
+
+
+.gratLines {
+	stroke:black;
+	fill:none;
+	opacity: 0.6;
+	
+	stroke-width:1px;
+}
+
+.gratBackground {
+	fill:red;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+
+h1 {
+  font-family: Lato, sans-serif;
+}
+.navbar {
+  color: #2184CF;
+}
+
+.jumbotron {
+  font-family: 'Lato', sans-serif;
+  color: #fff;
+  background: #b8c68b;
+  text-align: center;
+  margin-bottom: 5px;
+ }
+
+.navbar-brand-custom {
+  min-height: 30px;
+  font-size: 40px;
+  color: #000000;
+  font-family: 'Reem Kufi', sans-serif;
+}
+
+.navbar-custom {
+  background-color: #ffffff;
+  color: #000000;
+  min-height: 30px;
+  font-family: 'Reem Kufi', sans-serif;
+}
+
+/* title font */
+.navbar-default .navbar-brand {
+  color: #9C0D08;
+  font-family: 'Lato', sans-serif;
+  font-size: 30px;
+}
+
+body {
+  background-color: #72CBDE;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 5px;
+}
+
+#nav1 {
+  padding-right: 20px;
+}
