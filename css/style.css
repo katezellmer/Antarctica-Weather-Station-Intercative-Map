@@ -1,0 +1,31 @@
+
+.map{
+	float: right;
+}
+
+.land {
+	fill:#1a3757;  /*this is styling the land*, with white background and grey line*/
+	stroke:white;
+	stroke-width:0.5px;
+}
+
+
+.sea {
+	fill:white;
+	stroke: white;
+	stroke-width:2px;
+}
+
+
+
+.gratLines {
+	stroke:black;
+	fill:none;
+	opacity: 0.6;
+	
+	stroke-width:1px;
+}
+
+.gratBackground {
+	fill:red;
+}
