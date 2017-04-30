@@ -130,7 +130,7 @@ function setMap(){
 			.enter()
 			.append("circle")
 			.attr("cx",function(d){
-				console.log(d['latitude']);
+				//console.log(d['latitude']);
 				//console.log(projection(d['latitude']));
 				return projection([d['longitude'],d['latitude']])[0];
 			})
@@ -140,18 +140,116 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
-			.attr("r","6px")
+			.attr("r", "6px")
+				/*function(d){
+				if (d['mapcode']=='UW'){
+					return "8px";
+				} ;
+				if (d['mapcode']=='UW/Australia'){
+					return "8px";
+				};
+				if (d['mapcode']=='UW/China'){
+					return "8px";
+				};
+				if (d['mapcode']=='UW/France'){
+					return "8px";
+				};
+				if (d['mapcode']=='UW/Japan'){
+					return "8px";
+				};
+				if (d['mapcode']=='UW/UK'){
+					return "8px";
+				} else { return "6px";};
+			})*/
+
+			.attr("fill", function(d){
+				//console.log(d['mapcode']);
+				if (d['mapcode']=='UW'){
+					return "#e31a1c";
+				} ;
+				if (d['mapcode']=='UW/Australia'){
+					return "#de2d26";
+				};
+				if (d['mapcode']=='UW/China'){
+					return "#fb6a4a";
+				};
+				if (d['mapcode']=='UW/France'){
+					return "#fc9272";
+				};
+				if (d['mapcode']=='UW/Japan'){
+					return "#fcbba1";
+				};
+				if (d['mapcode']=='UW/UK'){
+					return "#df65b0";
+				};
+				if (d['mapcode']=='Australia'){
+					return "#3182bd";
+				};
+				if (d['mapcode']=='New Zealand'){
+					return "#9ecae1";
+				};
+				if (d['mapcode']=='China/Australia'){
+					return "#fb8d3c";
+				};
+				if (d['mapcode']=='South Korea'){
+					return "#fecc5c";
+				};
+				if (d['mapcode']=='Japan'){
+					return "#ffffb2";
+				};
+				if (d['mapcode']=='Belgium/Netherlands'){
+					return "#00441b";
+				};
+				if (d['mapcode']=='Finland'){
+					return "#006d2c";
+				};
+				if (d['mapcode']=='France'){
+					return "#238b45";
+				};
+				if (d['mapcode']=='Germany'){
+					return "#41ab5d";
+				};
+				if (d['mapcode']=='Italy'){
+					return "#74c476";
+				};
+				if (d['mapcode']=='Netherlands'){
+					return "#a1d99b";
+				};
+				if (d['mapcode']=='Norway'){
+					return "#c7e9c0";
+				};
+				if (d['mapcode']=='Russia'){
+					return "#e5f5e0";
+				};
+				if (d['mapcode']=='United Kingdom'){
+					return "#005a32";
+				};
+				if (d['mapcode']=='Brazil'){
+					return "#fa9fb5";
+				};
+				if (d['mapcode']=='Other US'){
+					return "#6a51a3";
+				};
+				if (d['mapcode']=='SPAWAR'){
+					return "#807dba";
+				};
+				if (d['mapcode']=='Commercial'){
+					return "#9e9ac8";
+				};
 			
-			//.attr("d",path);
-			//.attr("class","station");
-		//console.log(aws);
 
 
-		
-
+			})
+			.attr("stroke","#fff");
 
 	};
 };
+
+
+
+
+
+
 
 d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
   if (error) throw error;

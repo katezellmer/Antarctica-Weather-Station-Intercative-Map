@@ -5,7 +5,7 @@
 
 .land {
 	fill:#F2F2F0;  /*this is styling the land*, with white background and grey line*/
-	stroke:white;
+	stroke:none;
 	stroke-width:0.5px;
 }
 
@@ -21,8 +21,7 @@
 
 circle {
 
-	fill:#F5B041;
-	stroke:#F39C12;
+	opacity: 0.8;
 }
 
 
@@ -46,6 +45,7 @@ html {
 h1 {
   font-family: Lato, sans-serif;
 }
+
 .navbar {
   color: #2184CF;
 }
@@ -80,7 +80,7 @@ h1 {
 }
 
 body {
-  background-color: #1f4667;
+  background-color: #bacde2;
   opacity: 1;
   font-family: 'Lato', sans-serif;
   margin-bottom: 5px;
