@@ -154,16 +154,16 @@ gid,sitename,mapcode,latitude,longitude
 675,Windless Bight,UW,-77.728,167.676
 590,Windy,United Kingdom,-75.55297,-27.44679
 542,Zoraida,Italy,-74.25,163.17
-,Bonney ,Other US,-77.7144,162.4642
-,Brownworth,Other US,-77.4335,162.7036
-,Canada Glacier,Other US,-77.6127,162.9635
-,Commonwealth Glacier,Other US,-77.5637,163.2801
-,Explorers Cove,Other US,-77.5887,163.4175
-,Mt Fleming,Other US,-77.5326,160.2711
-,Fryxell,Other US,-77.6109,163.1696
-,Friis,Other US,-77.7474,161.5162
-,Howard,Other US,-77.6715,163.0791
-,Miers,Other US,-78.101133,163.78765
-,Taylor Glacier,Other US,-77.7402,162.1284
-,Vanda,Other US,-77.52567,161.69129
-,Vida,Other US,-77.3778,161.8006
+100,Bonney ,Other US,-77.7144,162.4642
+101,Brownworth,Other US,-77.4335,162.7036
+102,Canada Glacier,Other US,-77.6127,162.9635
+103,Commonwealth Glacier,Other US,-77.5637,163.2801
+104,Explorers Cove,Other US,-77.5887,163.4175
+105,Mt Fleming,Other US,-77.5326,160.2711
+106,Fryxell,Other US,-77.6109,163.1696
+107,Friis,Other US,-77.7474,161.5162
+108,Howard,Other US,-77.6715,163.0791
+109,Miers,Other US,-78.101133,163.78765
+110,Taylor Glacier,Other US,-77.7402,162.1284
+111,Vanda,Other US,-77.52567,161.69129
+112,Vida,Other US,-77.3778,161.8006

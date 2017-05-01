@@ -6,7 +6,7 @@
 .land {
 	fill:#F2F2F0;  /*this is styling the land*, with white background and grey line*/
 	stroke:none;
-	stroke-width:0.5px;
+	stroke-width:0px;
 }
 
 .ice {
