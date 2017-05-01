@@ -1,25 +1,33 @@
 
-.map{
+.map {
 	float: right;
 }
 
 .land {
-	fill:#1a3757;  /*this is styling the land*, with white background and grey line*/
+	fill:#F2F2F0;  /*this is styling the land*, with white background and grey line*/
 	stroke:white;
 	stroke-width:0.5px;
 }
 
+.ice {
+	fill:white;
+}
 
 .sea {
-	fill:white;
+	fill:black;
 	stroke: white;
 	stroke-width:2px;
 }
 
+circle {
+
+	fill:#F5B041;
+	stroke:#F39C12;
+}
 
 
 .gratLines {
-	stroke:black;
+	stroke:none;
 	fill:none;
 	opacity: 0.6;
 	
@@ -27,12 +35,13 @@
 }
 
 .gratBackground {
-	fill:red;
+	fill:none;
 }
 
 html {
   position: relative;
   min-height: 100%;
+}
 
 h1 {
   font-family: Lato, sans-serif;
@@ -71,7 +80,8 @@ h1 {
 }
 
 body {
-  background-color: #72CBDE;
+  background-color: #1f4667;
+  opacity: 1;
   font-family: 'Lato', sans-serif;
   margin-bottom: 5px;
 }
