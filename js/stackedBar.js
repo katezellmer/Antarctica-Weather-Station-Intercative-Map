@@ -18,10 +18,9 @@ function initialize() {
 	var z = d3.scaleOrdinal()
     	.range(["#2E5DAB", "#5C6778", "#52D0DE", "#E2A48C", "#AB3F2E", "#d0743c", "#ff8c00"]);
 
-	d3.csv("data/states.csv", function(d, i, columns) {
+	d3.csv("data/stationData.csv", function(d, i, columns) {
 
-	for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-
+	for (i = 1, t = 0; i < 12; ++i) t += d[columns[i]] = +d[columns[i]];
 	  	d.total = t;
 		console.log(d.total);
 	  	return d;
