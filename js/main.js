@@ -13,8 +13,8 @@ function setMap(){
 		.append("svg")
 		.attr("class","map")
 		.attr("width",width)
-		.attr("height",height)
-		.attr('viewBox',"0 -70 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		.attr("height",height+30)
+		.attr('viewBox',"0 -80 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
@@ -25,9 +25,9 @@ function setMap(){
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
-	var svg = d3.select("body").append("svg")
-    	.attr("width", width)
-    	.attr("height", height);
+	// var svg = d3.select("body").append("svg")
+ //    	.attr("width", width)
+ //    	.attr("height", height);
 
 	//console.log(projection);
 
@@ -38,7 +38,7 @@ function setMap(){
 
 
 	d3.queue()
-		.defer(d3.csv,"data/Trial_aws_coords_2017.csv")
+		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly2.topojson")
@@ -144,6 +144,12 @@ function setMap(){
 			.attr('mapcode',function(d){
 				return d['mapcode']
 			})
+			.attr('website',function(d){
+				return d['website']
+			})
+			.attr('description',function(d){
+				return d['description']
+			})
 			.attr("cx",function(d){
 				//console.log(d['latitude']);
 				//console.log(projection(d['latitude']));
@@ -154,7 +160,7 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
-			.attr("r", "6px")
+			.attr("r", "8px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
 				if (d['mapcode']=='UW'){
@@ -220,7 +226,7 @@ function setMap(){
 				if (d['mapcode']=='Brazil'){
 					return "#fa9fb5";
 				};
-				if (d['mapcode']=='Other US'){
+				if (d['mapcode']=='Other US program'){
 					return "#6a51a3";
 				};
 				if (d['mapcode']=='SPAWAR'){
@@ -239,15 +245,15 @@ function setMap(){
 				dehighlight(d['sitename']);
 
 			})
-			.on("mousemove",moveLabel())
+			//.on("mousemove",moveLabel)
 			.transition()
-			.duration(1000)
+			.duration(1000);
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
 		//highlight(props);
 
-			});
+			//});
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
 
 
@@ -284,8 +290,8 @@ function setMap(){
 	function highlight(stationName){
 		//var circleAttrs=
 		//console.log(stationName);
-		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
-			.attr("r","12px");
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","17px");
 		//console.log(selected);
 		
 			//.style("stroke")
@@ -293,48 +299,62 @@ function setMap(){
 	};
 
 	function dehighlight(stationName){
-		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
-			.attr("r","6px");
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","8px");
 		d3.select(".infoLabel")
 			.remove();
+		//setLabel(stationName, selected);
+		//d3.select(".infoLabel");
 	};
 
 	function setLabel(stationName,selected){
 		console.log(selected);
-		var labelAttribute="<h1>"+stationName+"</h1>"+"operated by "+selected.attr('mapcode');
+		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
 		console.log(labelAttribute);
 
-		/*for (i=0; i<allCoords.length; i++) {
-			labelAttribute=allCoords[i].sitename;
-			//console.log(i);
-			//console.log(labelAttribute);
-		};*/
-		//="<h1>"+allCoords[0:169].sitename+"</h1>";
+
 
 		var infoLabel=d3.select("body")
 			.append("div")
 			.attr("class","infoLabel")
 			.attr("id",selected.attr('gid'))
-			//.transition()
-			//.duration(1000)
-			.html(labelAttribute);
+			.html(labelAttribute)
+			// .node()
+			// .getBoundingClientRect()
+			// .width;
 			//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
 			//.attr('preserveAspectRatio',"xMidYMid meet");
 		//console.log(infoLabel);
 
-		/*var countryName=infoLabel.append("div")
-			.attr("class","countryName")
-			.html(selected.attr('mapcode'));
+		//var x=window.innerWidth-100;
+		//var y=window.innerHeight;
+		//console.log(x);
+
+		infoLabel = d3.selectAll(".infoLabel")
+			.style("width","240px")
+			.style("height", "620px")//window.innerWidth-500+"px")
+			.style("right","0px")
+			.style("top","70px");
+
+		console.log(infoLabel);
+
+		var contextContent1="<h2>Website: </h2>"+selected.attr('website');
+
+		var contextContent2="<h2>More about the station: </h2>"+selected.attr('description');
+
+		var context=infoLabel.append("div")
+			.attr("class","context")
+			.html(contextContent1+contextContent2);
 		//console.log(countryName);*/
 	};
 
 
-	function moveLabel(){
+	/*function moveLabel(){
 
 		var labelWidth=d3.selectAll(".infoLabel");
-			//.node()
-			//.getBoundingClientRect()
-			//.width;
+			.node()
+			.getBoundingClientRect()
+			.width;
 
 		console.log(labelWidth);
 
@@ -352,7 +372,10 @@ function setMap(){
 		d3.selectAll(".infoLabel")
 			.style("left",x+"px")
 			.style("right",y+"px");
-	};
+	};*/
+
+
+	//function legend
 
 };
 
@@ -381,7 +404,7 @@ function initialize() {
 	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 }*/
 
-function createLineGraph(csvData) {
+/*function createLineGraph(csvData) {
     var height = 200;
     var width = 500;
     var svg = d3.select("svg"),
@@ -439,6 +462,6 @@ function createLineGraph(csvData) {
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-}
+}*/
 
 
