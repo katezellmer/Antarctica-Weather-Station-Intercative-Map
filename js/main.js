@@ -135,7 +135,7 @@ function setMap(){
 				return d['gid'];
 			})
 			.attr('class',function(d){
-				return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
+				return d['sitename'].replace(/[ () !]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
 			})
 			.attr('mapcode',function(d){
 				return d['mapcode']
@@ -237,7 +237,10 @@ function setMap(){
 			})
 			.on("mouseout",function(d){
 				dehighlight(d['sitename']);
-			});
+			})
+			.on("mousemove",moveLabel())
+			.transition()
+			.duration(1000)
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
@@ -288,7 +291,7 @@ function setMap(){
 
 	function setLabel(stationName,selected){
 		console.log(selected);
-		var labelAttribute="<h1>"+stationName+"</h1>"+selected.attr('mapcode');
+		var labelAttribute="<h1>"+stationName+"</h1>"+"operated by "+selected.attr('mapcode');
 		console.log(labelAttribute);
 
 		/*for (i=0; i<allCoords.length; i++) {
@@ -303,13 +306,43 @@ function setMap(){
 			.append("div")
 			.attr("class","infoLabel")
 			.attr("id",selected.attr('gid'))
+			//.transition()
+			//.duration(1000)
 			.html(labelAttribute);
+			//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+			//.attr('preserveAspectRatio',"xMidYMid meet");
 		//console.log(infoLabel);
 
-		var countryName=infoLabel.append("div")
+		/*var countryName=infoLabel.append("div")
 			.attr("class","countryName")
 			.html(selected.attr('mapcode'));
-		//console.log(countryName);
+		//console.log(countryName);*/
+	};
+
+
+	function moveLabel(){
+
+		var labelWidth=d3.selectAll(".infoLabel");
+			//.node()
+			//.getBoundingClientRect()
+			//.width;
+
+		console.log(labelWidth);
+
+		var x1=d3.event.clientX+10,
+			y1=d3.event.clientY-75,
+			x2=d3.event.clientX-labelWidth-10,
+			y2=d3.event.clientY+25;
+
+		var x=d3.event.clientX>window.innerWidth-labelWidth-20 ? x2 : x1;
+
+		var y=d3.event.clientY<75 ? y2 : y1;
+
+
+
+		d3.selectAll(".infoLabel")
+			.style("left",x+"px")
+			.style("right",y+"px");
 	};
 
 };
