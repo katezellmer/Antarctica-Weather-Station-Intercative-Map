@@ -10,13 +10,15 @@ function setMap(){
 		.append("svg")
 		.attr("class","map")
 		.attr("width",width)
-		.attr("height",height);
+		.attr("height",height)
+		.attr('viewBox',"0 -70 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
 		//.center(0,0)
 		
 		//.(0,-90)
-		.scale(900)
+		.scale(1100)
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
@@ -32,7 +34,7 @@ function setMap(){
 		.defer(d3.csv,"data/aws_coords_2017.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
-		.defer(d3.json,"data/coastPoly.topojson")
+		.defer(d3.json,"data/coastPoly2.topojson")
 		.defer(d3.json,"data/iceshelf.topojson")
 		.await(callback);
 
@@ -72,7 +74,7 @@ function setMap(){
 		
 
 		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
-			land=topojson.feature(coastline,coastline.objects.ne_50m_land).features,
+			land=topojson.feature(coastline,coastline.objects.ant_reg2).features,
 			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
 
 		//console.log(ice);
@@ -125,10 +127,19 @@ function setMap(){
 
 		//var x=projection(function(d))
 
-		var aws=map.selectAll("circle")
+		var aws=map.selectAll(".circle")
 			.data(allCoords)
 			.enter()
 			.append("circle")
+			.attr('gid', function(d){
+				return d['gid'];
+			})
+			.attr('class',function(d){
+				return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
+			})
+			.attr('mapcode',function(d){
+				return d['mapcode']
+			})
 			.attr("cx",function(d){
 				//console.log(d['latitude']);
 				//console.log(projection(d['latitude']));
@@ -140,6 +151,7 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
+<<<<<<< HEAD
 			.attr("r","6px");
 
     
@@ -150,11 +162,177 @@ function setMap(){
 		//console.log(aws);
 
 
+=======
+			.attr("r", "6px")
+			.attr("fill", function(d){
+				//console.log(d['mapcode']);
+				if (d['mapcode']=='UW'){
+					return "#e31a1c";
+				} ;
+				if (d['mapcode']=='UW/Australia'){
+					return "#de2d26";
+				};
+				if (d['mapcode']=='UW/China'){
+					return "#fb6a4a";
+				};
+				if (d['mapcode']=='UW/France'){
+					return "#fc9272";
+				};
+				if (d['mapcode']=='UW/Japan'){
+					return "#fcbba1";
+				};
+				if (d['mapcode']=='UW/UK'){
+					return "#df65b0";
+				};
+				if (d['mapcode']=='Australia'){
+					return "#3182bd";
+				};
+				if (d['mapcode']=='New Zealand'){
+					return "#9ecae1";
+				};
+				if (d['mapcode']=='China/Australia'){
+					return "#fb8d3c";
+				};
+				if (d['mapcode']=='South Korea'){
+					return "#fecc5c";
+				};
+				if (d['mapcode']=='Japan'){
+					return "#ffffb2";
+				};
+				if (d['mapcode']=='Belgium/Netherlands'){
+					return "#00441b";
+				};
+				if (d['mapcode']=='Finland'){
+					return "#006d2c";
+				};
+				if (d['mapcode']=='France'){
+					return "#238b45";
+				};
+				if (d['mapcode']=='Germany'){
+					return "#41ab5d";
+				};
+				if (d['mapcode']=='Italy'){
+					return "#74c476";
+				};
+				if (d['mapcode']=='Netherlands'){
+					return "#a1d99b";
+				};
+				if (d['mapcode']=='Norway'){
+					return "#c7e9c0";
+				};
+				if (d['mapcode']=='Russia'){
+					return "#a8ddb5";
+				};
+				if (d['mapcode']=='United Kingdom'){
+					return "#005a32";
+				};
+				if (d['mapcode']=='Brazil'){
+					return "#fa9fb5";
+				};
+				if (d['mapcode']=='Other US'){
+					return "#6a51a3";
+				};
+				if (d['mapcode']=='SPAWAR'){
+					return "#807dba";
+				};
+				if (d['mapcode']=='Commercial'){
+					return "#9e9ac8";
+				};
+			
+
+
+			})
+			.attr("stroke","#fff")
+			.on("mouseover",function(d){
+				//console.log(d['sitename']);
+				highlight(d['sitename']);
+			})
+			.on("mouseout",function(d){
+				dehighlight(d['sitename']);
+			});
+		//console.log(allCoords);
+		//aws=joinData(aws,allCoords);
+		//setLabel(allCoords);
+		//highlight(props);
 
 	};
+
+
+
+
+	/*function joinData(aws, allCoords){
+		for (var i=0;i<allCoords.length;i++){
+			var csvStation=allCoords[i];
+			var csvKey=csvStation.gid;
+
+			for (var a=0; a<aws.length;i++){
+				var stationProps=aws[a].properties;
+				var stationKey=geojson.id;
+
+				if (csvKey==stationKey){
+					attrArray.forEach(function(attr){
+						var val=parseFloat(csvStation[attr]);
+						stationProps[attr]=val;
+					});
+				};
+			};
+		};
+	};*/
+
+	function highlight(stationName){
+		//var circleAttrs=
+		//console.log(stationName);
+		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
+			.attr("r","12px");
+		//console.log(selected);
+		
+			//.style("stroke")
+		setLabel(stationName, selected);
+	};
+
+	function dehighlight(stationName){
+		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
+			.attr("r","6px");
+		d3.select(".infoLabel")
+			.remove();
+
+	};
+
+	function setLabel(stationName,selected){
+		console.log(selected);
+		var labelAttribute="<h1>"+stationName+"</h1>"+selected.attr('mapcode');
+		console.log(labelAttribute);
+
+		/*for (i=0; i<allCoords.length; i++) {
+			labelAttribute=allCoords[i].sitename;
+			//console.log(i);
+			//console.log(labelAttribute);
+		};*/
+		//="<h1>"+allCoords[0:169].sitename+"</h1>";
+		
+>>>>>>> origin/master
+
+		var infoLabel=d3.select("body")
+			.append("div")
+			.attr("class","infoLabel")
+			.attr("id",selected.attr('gid'))
+			.html(labelAttribute);
+		//console.log(infoLabel);
+
+		var countryName=infoLabel.append("div")
+			.attr("class","countryName")
+			.html(selected.attr('mapcode'));
+		//console.log(countryName);
+	};
+
 };
 
-d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
+
+
+
+
+
+/*d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
   if (error) throw error;
 
 
@@ -249,4 +427,10 @@ function createLineGraph(csvData) {
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
+<<<<<<< HEAD
 }
+=======
+}*/
+
+
+>>>>>>> origin/master
