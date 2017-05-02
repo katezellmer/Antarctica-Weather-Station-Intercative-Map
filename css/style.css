@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
 
 .map {
-=======
-.map{
->>>>>>> Stashed changes
 	float: right;
 }
 
@@ -23,15 +19,12 @@
 	stroke-width:2px;
 }
 
-<<<<<<< Updated upstream
 circle {
 
 	opacity: 0.8;
 }
 
 
-=======
->>>>>>> Stashed changes
 .gratLines {
 	stroke:none;
 	fill:none;

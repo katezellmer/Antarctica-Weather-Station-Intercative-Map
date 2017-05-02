@@ -1,16 +1,13 @@
-<<<<<<< Updated upstream
 //window.onload = initialize();
 
 // this script will add the basemap and the data points on map
-=======
-/** Global Variables **/
-var keyArray = [];
-var Category = ["minTemp", "maxTemp", "meanTemp", "meanWindSpeed", "meanPressure"];
->>>>>>> Stashed changes
 
 window.load=setMap();
 
 function setMap(){
+
+
+
 	var width=window.innerWidth*0.7,
 		height=window.innerHeight*0.9;
 
@@ -23,31 +20,29 @@ function setMap(){
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
-<<<<<<< Updated upstream
 		//.center(0,0)
 		
 		//.(0,-90)
 		.scale(1100)
-=======
-		.scale(900)
->>>>>>> Stashed changes
 		.translate([width/2,height/2])
 		.rotate([0,90]);
+
+	//console.log(projection);
 
 	var path=d3.geoPath()
 		.projection(projection);
 
 	//console.log(path);
+
+
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_2017.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
-		//.defer(d3.csv, "data/Henry.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly2.topojson")
 		.defer(d3.json,"data/iceshelf.topojson")
 		.await(callback);
 
-<<<<<<< Updated upstream
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
 		/*console.log(error);
@@ -57,14 +52,6 @@ function setMap(){
 		console.log(coastline);
 		console.log(iceshelf);*/
 
-=======
-	function callback(error,allCoords,uwCoords,seamask,coastline){
-		console.log(error);
-		//console.log(allCoords);
-		//console.log(uwCoords);
-		//console.log(seamask);
-		//console.log(coastline);
->>>>>>> Stashed changes
 
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
@@ -84,7 +71,6 @@ function setMap(){
             .attr("d", path); //project graticule lines
 		
 		//console.log(graticule.outline());
-<<<<<<< Updated upstream
 		
 
 		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
@@ -93,12 +79,8 @@ function setMap(){
 
 		//console.log(ice);
 		//console.log(sea);
-=======
-
-		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean), 
-			land=topojson.feature(coastline,coastline.objects.ne_50m_land).features;
->>>>>>> Stashed changes
 		
+
 		var seaArea=map.append("path")
 			.datum(sea)
 			.enter()
@@ -128,7 +110,6 @@ function setMap(){
 				};
 			});
 
-<<<<<<< Updated upstream
 		var iceArea=map.selectAll(".ice")
 			.data(ice)
 			.enter()
@@ -147,9 +128,6 @@ function setMap(){
 		//var x=projection(function(d))
 
 		var aws=map.selectAll(".circle")
-=======
-		var aws=map.selectAll("circle")
->>>>>>> Stashed changes
 			.data(allCoords)
 			.enter()
 			.append("circle")
@@ -173,7 +151,6 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
-<<<<<<< Updated upstream
 			.attr("r", "6px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -307,11 +284,6 @@ function setMap(){
 		d3.select(".infoLabel")
 			.remove();
 
-=======
-			.attr("r","8px")
-			.attr("fill","#900")
-			.attr("stroke","#999")
->>>>>>> Stashed changes
 	};
 
 	function setLabel(stationName,selected){
@@ -342,7 +314,6 @@ function setMap(){
 
 };
 
-<<<<<<< Updated upstream
 
 
 
@@ -370,22 +341,6 @@ function initialize() {
 
 	var z = d3.scaleOrdinal()
 	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-=======
-function yearChange(){
-  //litearlize this: return row["Year"] == "2007" || row["Year"] == "2009"
-  //console.log(d3.map.values(filterTypesSignal))
-  currentYears = []
-  for (var n =0; n< filterTypesYear.length; n++){
-    if (filterTypesSignal[filterTypesYear[n]] == "on"){
-        currentYears.push(filterTypesYear[n])
-    } else {
-      currentYears.push("0")
-    } 
-  }
-  //obj = "return"+obj
-  //obj = obj.slice(0, obj.length-3)
-  setData(phase, currentYears, view)
->>>>>>> Stashed changes
 }
 
 function createLineGraph(csvData) {
@@ -395,8 +350,7 @@ function createLineGraph(csvData) {
         margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", 
-        	"translate(" + margin.left + "," + margin.top + ")");
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var parseTime = d3.timeParse("%d-%b-%y");
 
@@ -447,10 +401,6 @@ function createLineGraph(csvData) {
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-<<<<<<< Updated upstream
 }*/
 
-=======
-}
->>>>>>> Stashed changes
 
