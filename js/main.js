@@ -150,19 +150,11 @@ function setMap(){
 				
 				return projection([d['longitude'],d['latitude']])[1];
 			})
-			
-<<<<<<< HEAD
-			.attr("r","6px");
-
-    
-    console.log(aws)
 
 			//.attr("d",path);
 			//.attr("class","station");
 		//console.log(aws);
 
-
-=======
 			.attr("r", "6px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -303,14 +295,12 @@ function setMap(){
 		var labelAttribute="<h1>"+stationName+"</h1>"+selected.attr('mapcode');
 		console.log(labelAttribute);
 
-		/*for (i=0; i<allCoords.length; i++) {
+		for (i=0; i<allCoords.length; i++) {
 			labelAttribute=allCoords[i].sitename;
 			//console.log(i);
 			//console.log(labelAttribute);
-		};*/
+		};
 		//="<h1>"+allCoords[0:169].sitename+"</h1>";
-		
->>>>>>> refs/remotes/origin/master
 
 		var infoLabel=d3.select("body")
 			.append("div")
@@ -327,12 +317,7 @@ function setMap(){
 
 };
 
-
-
-
-
-
-/*d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
+d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
   if (error) throw error;
 
 
@@ -366,71 +351,3 @@ function autoFillForm(stations) {
   });
 };
 
-
-
-
-function createLineGraph(csvData) {
-    var height = 200;
-    var width = 500;
-    var svg = d3.select("svg"),
-        margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var parseTime = d3.timeParse("%d-%b-%y");
-
-    var x = d3.scaleTime()
-        .rangeRound([0, width]);
-
-    var y = d3.scaleLinear()
-        .rangeRound([height, 0]);
-
-    var line = d3.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
-
-    d3.tsv("data.tsv", function(d) {
-      d.date = parseTime(d.date);
-      d.close = +d.close;
-      return d;
-    },
-
-    function(error, csvData) {
-      if (error) throw error;
-
-      x.domain(d3.extent(csvData, function(d) { return d.date; }));
-      y.domain(d3.extent(csvData, function(d) { return d.close; }));
-
-      g.append("g")
-          .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x))
-        .select(".domain")
-          .remove();
-
-      g.append("g")
-          .call(d3.axisLeft(y))
-        .append("text")
-          .attr("fill", "#000")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", "0.71em")
-          .attr("text-anchor", "end")
-          .text("Price ($)");
-
-      g.append("path")
-          .datum(csvData)
-          .attr("fill", "none")
-          .attr("stroke", "steelblue")
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-linecap", "round")
-          .attr("stroke-width", 1.5)
-          .attr("d", line);
-    });
-<<<<<<< HEAD
-}
-=======
-}*/
-
-
->>>>>>> refs/remotes/origin/master
