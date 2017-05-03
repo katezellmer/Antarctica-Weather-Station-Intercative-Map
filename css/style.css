@@ -304,4 +304,7 @@ body {
     margin-bottom: -.6em;      
 }
 
-
+.zoom {
+  height: 15;
+  width: 15;
+}

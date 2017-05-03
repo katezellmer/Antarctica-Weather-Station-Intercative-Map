@@ -22,7 +22,9 @@ function initialize() {
 
 	for (i = 1, t = 0; i < 12; ++i) t += d[columns[i]] = +d[columns[i]];
 	  	d.total = t;
-		console.log(d.total);
+
+		// console.log(d.total);
+
 	  	return d;
 	}, function(error, data) {
 	  if (error) throw error;
