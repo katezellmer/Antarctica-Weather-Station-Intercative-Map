@@ -8,6 +8,7 @@
 		<link rel="shortcut icon" href="assets/aws-logo.png">
 
 		<!--put your external stylesheet links here-->
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet"> 
@@ -15,6 +16,22 @@
 
 	<body>
 		<!--put your external script links here-->
+
+		<script src="data/aws_coords_2017.geojson"></script>
+ 		<script type="text/javascript" src="lib/topojson.js"></script>
+
+
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/d3.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+ 		<!-- main js links-->
+
+ 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
+		<script type="text/javascript" src="js/stackedBar.js"></script>
+
+
+		<script type="text/javascript" src="js/main.js"></script>
 
 		<nav class="navbar navbar-default navbar-fixed-top main-navbar"> <!--creates navbar-->
 						<div class="navbar-header"> <!--creates the navbar header-->
@@ -30,16 +47,105 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="nav1">
       <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Enter Keyword">
-        </div>
+        <div class="ui-widget">
+  			<label for="tags">Search Station:</label>
+  				<input id="tags">
+		</div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
       </ul>
     </div><!-- /.navbar-collapse -->
 
+		</nav><!--end navigation bar-->
 
+		<!-- slider bar -->
+		<div id="slider-container">
+			<div id = "slider-probe">
+				
+
+<<<<<<< HEAD
+			</div>
+			<div id = "slider-div" class = "d3-slider d3 slider-horizontal"
+			style="width: 500px"> 
+				<a class = "d3-slider-handle" href = "#" style = "left: 0%"></a>
+
+			</div>
+			<svg id = "axis" width = "630" height = "25">
+				<!-- 2009 -->
+				<g transform = "translate(66,0)"> 
+					<g class = "tick" transform = "translate(0,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2009 </text>
+					</g>
+					<!-- 2010 -->
+					<g class = "tick" transform = "translate(71.4285714286,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2010 </text>
+					</g>
+					<!-- 2011 -->
+					<g class = "tick" transform = "translate(142.857142857,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2011 </text>
+					</g>
+					<!-- 2012 -->
+					<g class = "tick" transform = "translate(214.285714286,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2012 </text>
+					</g>
+					<!-- 2013 -->
+					<g class = "tick" transform = "translate(285.714285714,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2013 </text>
+					</g>
+					<!-- 2014 -->
+					<g class = "tick" transform = "translate(357.142857143,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2014 </text>
+					</g>
+					<!-- 2015 -->
+					<g class = "tick" transform = "translate(428.571428571,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2015 </text>
+					</g>
+					<!-- 2016 -->
+					<g class = "tick" transform = "translate(500,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2016 </text>
+					</g>
+					<path class = "domain" d= "M0,10V0H500V10"></path>
+				</g>
+			</svg>
+		</div>
+		
+
+		<!-- main menu -->
+    <div class="collapse navbar-collapse" id="nav1">
+      <form class="navbar-form navbar-right" role="search">
+        <div class="">
+  			<label for="tags">Search Station:</label>
+  				<input id="tags">
+		</div>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div><!-- /.navbar-collapse -->
 
 		</nav><!--end navigation bar-->
 		<div class = "main-menu">
@@ -60,21 +166,53 @@
 	  	 </div>
 		</div>
 
+<<<<<<< HEAD
 		<div class="map"></div>
+=======
+		<div class="map"> <!-- map svg is drawn in main.js -->
+		    </div>  
+		   
+
+>>>>>>> origin/master
 		<script src="data/aws_coords_2017.geojson"></script>
  		<script type="text/javascript" src="lib/topojson.js"></script>
-
+ 		
 		<script src="http://d3js.org/queue.v1.min.js"></script>
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/d3-slider.js"></script>
+
+ 		<!-- main js links-->
+		<script type="text/javascript" src="js/main.js"></script>
+
+
+				
+				<div class="zoom">
+					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
+					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button>
+				</div>
 
  		<!-- main js links-->
 
- 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
-		<script type="text/javascript" src="js/stackedBar.js"></script>
 
-		<script type="text/javascript" src="js/main.js"></script>
+					<div class="map"></div>
+					<div class="container zoomBox">
+						<div class="col-md-12 zoomIn well"></div>
+					    <div class="col-md-12 zoomOut well"></div>
+	    			</div>		
+					<div class = "col-md-3" id="viewShowHide" style="display:button">
+						<div class="col-md-12 viewer well"></div>
+					</div> 
+
+
+	   <footer class="footer">
+	      <div class="container">
+	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	        <a id="foot" href="abouts/help.html" target="_blank">Help</a>
+	      </div>
+		</footer>
+
 	</body>
 		
 	  
