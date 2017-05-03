@@ -59,6 +59,17 @@
 
 
 
+    <div class="collapse navbar-collapse" id="nav1">
+      <form class="navbar-form navbar-right" role="search">
+        <div class="">
+  			<label for="tags">Search Station:</label>
+  				<input id="tags">
+		</div>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div><!-- /.navbar-collapse -->
+
 		</nav><!--end navigation bar-->
 		<div class = "main-menu">
 	  	<div class="menu-inset" style="width:200px;height:100px;"></div>
@@ -81,24 +92,33 @@
 		<script src="data/aws_coords_2017.geojson"></script>
  		<script type="text/javascript" src="lib/topojson.js"></script>
 
-		<script src="http://d3js.org/queue.v1.min.js"></script>
-		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
-		<script type="text/javascript" src="lib/d3.js"></script>
-		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+
+				
+				<div class="zoom">
+					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
+					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button>
+				</div>
 
  		<!-- main js links-->
 
- 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
-		<script type="text/javascript" src="js/stackedBar.js"></script>
 
-		</div>
+					<div class="map"></div>
+					<div class="container zoomBox">
+						<div class="col-md-12 zoomIn well"></div>
+					    <div class="col-md-12 zoomOut well"></div>
+	    			</div>		
+					<div class = "col-md-3" id="viewShowHide" style="display:button">
+						<div class="col-md-12 viewer well"></div>
+					</div> 
+
+
 	   <footer class="footer">
 	      <div class="container">
 	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 	        <a id="foot" href="abouts/help.html" target="_blank">Help</a>
 	      </div>
 		</footer>
-		<script type="text/javascript" src="js/main.js"></script>
+
 	</body>
 		
 	  

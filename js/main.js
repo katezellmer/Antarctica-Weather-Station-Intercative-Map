@@ -1,3 +1,4 @@
+
 //window.onload = initialize();
 // this script will add the basemap and the data points on map
 
@@ -36,11 +37,10 @@ function circleSize(d){
 };
 
 window.onload=setMap();
->>>>>>> origin/master
 
 function setMap(){
-	var width=window.innerWidth*0.7,
-		height=window.innerHeight*0.9;
+	 var width=window.innerWidth*0.7,
+	 height=window.innerHeight*0.9;
 
 	var map=d3.select("body")
 		.append("svg")
@@ -58,11 +58,12 @@ function setMap(){
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
-	// var svg = d3.select("body").appen
 	//console.log(projection);
 
 	var path=d3.geoPath()
 		.projection(projection);
+
+
 
 	//console.log(path);
 
@@ -80,17 +81,14 @@ function setMap(){
 		.defer(d3.csv, "data/meanPressure.csv")
 		.await(callback);
 
+
 	clickMenu("data/Trial_aws_coords_2017.csv");
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 
 		console.log(allCoords);
-    var stations = []
-    for (var i = 0; i < allCoords.length; i++){
-      stations.push(allCoords[i].sitename);
-    }
-    autoFillForm(stations)
+    
 		// console.log(uwCoords);
 		// console.log(seamask);
 		// console.log(coastline);
@@ -162,6 +160,19 @@ function setMap(){
 			}
 		}
 
+	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
+		//console.log(error);
+		console.log(allCoords);
+    var stations = []
+    for (var i = 0; i < allCoords.length; i++){
+      stations.push(allCoords[i].sitename);
+    }
+    autoFillForm(stations)
+		// console.log(uwCoords);
+		// console.log(seamask);
+		// console.log(coastline);
+		// console.log(iceshelf);*/
+
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
 
@@ -180,6 +191,7 @@ function setMap(){
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines
 		
+
 			var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
 			land=topojson.feature(coastline,coastline.objects.ant_reg2).features,
 			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
@@ -256,9 +268,6 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 
-			.attr("r","6px");
-
-  
 			.attr("r", "8px")
 
 			.attr("fill", function(d){
@@ -344,10 +353,22 @@ function setMap(){
 			.on("mouseout",function(d){
 				dehighlight(d['sitename']);
 
+
 			})
 			//.on("mousemove",moveLabel)
 			.transition()
 			.duration(1000);
+
+			});
+
+		
+		var zoom = d3.select("#zoomin") 
+			.on("click", zoomed);
+		
+
+		var zoom2 = d3.select("#zoomout")
+			.on("click", zoomedOut);
+
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
@@ -363,6 +384,30 @@ function setMap(){
 			//aws=joinData(aws,allCoords);
 			//setLabel(allCoords);
 			//highlight(props);
+
+		var drag = d3.select(".map")
+	    .origin(function(d) { return d; })
+	    .on("dragstart", dragstarted)
+	    .on("drag", dragged)
+	    .on("dragend", dragended);
+  
+function zoomed() {
+	if (zoomlevel < 2){
+		console.log(zoomlevel)
+		zoomlevel += 0.1
+	}
+  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
+function zoomedOut() {
+	if (zoomlevel > 1){
+		console.log()
+		zoomlevel += -0.1
+	}
+		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
+
 
 	};
 
@@ -410,6 +455,7 @@ function setMap(){
 			.style("stroke-width","1px");
 		d3.select(".infoLabel")
 			.remove();
+
 		//setLabel(stationName, selected);
 		//d3.select(".infoLabel");
 	};
@@ -739,3 +785,51 @@ function clickMenu(currData) {
     });
 
 }*/
+
+d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
+  if (error) throw error;
+
+
+});
+
+function initialize() {
+	// stacked bar chart
+	var svg = d3.select("svg"),
+	    width = +svg.attr("width"),
+	    height = +svg.attr("height"),
+	    innerRadius = 180,
+	    outerRadius = Math.min(width, height) * 0.77,
+	    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height * 0.78 + ")");
+
+	var x = d3.scaleBand()
+	    .range([0, 2 * Math.PI])
+	    .align(0);
+
+	var y = d3.scaleRadial()
+	    .range([innerRadius, outerRadius]);
+
+	var z = d3.scaleOrdinal()
+	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+ 
+
+}
+
+function autoFillForm(stations) {
+  $("#tags").autocomplete({
+    source: stations
+  });
+};
+
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+}
