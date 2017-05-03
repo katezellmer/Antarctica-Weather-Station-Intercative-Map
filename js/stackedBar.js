@@ -22,10 +22,7 @@ function initialize() {
 
 	for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
 	  	d.total = t;
-<<<<<<< HEAD
-		// console.log(d.total);
-=======
->>>>>>> refs/remotes/origin/master
+
 	  	return d;
 	}, function(error, data) {
 	  if (error) throw error;
