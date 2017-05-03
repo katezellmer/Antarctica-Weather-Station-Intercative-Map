@@ -1,4 +1,6 @@
 gid,sitename,mapcode,latitude,longitude
+607,Henry,UW,-89.001,-0.391
+633,Byrd,UW,-80.011,-119.438
 440,AGO-4,UW,-82.01,96.76
 459,Alessandra,Italy,-73.58,166.62
 676,Alexander Tall Tower!,UW,-79.012,170.723
@@ -17,7 +19,6 @@ gid,sitename,mapcode,latitude,longitude
 471,Bratina Island,New Zealand,-78.016367,165.54975
 472,Bull Pass,New Zealand,-77.31,161.51
 587,Butler Island,United Kingdom,-72.2062667,-60.16975
-633,Byrd,UW,-80.011,-119.438
 570,Camp Maudheimvida,Finland,-73.105278,-13.164722
 667,Cape Bird,UW,-77.217,166.439
 389,Cape Denison,UW/Australia,-67.009,142.664
@@ -68,7 +69,6 @@ gid,sitename,mapcode,latitude,longitude
 500,Halvfarryggen,Netherlands,-71.160278,-6.69861
 638,Harry,UW,-83.005,-121.407
 501,Haupt Nunataks,Australia,-66.5819,110.693889
-607,Henry,UW,-89.001,-0.391
 130,Herbie Alley,SPAWAR,-78.0906,166.6808
 502,Irene,Italy,-71.63,148.67
 401,Janet,UW,-77.174,-123.39
