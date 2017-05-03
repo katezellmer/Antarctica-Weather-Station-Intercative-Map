@@ -324,8 +324,8 @@ function setMap(){
 			// .on("mouseout",function(d){
 			// 	dehighlight(d['sitename']);
 
-
 			// })
+
 
 			//.on("mousemove",moveLabel)
 			.transition()
