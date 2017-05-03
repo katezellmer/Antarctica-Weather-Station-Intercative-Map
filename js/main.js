@@ -1,8 +1,7 @@
 //window.onload = initialize();
-// this script will add the basemap and the data points on map
 
-window.load=setMap();
-var zoomlevel = 1;
+// this script will add the basemap and the data points on map
+/* GLOBAL VARIABLES */
 var Category = ["overview, meanTemp, minTemp, maxTemp, meanWind, meanPressure"];
 var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
 "2009_8","2009_9","2009_10","2009_11","2009_12","2010_1","2010_2","2010_3",
@@ -32,8 +31,8 @@ function circleSize(d){
 window.onload=setMap();
 
 function setMap(){
-	 var width=window.innerWidth*0.7,
-	 height=window.innerHeight*0.9;
+	var width=window.innerWidth*0.7,
+		height=window.innerHeight*0.9;
 
 	var map=d3.select("body")
 		.append("svg")
@@ -51,14 +50,15 @@ function setMap(){
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
+	// var svg = d3.select("body").appen
 	//console.log(projection);
 
 	var path=d3.geoPath()
 		.projection(projection);
 
-
-
 	//console.log(path);
+
+
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
@@ -72,100 +72,76 @@ function setMap(){
 		.defer(d3.csv, "data/meanPressure.csv")
 		.await(callback);
 
-
-	clickMenu();
-
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
-
-		console.log(allCoords);
-    
-		// console.log(uwCoords);
-		// console.log(seamask);
-		// console.log(coastline);
-		// console.log(iceshelf);*/
-
+		/*console.log(error);
 		console.log(allCoords);
 		console.log(uwCoords);
+		console.log(seamask);
+		console.log(coastline);
+		console.log(iceshelf);*/
 
-		creatLegend();
-
+		console.log(minTemp);
+		console.log(meanTemp);
 		console.log(maxTemp);
+		console.log(meanWind);
+		console.log(meanPressure);
 
 		// DIFFERENT VARIABLE
 
 		/**** Link that data **/
-		var currAttribute;
 		// create array w/ csv's loaded
 		var csvArray = [meanTemp, minTemp, maxTemp, meanWind, meanPressure];
 		// names for the overall label
 		var attributeNames = ["meanTemp", "minTemp", "maxTemp", 
 		"meanWind", "meanPressure"];
 
-		var linkStations = ["Henry", "Byrd"];
-
 		for (csv in csvArray) {
-			currAttribute = attributeNames[csv];
-			allCoords = LinkData(allCoords, csvArray[csv], attributeNames[csv]); 
+			LinkData(allCoords, csvArray[csv], attributeNames[csv]); 
 		}
 
-		console.log(allCoords);
-
+		numFound = 0;
 		// loop through the csv and tie it to the coords CSV
 		function LinkData(coordsCSV, csvData, attribute) {
+			console.log(coordsCSV);
 			// loop through coords csv
 			// update this value when we add more stations
 			for (var i = 0; i < 2; i++) {
 				// create a property to hold csvData
-				console.log("i = " + i);
+
 				var csvStation = coordsCSV[i];
-				console.log(coordsCSV[i]);
-				//console.log(csvStation);
 				var csvLink = csvStation.sitename;
+				console.log(csvLink);
+				console.log(numFound);
 
-				// find the correct station
 				if (csvLink == 'Henry' || csvLink == 'Byrd') {
-					// connect the link with the station 
-					//console.log(attribute);
+					console.log("i'm in the if statement");
 					numFound = numFound + 1;
-					//console.log("length " + csvData.length);
-
-					for (var j = 0; j < csvData.length; j++) {
-						if (csvLink == csvData[i].sitename) {
+					console.log("length " + csvData.length);
+					for (var i = 0; i < csvData.length; i++) {
+						console.log(csvData[i]);
+						if (csvLink == csvData[i]) {
+							console.log("i'm in the tiny if statement");
+							attrObj = {};
 							for (var key in keyArray) {
-
-								var attr = currAttribute + "_" + keyArray[key];
-								//console.log(csvData[i], keyArray[key]);
-								var val = csvData[i][keyArray[key]];
-								//console.log("attr " + attr);
-								//console.log("val " + val);
-								
-								csvStation[attr] = val;
+								console.log(key);
+								var attr = keyArray[key];
+								var val = csvStation[attr];
+								console.log(val);
+								console.log(attr);
+								attrObj[attr] = val;
 							}
 						}
+					
 					}
 				}
 				if (numFound == 2) {
 					break;
 				}
+				// loop through stations and assign data to right station
 			}
-			return coordsCSV;
 		}
-
-		console.log(allCoords);
-
-		////*** GENERATING MAP ***////
 		//for (var i = 0; i )
-		console.log(allCoords);
-	    var stations = []
-		    for (var i = 0; i < allCoords.length; i++){
-		      stations.push(allCoords[i].sitename);
-		    }
-	    autoFillForm(stations);
-		// console.log(uwCoords);
-		// console.log(seamask);
-		// console.log(coastline);
-		// console.log(iceshelf);*/
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
 
@@ -184,7 +160,6 @@ function setMap(){
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines
 		
-
 			var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
 			land=topojson.feature(coastline,coastline.objects.ant_reg2).features,
 			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
@@ -236,8 +211,8 @@ function setMap(){
 			.data(allCoords)
 			.enter()
 			.append("circle")
-			.attr('id', function(d){
-				return "#"+d['gid'];
+			.attr('gid', function(d){
+				return d['gid'];
 			})
 			.attr('class',function(d){
 				return d['sitename'].replace(/[ () !]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
@@ -260,6 +235,7 @@ function setMap(){
 				//console.log(projection(d));
 				return projection([d['longitude'],d['latitude']])[1];
 			})
+			
 			.attr("r", "8px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -344,27 +320,14 @@ function setMap(){
 			.on("mouseout",function(d){
 				dehighlight(d['sitename']);
 
-
 			})
 			//.on("mousemove",moveLabel)
 			.transition()
-			.duration(1000)
-
-			});
-
-		
-		var zoom = d3.select("#zoomin") 
-			.on("click", zoomed);
-		
-
-		var zoom2 = d3.select("#zoomout")
-			.on("click", zoomedOut);
-
+			.duration(1000);
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
 		//highlight(props);
-		
 
 			//});
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
@@ -375,64 +338,13 @@ function setMap(){
 			//aws=joinData(aws,allCoords);
 			//setLabel(allCoords);
 			//highlight(props);
-
-		var drag = d3.select(".map")
-	    .origin(function(d) { return d; })
-	    .on("dragstart", dragstarted)
-	    .on("drag", dragged)
-	    .on("dragend", dragended);
-  
-function zoomed() {
-	if (zoomlevel < 2){
-		console.log(zoomlevel)
-		zoomlevel += 0.1
-	}
-  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
-
-function zoomedOut() {
-	if (zoomlevel > 1){
-		console.log()
-		zoomlevel += -0.1
-	}
-		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
-
-
-
 	};
-
-
-
-
-	/*function joinData(aws, allCoords){
-		for (var i=0;i<allCoords.length;i++){
-			var csvStation=allCoords[i];
-			var csvKey=csvStation.gid;
-
-			for (var a=0; a<aws.length;i++){
-				var stationProps=aws[a].properties;
-				var stationKey=geojson.id;
-
-				if (csvKey==stationKey){
-					attrArray.forEach(function(attr){
-						var val=parseFloat(csvStation[attr]);
-						stationProps[attr]=val;
-					});
-				};
-			};
-		};
-	};*/
-
 
 	function highlight(stationName){
 		//var circleAttrs=
 		//console.log(stationName);
 		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","17px")
-			.style("stroke","#dce8f7")
-			.style("stroke-width","7px")
-			.style("stroke-opacity","0.6");
+			.attr("r","17px");
 		//console.log(selected);
 		
 			//.style("stroke")
@@ -441,20 +353,17 @@ function zoomedOut() {
 
 	function dehighlight(stationName){
 		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","8px")
-			.style("stroke","#fff")
-			.style("stroke-width","1px");
+			.attr("r","8px");
 		d3.select(".infoLabel")
 			.remove();
-
 		//setLabel(stationName, selected);
 		//d3.select(".infoLabel");
 	};
 
 	function setLabel(stationName,selected){
-		//console.log(selected);
+		console.log(selected);
 		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
-		//console.log(labelAttribute);
+		console.log(labelAttribute);
 
 		var infoLabel=d3.select("body")
 			.append("div")
@@ -478,7 +387,7 @@ function zoomedOut() {
 			.style("right","0px")
 			.style("top","70px");
 
-		//console.log(infoLabel);
+		console.log(infoLabel);
 
 		var contextContent1="<h2>Website: </h2>"+selected.attr('website');
 
@@ -489,6 +398,7 @@ function zoomedOut() {
 			.html(contextContent1+contextContent2);
 		//console.log(countryName);*/
 	};
+
 
 	/*function moveLabel(){
 
@@ -516,62 +426,20 @@ function zoomedOut() {
 	};*/
 
 
-	function creatLegend(){
-
-		var colorClasses=["#e31a1c","#00441b","#fd8d3c","#3182bd","#fa9fb5","#6a51a3"];
-
-		var legendClasses=["UW AWS","European AWS","Asian AWS","Oceanian AWS","South American AWS","Other American AWS"];
-		/*function legendClass(legendClasses){
-			for (i=0;i<legendClasses.length;i++){
-				console.log(legendClasses[1]);
-				return legendClasses[i];
-			};
-		};*/
-		var legend=d3.select("body")
-			.append("svg")
-
-		legend=d3.selectAll("g.legend")
-			.data(colorClasses)
-			.enter().append("g")
-			.attr("class","legend")
-
-		var ls_w=20, ls_h=20;
-
-		legend.append("circle")
-			.attr("x",10)
-			.attr("y",function(d,i){return height-(1*ls_h)-2*ls_h;})
-			.attr("width",ls_w)
-			.attr("height",ls_h)
-			.style("fill",function(d,i){return colorClasses[i];})
-			.style("background","#d6eaf8");
-		console.log(legend);
-
-		legend.append("text")
-			.attr("x",50)
-			.attr("y",function(d,i){return height-(i*ls_h)-2*ls_h;})
-			.attr(function(d,i){
-				return legendClasses[i];
-			});
-		console.log(legendClasses[1]);
-
-
-	};
+	//function legend
 
 };
 
 // change year
 function changeYear() {
 
-
 }
-
 
 // change attribute
 function changeAttribute() {
 
 }
 
-// create Slider
 function createSlider(){
   sliderScale = d3.scaleLinear().domain([0,126]);
 
@@ -639,13 +507,11 @@ function createSlider(){
   d3.select("#axis > g g:last-of-type text").attr("text-anchor","start").style("text-anchor","start");
 }
 
-
 // create side menu to change to different attributes
-function clickMenu() {
+function clickMenu(currData) {
 	$(".Overview").click(function(){
 		expressed = Category[0];
 		yearExpressed = keyArray[0];
-		console.log('you clicked overview');
 		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
@@ -663,24 +529,8 @@ function clickMenu() {
 		d3.select("Mean-Temp")
 			.style('background-color', '#9C0D08')
 			.style('color', '#fff');*/
-		d3.selectAll(".circle")
-			.append("circle")
-			.attr('meanTemp_2009_1', function(d){
-				return d['meanTemp_2009_1'];
-			})
-			.attr("r", "20px")
-			.attr("cx",function(d){
-				//console.log(d['latitude']);
-				//console.log(projection(d['latitude']));
-				return projection([d['longitude'],d['latitude']])[0];
-			})
-			.attr("cy",function(d){
-				//console.log(projection(d));
-				return projection([d['longitude'],d['latitude']])[1];
-			});
 	})
 	$(".Min-Temp").click(function(){
-		console.log('you clicked min temp');
 		expressed = Category[2];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -688,11 +538,10 @@ function clickMenu() {
 		 .style('color', '#9C0D08');
 		d3.select("Min-Temp")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+			.style('color', '#333333');
+		d3.selectAll(".circles");*/
 	})
 	$(".Max-Temp").click(function(){
-		console.log('you clicked max temp');
 		expressed = Category[3];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -701,10 +550,9 @@ function clickMenu() {
 		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
 			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+		d3.selectAll(".circles");
 	})
 	$(".Mean-Wind").click(function(){
-		console.log('you clicked mean wind');
 		expressed = Category[4];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -713,10 +561,9 @@ function clickMenu() {
 		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
 			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+		d3.selectAll(".circles");
 	})
 	$(".Mean-Pressure").click(function(){
-		console.log('you clicked mean pressure');
 		expressed = Category[5];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -725,16 +572,11 @@ function clickMenu() {
 		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
 			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+		d3.selectAll(".circles");
 	})
-};
-
-function circleSize(d){
-  return Math.sqrt( .02 * Math.abs(d) );
-};
+}
 
 /*function createLineGraph(csvData) {
-
     var height = 200;
     var width = 500;
     var svg = d3.select("svg"),
@@ -792,53 +634,5 @@ function circleSize(d){
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-
 }*/
 
-d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
-  if (error) throw error;
-
-
-});
-
-function initialize() {
-	// stacked bar chart
-	var svg = d3.select("svg"),
-	    width = +svg.attr("width"),
-	    height = +svg.attr("height"),
-	    innerRadius = 180,
-	    outerRadius = Math.min(width, height) * 0.77,
-	    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height * 0.78 + ")");
-
-	var x = d3.scaleBand()
-	    .range([0, 2 * Math.PI])
-	    .align(0);
-
-	var y = d3.scaleRadial()
-	    .range([innerRadius, outerRadius]);
-
-	var z = d3.scaleOrdinal()
-	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
- 
-
-}
-
-function autoFillForm(stations) {
-  $("#tags").autocomplete({
-    source: stations
-  });
-};
-
-
-function dragstarted(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
-
-function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-}
-
-function dragended(d) {
-  d3.select(this).classed("dragging", false);
-}

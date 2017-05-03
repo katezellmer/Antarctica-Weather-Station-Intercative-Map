@@ -176,6 +176,7 @@ function drawMonth(m,tween){
 function animate(){
   interval = setInterval( function(){
     currentFrame++;
+
     if ( currentFrame == orderedColumns.length ) currentFrame = 0;
 
     d3.select("#slider-div .d3-slider-handle")
