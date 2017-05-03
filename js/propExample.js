@@ -50,7 +50,6 @@ function circleSize(d){
   return Math.sqrt( .02 * Math.abs(d) );
 };
 
-
 d3.json("json/states.json", function(error, us) {
   map.selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
@@ -197,7 +196,6 @@ function animate(){
 }
 
 function createSlider(){
-
   sliderScale = d3.scale.linear().domain([0,orderedColumns.length-1]);
 
   var val = slider ? slider.value() : 0;

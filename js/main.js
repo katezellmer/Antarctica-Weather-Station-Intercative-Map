@@ -1,11 +1,42 @@
 //window.onload = initialize();
 
 // this script will add the basemap and the data points on map
+/* GLOBAL VARIABLES */
+var Category = ["overview, meanTemp, minTemp, maxTemp, meanWind, meanPressure"];
+var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
+"2009_8","2009_9","2009_10","2009_11","2009_12","2010_1","2010_2","2010_3",
+"2010_4","2010_5","2010_6","2010_7","2010_8","2010_9","2010_10","2010_11",
+"2010_12","2011_1","2011_2","2011_3","2011_4","2011_5","2011_6","2011_7","2011_8"
+,"2011_9","2011_10","2011_11","2011_12","2012_1","2012_2","2012_3","2012_4","2012_5","2012_6"
+,"2012_7","2012_8","2012_9","2012_10","2012_11","2012_12","2013_1","2013_2","2013_3",
+"2013_4","2013_5","2013_6","2013_7","2013_8","2013_9","2013_10","2013_11",
+"2013_12","2014_1","2014_2",'2014_3','2014_4','2014_5','2014_6','2014_7',
+'2014_8','2014_9','2014_10','2014_11','2014_12','2015_1','2015_2','2015_3',
+'2015_4','2015_5','2015_6','2015_7','2015_8','2015_9','2015_10','2015_11',
+'2015_12','2016_1','2016_2','2016_3','2016_4','2016_5','2016_6','2016_7',
+'2016_8','2016_9','2016_10','2016_11','2016_12'];
+var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016']
+var expressed;
+var yearExpressed;
+var scale;
+var menuWidth = 200, menuHeight = 300;
+var menuInfoWidth = 250, menuInfoHeight = 100;
+var allCoords = "data/Trial_aws_coords_2017.csv";
+var minTempData = "data/minTemp.csv";
+var meanTempData = "data/meanTemp.csv";
+var maxTempData = "data/maxTemp.csv";
+var meanWindData = "data/meanWind.csv";
+var meanPressure = "data/meanPressure.csv";
+var numFound;
+var dateScale, sliderScale, slider;
 
-window.load=setMap();
+function circleSize(d){
+  return Math.sqrt( .02 * Math.abs(d) );
+};
+
+window.onload=setMap();
 
 function setMap(){
-
 	var width=window.innerWidth*0.7,
 		height=window.innerHeight*0.9;
 
@@ -14,7 +45,8 @@ function setMap(){
 		.attr("class","map")
 		.attr("width",width)
 		.attr("height",height)
-		.attr('viewBox',"0 -70 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		.attr('viewBox',"0 -70 1300 700")  //the view box and preserveAspectRadio 
+		//tags allows to locate the map and preserve the ratio when resize the screen
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
@@ -24,10 +56,6 @@ function setMap(){
 		.scale(1100)
 		.translate([width/2,height/2])
 		.rotate([0,90]);
-
-	var svg = d3.select("body").append("svg")
-    	.attr("width", width)
-    	.attr("height", height);
 
 	//console.log(projection);
 
@@ -43,11 +71,17 @@ function setMap(){
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly2.topojson")
 		.defer(d3.json,"data/iceshelf.topojson")
-		.defer(d3.csv, "data/siteData.csv")
+		.defer(d3.csv, "data/minTemp.csv")
+		.defer(d3.csv, "data/meanTemp.csv")
+		.defer(d3.csv, "data/maxTemp.csv")
+		.defer(d3.csv, "data/meanWind.csv")
+		.defer(d3.csv, "data/meanPressure.csv")
 		.await(callback);
 
+	clickMenu("data/Trial_aws_coords_2017.csv");
 
-	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
+	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
+		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 		/*console.log(error);
 		console.log(allCoords);
 		console.log(uwCoords);
@@ -55,9 +89,67 @@ function setMap(){
 		console.log(coastline);
 		console.log(iceshelf);*/
 
-		console.log(allCoords);
-		console.log(uwCoords);
+		console.log(minTemp);
+		console.log(meanTemp);
+		console.log(maxTemp);
+		console.log(meanWind);
+		console.log(meanPressure);
 
+		// DIFFERENT VARIABLE
+
+		/**** Link that data **/
+		// create array w/ csv's loaded
+		var csvArray = [meanTemp, minTemp, maxTemp, meanWind, meanPressure];
+		// names for the overall label
+		var attributeNames = ["meanTemp", "minTemp", "maxTemp", 
+		"meanWind", "meanPressure"];
+
+		for (csv in csvArray) {
+			LinkData(allCoords, csvArray[csv], attributeNames[csv]); 
+		}
+
+		numFound = 0;
+		// loop through the csv and tie it to the coords CSV
+		function LinkData(coordsCSV, csvData, attribute) {
+			console.log(coordsCSV);
+			// loop through coords csv
+			// update this value when we add more stations
+			for (var i = 0; i < 2; i++) {
+				// create a property to hold csvData
+
+				var csvStation = coordsCSV[i];
+				var csvLink = csvStation.sitename;
+				//console.log(csvLink);
+				//console.log(numFound);
+
+				if (csvLink == 'Henry' || csvLink == 'Byrd') {
+					console.log("i'm in the if statement");
+					numFound = numFound + 1;
+					console.log("length " + csvData.length);
+					for (var i = 0; i < csvData.length; i++) {
+						console.log(csvData[i]);
+						if (csvLink == csvData[i]) {
+
+							attrObj = {};
+							for (var key in keyArray) {
+								console.log(key);
+								var attr = keyArray[key];
+								var val = csvStation[attr];
+								console.log(val);
+								console.log(attr);
+								attrObj[attr] = val;
+							}
+						}
+					
+					}
+				}
+				if (numFound == 2) {
+					break;
+				}
+				// loop through stations and assign data to right station
+			}
+		}
+		//for (var i = 0; i )
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
 
@@ -76,15 +168,9 @@ function setMap(){
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines
 		
-		//console.log(graticule.outline());
-		
-		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
+			var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
 			land=topojson.feature(coastline,coastline.objects.ant_reg2).features,
 			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
-
-		//console.log(ice);
-
-		//console.log(sea);
 
 		var seaArea=map.append("path")
 			.datum(sea)
@@ -129,115 +215,147 @@ function setMap(){
 				};
 			});
 
-		//var x=projection(function(d))
+		changeMap(allCoords);
 
-		var aws=map.selectAll(".circle")
-			.data(allCoords)
-			.enter()
-			.append("circle")
-			.attr('gid', function(d){
-				return d['gid'];
-			})
-			.attr('class',function(d){
-				return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
-			})
-			.attr('mapcode',function(d){
-				return d['mapcode']
-			})
-			.attr("cx",function(d){
-				//console.log(d['latitude']);
-				//console.log(projection(d['latitude']));
-				return projection([d['longitude'],d['latitude']])[0];
-			})
-			.attr("cy",function(d){
-				//console.log(projection(d));
-				return projection([d['longitude'],d['latitude']])[1];
-			})
-			
-			.attr("r", "6px")
-			.attr("fill", function(d){
-				//console.log(d['mapcode']);
-				if (d['mapcode']=='UW'){
-					return "#e31a1c";
-				} ;
-				if (d['mapcode']=='UW/Australia'){
-					return "#de2d26";
-				};
-				if (d['mapcode']=='UW/China'){
-					return "#fb6a4a";
-				};
-				if (d['mapcode']=='UW/France'){
-					return "#fc9272";
-				};
-				if (d['mapcode']=='UW/Japan'){
-					return "#fcbba1";
-				};
-				if (d['mapcode']=='UW/UK'){
-					return "#df65b0";
-				};
-				if (d['mapcode']=='Australia'){
-					return "#3182bd";
-				};
-				if (d['mapcode']=='New Zealand'){
-					return "#9ecae1";
-				};
-				if (d['mapcode']=='China/Australia'){
-					return "#fb8d3c";
-				};
-				if (d['mapcode']=='South Korea'){
-					return "#fecc5c";
-				};
-				if (d['mapcode']=='Japan'){
-					return "#ffffb2";
-				};
-				if (d['mapcode']=='Belgium/Netherlands'){
-					return "#00441b";
-				};
-				if (d['mapcode']=='Finland'){
-					return "#006d2c";
-				};
-				if (d['mapcode']=='France'){
-					return "#238b45";
-				};
-				if (d['mapcode']=='Germany'){
-					return "#41ab5d";
-				};
-				if (d['mapcode']=='Italy'){
-					return "#74c476";
-				};
-				if (d['mapcode']=='Netherlands'){
-					return "#a1d99b";
-				};
-				if (d['mapcode']=='Norway'){
-					return "#c7e9c0";
-				};
-				if (d['mapcode']=='Russia'){
-					return "#a8ddb5";
-				};
-				if (d['mapcode']=='United Kingdom'){
-					return "#005a32";
-				};
-				if (d['mapcode']=='Brazil'){
-					return "#fa9fb5";
-				};
-				if (d['mapcode']=='Other US'){
-					return "#6a51a3";
-				};
-				if (d['mapcode']=='SPAWAR'){
-					return "#807dba";
-				};
-				if (d['mapcode']=='Commercial'){
-					return "#9e9ac8";
-				};
-			})
-			.attr("stroke","#fff")
-			.on("mouseover",function(d){
-				//console.log(d['sitename']);
-				highlight(d['sitename']);
-			})
-			.on("mouseout",function(d){
-				dehighlight(d['sitename']);
-			});
+		function changeMap(currData) {
+			if (currData == allCoords) {
+				var aws=map.selectAll(".circle")
+					.data(currData)
+					.enter()
+					.append("circle")
+					.attr('gid', function(d){
+						return d['gid'];
+					})
+					.attr('class',function(d){
+						return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
+					})
+					.attr('mapcode',function(d){
+						return d['mapcode']
+					})
+					.attr("cx",function(d){
+						//console.log(d['latitude']);
+						//console.log(projection(d['latitude']));
+						return projection([d['longitude'],d['latitude']])[0];
+					})
+					.attr("cy",function(d){
+						//console.log(projection(d));
+						return projection([d['longitude'],d['latitude']])[1];
+					})
+					.attr("r", "6px")
+					.attr("fill", function(d){
+						//console.log(d['mapcode']);
+						if (d['mapcode']=='UW'){
+							return "#e31a1c";
+						} ;
+						if (d['mapcode']=='UW/Australia'){
+							return "#de2d26";
+						};
+						if (d['mapcode']=='UW/China'){
+							return "#fb6a4a";
+						};
+						if (d['mapcode']=='UW/France'){
+							return "#fc9272";
+						};
+						if (d['mapcode']=='UW/Japan'){
+							return "#fcbba1";
+						};
+						if (d['mapcode']=='UW/UK'){
+							return "#df65b0";
+						};
+						if (d['mapcode']=='Australia'){
+							return "#3182bd";
+						};
+						if (d['mapcode']=='New Zealand'){
+							return "#9ecae1";
+						};
+						if (d['mapcode']=='China/Australia'){
+							return "#fb8d3c";
+						};
+						if (d['mapcode']=='South Korea'){
+							return "#fecc5c";
+						};
+						if (d['mapcode']=='Japan'){
+							return "#ffffb2";
+						};
+						if (d['mapcode']=='Belgium/Netherlands'){
+							return "#00441b";
+						};
+						if (d['mapcode']=='Finland'){
+							return "#006d2c";
+						};
+						if (d['mapcode']=='France'){
+							return "#238b45";
+						};
+						if (d['mapcode']=='Germany'){
+							return "#41ab5d";
+						};
+						if (d['mapcode']=='Italy'){
+							return "#74c476";
+						};
+						if (d['mapcode']=='Netherlands'){
+							return "#a1d99b";
+						};
+						if (d['mapcode']=='Norway'){
+							return "#c7e9c0";
+						};
+						if (d['mapcode']=='Russia'){
+							return "#a8ddb5";
+						};
+						if (d['mapcode']=='United Kingdom'){
+							return "#005a32";
+						};
+						if (d['mapcode']=='Brazil'){
+							return "#fa9fb5";
+						};
+						if (d['mapcode']=='Other US'){
+							return "#6a51a3";
+						};
+						if (d['mapcode']=='SPAWAR'){
+							return "#807dba";
+						};
+						if (d['mapcode']=='Commercial'){
+							return "#9e9ac8";
+						};
+					})
+					.attr("stroke","#fff")
+					.on("mouseover",function(d){
+						//console.log(d['sitename']);
+						highlight(d['sitename']);
+					})
+					.on("mouseout",function(d){
+						dehighlight(d['sitename']);
+					});
+			}
+			else {
+				map.selectAll(".circle")
+					.data(currData)
+					.enter()
+					.append("circle")
+					.attr('gid', function(d){
+						return d['gid'];
+					})
+					.attr('class',function(d){
+						return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
+					})
+					.attr('mapcode',function(d){
+						return d['mapcode']
+					})
+					.attr("cx",function(d){
+						//console.log(d['latitude']);
+						//console.log(projection(d['latitude']));
+						return projection([d['longitude'],d['latitude']])[0];
+					})
+					.attr("cy",function(d){
+						//console.log(projection(d));
+						return projection([d['longitude'],d['latitude']])[1];
+					})
+					.attr("r", "6px")
+					.attr("fill", function(d){
+
+					});
+			}
+		}
+
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
 
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
@@ -246,29 +364,6 @@ function setMap(){
 			//setLabel(allCoords);
 			//highlight(props);
 	};
-
-	function updateMap() {
-		
-	}
-
-	/*function joinData(aws, allCoords){
-		for (var i=0;i<allCoords.length;i++){
-			var csvStation=allCoords[i];
-			var csvKey=csvStation.gid;
-
-			for (var a=0; a<aws.length;i++){
-				var stationProps=aws[a].properties;
-				var stationKey=geojson.id;
-
-				if (csvKey==stationKey){
-					attrArray.forEach(function(attr){
-						var val=parseFloat(csvStation[attr]);
-						stationProps[attr]=val;
-					});
-				};
-			};
-		};
-	};*/
 
 	function highlight(stationName){
 		//var circleAttrs=
@@ -312,35 +407,155 @@ function setMap(){
 			.html(selected.attr('mapcode'));
 		//console.log(countryName);
 	};
-
 };
 
+// change year
+function changeYear() {
 
-/*d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
-  if (error) throw error;
-});
+}
 
-function initialize() {
-	// stacked bar chart
-	var svg = d3.select("svg"),
-	    width = +svg.attr("width"),
-	    height = +svg.attr("height"),
-	    innerRadius = 180,
-	    outerRadius = Math.min(width, height) * 0.77,
-	    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height * 0.78 + ")");
+// change attribute
+function changeAttribute() {
 
-	var x = d3.scaleBand()
-	    .range([0, 2 * Math.PI])
-	    .align(0);
+}
 
-	var y = d3.scaleRadial()
-	    .range([innerRadius, outerRadius]);
+function createSlider(){
+  sliderScale = d3.scale.linear().domain([0,orderedColumns.length-1]);
 
-	var z = d3.scaleOrdinal()
-	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-}*/
+  var val = slider ? slider.value() : 0;
 
-function createLineGraph(csvData) {
+  slider = d3.slider()
+    .scale( sliderScale )
+    .on("slide",function(event,value){
+      if ( isPlaying ){
+        clearInterval(interval);
+      }
+      currentFrame = value;
+      drawMonth( orderedColumns[value], d3.event.type != "drag" );
+    })
+    .on("slideend",function(){
+      if ( isPlaying ) animate();
+      d3.select("#slider-div").on("mousemove",sliderProbe)
+    })
+    .on("slidestart",function(){
+      d3.select("#slider-div").on("mousemove",null)
+    })
+    .value(val);
+
+  d3.select("#slider-div").remove();
+
+  d3.select("#slider-container")
+    .append("div")
+    .attr("id","slider-div")
+    .style("width",dateScale.range()[1] + "px")
+    .on("mousemove",sliderProbe)
+    .on("mouseout",function(){
+      d3.select("#slider-probe").style("display","none");
+    })
+    .call( slider );
+
+  d3.select("#slider-div a").on("mousemove",function(){
+    d3.event.stopPropagation();
+  })
+
+  var sliderAxis = d3.svg.axis()
+    .scale( dateScale )
+    .tickValues( dateScale.ticks(orderedColumns.length).filter(function(d,i){
+      // ticks only for beginning of each year, plus first and last
+      return d.getMonth() == 0 || i == 0 || i == orderedColumns.length-1;
+    }))
+    .tickFormat(function(d){
+      // abbreviated year for most, full month/year for the ends
+      if ( d.getMonth() == 0 ) return "'" + d.getFullYear().toString().substr(2);
+      return months[d.getMonth()] + " " + d.getFullYear();
+    })
+    .tickSize(10)
+
+  d3.select("#axis").remove();
+
+  d3.select("#slider-container")
+    .append("svg")
+    .attr("id","axis")
+    .attr("width",dateScale.range()[1] + sliderMargin*2 )
+    .attr("height",25)
+    .append("g")
+      .attr("transform","translate(" + (sliderMargin+1) + ",0)")
+      .call(sliderAxis);
+
+  d3.select("#axis > g g:first-child text").attr("text-anchor","end").style("text-anchor","end");
+  d3.select("#axis > g g:last-of-type text").attr("text-anchor","start").style("text-anchor","start");
+}
+
+// create side menu to change to different attributes
+function clickMenu(currData) {
+	$(".Overview").click(function(){
+		expressed = Category[0];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Overview")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');
+	})
+	$(".Mean-Temp").click(function(){
+		console.log('you clicked mean temp');
+		expressed = Category[1];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Mean-Temp")
+			.style('background-color', '#9C0D08')
+			.style('color', '#fff');
+	})
+	$(".Min-Temp").click(function(){
+		expressed = Category[2];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Min-Temp")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');
+		d3.selectAll(".circles");
+	})
+	$(".Max-Temp").click(function(){
+		expressed = Category[3];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Max-Temp")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');
+		d3.selectAll(".circles");
+	})
+	$(".Mean-Wind").click(function(){
+		expressed = Category[4];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Mean-Wind")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');
+		d3.selectAll(".circles");
+	})
+	$(".Mean-Pressure").click(function(){
+		expressed = Category[5];
+		yearExpressed = keyArray[0];
+		d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Mean-Pressure")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');
+		d3.selectAll(".circles");
+	})
+}
+
+/*function createLineGraph(csvData) {
     var height = 200;
     var width = 500;
     var svg = d3.select("svg"),
@@ -398,6 +613,5 @@ function createLineGraph(csvData) {
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-}
-
+}*/
 
