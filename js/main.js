@@ -1,7 +1,3 @@
-
-//window.onload = initialize();
-// this script will add the basemap and the data points on map
-
 window.load=setMap();
 var zoomlevel = 1;
 var Category = ["overview, meanTemp, minTemp, maxTemp, meanWind, meanPressure"];
@@ -17,7 +13,7 @@ var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
 '2015_4','2015_5','2015_6','2015_7','2015_8','2015_9','2015_10','2015_11',
 '2015_12','2016_1','2016_2','2016_3','2016_4','2016_5','2016_6','2016_7',
 '2016_8','2016_9','2016_10','2016_11','2016_12'];
-var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016']
+var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016'];
 var expressed;
 var yearExpressed;
 var scale;
@@ -36,7 +32,6 @@ function circleSize(d){
   return Math.sqrt( .02 * Math.abs(d) );
 };
 
-window.onload=setMap();
 
 function setMap(){
 	 var width=window.innerWidth*0.7,
@@ -82,12 +77,18 @@ function setMap(){
 		.await(callback);
 
 
-	clickMenu("data/Trial_aws_coords_2017.csv");
+	// clickMenu("data/Trial_aws_coords_2017.csv");
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 
 		console.log(allCoords);
+		var stations = []
+    for (var i = 0; i < allCoords.length; i++){
+      stations.push(allCoords[i].sitename);
+    }
+    autoFillForm(stations);
+
     
 		// console.log(uwCoords);
 		// console.log(seamask);
@@ -121,7 +122,7 @@ function setMap(){
 		numFound = 0;
 		// loop through the csv and tie it to the coords CSV
 		function LinkData(coordsCSV, csvData, attribute) {
-			console.log(coordsCSV);
+			//console.log(coordsCSV);
 			// loop through coords csv
 			// update this value when we add more stations
 			for (var i = 0; i < 2; i++) {
@@ -158,20 +159,8 @@ function setMap(){
 				}
 				// loop through stations and assign data to right station
 			}
-		}
+		
 
-	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
-		//console.log(error);
-		console.log(allCoords);
-    var stations = []
-    for (var i = 0; i < allCoords.length; i++){
-      stations.push(allCoords[i].sitename);
-    }
-    autoFillForm(stations)
-		// console.log(uwCoords);
-		// console.log(seamask);
-		// console.log(coastline);
-		// console.log(iceshelf);*/
 
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
@@ -359,10 +348,8 @@ function setMap(){
 			.transition()
 			.duration(1000);
 
-			});
-
 		
-		var zoom = d3.select("#zoomin") 
+		var zoom = d3.select("#zoomin")
 			.on("click", zoomed);
 		
 
@@ -391,25 +378,9 @@ function setMap(){
 	    .on("drag", dragged)
 	    .on("dragend", dragended);
   
-function zoomed() {
-	if (zoomlevel < 2){
-		console.log(zoomlevel)
-		zoomlevel += 0.1
-	}
-  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
-
-function zoomedOut() {
-	if (zoomlevel > 1){
-		console.log()
-		zoomlevel += -0.1
-	}
-		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
 
 
-
-	};
+};
 
 
 
@@ -526,7 +497,7 @@ function zoomedOut() {
 			.style("right",y+"px");
 	};*/
 
-
+}
 	function creatLegend(){
 
 		var colorClasses=["#e31a1c","#00441b","#fd8d3c","#3182bd","#fa9fb5","#6a51a3"];
@@ -572,8 +543,6 @@ function zoomedOut() {
 
 
 	};
-
-};
 
 // change year
 function changeYear() {
@@ -820,6 +789,21 @@ function autoFillForm(stations) {
   });
 };
 
+function zoomed() {
+	if (zoomlevel < 2){
+		console.log(zoomlevel)
+	}
+  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
+function zoomedOut() {
+	if (zoomlevel > 1){
+		console.log()
+		zoomlevel += -0.1
+	}
+		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
 
 function dragstarted(d) {
   d3.event.sourceEvent.stopPropagation();
@@ -831,5 +815,6 @@ function dragged(d) {
 }
 
 function dragended(d) {
-  d3.select(this).classed("dragging", false);
-}
+  d3.select(this).classed("dragging", false)
+};
+};
