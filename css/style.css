@@ -1,20 +1,26 @@
-<<<<<<< Updated upstream
+.menu-options {
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
 
 .map {
-=======
-.map{
->>>>>>> Stashed changes
 	float: right;
 }
 
 .land {
-	fill:#F2F2F0;  /*this is styling the land*, with white background and grey line*/
+	fill:white;  /*this is styling the land*, with white background and grey line*/
+	opacity: 0.9;
 	stroke:none;
 	stroke-width:0px;
 }
 
 .ice {
-	fill:white;
+	fill:#f8f8fa;
+	fill-opacity:0.8;
+	stroke:white;
+	stroke-width:0.7px;
+	stroke-opacity:0.7;
 }
 
 .sea {
@@ -23,15 +29,48 @@
 	stroke-width:2px;
 }
 
-<<<<<<< Updated upstream
 circle {
 
 	opacity: 0.8;
 }
 
+.infoLabel {
+	position: absolute;
+	/*height: 50px;*/
+	min-width: 100px;
+	color: #1a4d84;
+	background-color: rgba(210, 224, 239,0.5);
+	/*opacity:0.5;*/
+	padding: 30px 10px;
+	font-family: lato;
 
-=======
->>>>>>> Stashed changes
+}
+
+.context {
+
+}
+
+.infoLabel h1{
+	margin: 0 20px 0 0;
+	padding: 0;
+	color: #103e70;
+
+	/*display: inline-block;*/
+	line-height: 1.2em;
+	font-weight: bold;
+	font-family: lato;
+}
+
+.infoLabel h2{
+	margin: 10px 20px 8px 0;
+	padding: 0;
+	font-size: 20px;
+	/*display: inline-block;*/
+	/*line-height: 0.8em;*/
+	font-family: lato;
+}
+
+
 .gratLines {
 	stroke:none;
 	fill:none;
