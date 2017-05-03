@@ -1,12 +1,23 @@
+<<<<<<< Updated upstream
 //window.onload = initialize();
 // this script will add the basemap and the data points on map
+=======
+/** Global Variables **/
+var keyArray = [];
+var Category = ["minTemp", "maxTemp", "meanTemp", "meanWindSpeed", "meanPressure"];
+>>>>>>> Stashed changes
 
 window.load=setMap();
 var zoomlevel = 1;
 
 function setMap(){
+<<<<<<< HEAD
 	 var width=window.innerWidth*0.7,
 	 height=window.innerHeight*0.9;
+=======
+	var width=window.innerWidth*0.7,
+		height=window.innerHeight*0.9;
+>>>>>>> refs/remotes/origin/master
 
 	var map=d3.select("body")
 		.append("svg")
@@ -17,14 +28,16 @@ function setMap(){
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
+<<<<<<< Updated upstream
 		//.center(0,0)
 		
 		//.(0,-90)
 		.scale(1100)
+=======
+		.scale(900)
+>>>>>>> Stashed changes
 		.translate([width/2,height/2])
 		.rotate([0,90]);
-
-	//console.log(projection);
 
 	var path=d3.geoPath()
 		.projection(projection);
@@ -32,16 +45,16 @@ function setMap(){
 
 
 	//console.log(path);
-
-
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_2017.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
+		//.defer(d3.csv, "data/Henry.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly2.topojson")
 		.defer(d3.json,"data/iceshelf.topojson")
 		.await(callback);
 
+<<<<<<< Updated upstream
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf){
 		//console.log(error);
@@ -56,6 +69,14 @@ function setMap(){
 		// console.log(coastline);
 		// console.log(iceshelf);*/
 
+=======
+	function callback(error,allCoords,uwCoords,seamask,coastline){
+		console.log(error);
+		//console.log(allCoords);
+		//console.log(uwCoords);
+		//console.log(seamask);
+		//console.log(coastline);
+>>>>>>> Stashed changes
 
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
@@ -75,6 +96,7 @@ function setMap(){
             .attr("d", path); //project graticule lines
 		
 		//console.log(graticule.outline());
+<<<<<<< Updated upstream
 		
 
 		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
@@ -83,8 +105,12 @@ function setMap(){
 
 		//console.log(ice);
 		//console.log(sea);
-		
+=======
 
+		var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean), 
+			land=topojson.feature(coastline,coastline.objects.ne_50m_land).features;
+>>>>>>> Stashed changes
+		
 		var seaArea=map.append("path")
 			.datum(sea)
 			.enter()
@@ -114,6 +140,7 @@ function setMap(){
 				};
 			});
 
+<<<<<<< Updated upstream
 		var iceArea=map.selectAll(".ice")
 			.data(ice)
 			.enter()
@@ -132,6 +159,9 @@ function setMap(){
 		//var x=projection(function(d))
 
 		var aws=map.selectAll(".circle")
+=======
+		var aws=map.selectAll("circle")
+>>>>>>> Stashed changes
 			.data(allCoords)
 			.enter()
 			.append("circle")
@@ -155,6 +185,7 @@ function setMap(){
 				return projection([d['longitude'],d['latitude']])[1];
 			})
 			
+<<<<<<< Updated upstream
 			.attr("r", "6px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -320,6 +351,11 @@ function zoomedOut() {
 		d3.select(".infoLabel")
 			.remove();
 
+=======
+			.attr("r","8px")
+			.attr("fill","#900")
+			.attr("stroke","#999")
+>>>>>>> Stashed changes
 	};
 
 	function setLabel(stationName,selected){
@@ -351,6 +387,7 @@ function zoomedOut() {
 
 };
 
+<<<<<<< Updated upstream
 
 
 
@@ -380,6 +417,7 @@ function initialize() {
 
 	var z = d3.scaleOrdinal()
 	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+<<<<<<< HEAD
  
 
 }
@@ -399,6 +437,91 @@ function dragstarted(d) {
 function dragged(d) {
   d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
+=======
+=======
+function yearChange(){
+  //litearlize this: return row["Year"] == "2007" || row["Year"] == "2009"
+  //console.log(d3.map.values(filterTypesSignal))
+  currentYears = []
+  for (var n =0; n< filterTypesYear.length; n++){
+    if (filterTypesSignal[filterTypesYear[n]] == "on"){
+        currentYears.push(filterTypesYear[n])
+    } else {
+      currentYears.push("0")
+    } 
+  }
+  //obj = "return"+obj
+  //obj = obj.slice(0, obj.length-3)
+  setData(phase, currentYears, view)
+>>>>>>> Stashed changes
+}
+
+function createLineGraph(csvData) {
+    var height = 200;
+    var width = 500;
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", 
+        	"translate(" + margin.left + "," + margin.top + ")");
+
+    var parseTime = d3.timeParse("%d-%b-%y");
+
+    var x = d3.scaleTime()
+        .rangeRound([0, width]);
+
+    var y = d3.scaleLinear()
+        .rangeRound([height, 0]);
+
+    var line = d3.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.close); });
+
+    d3.tsv("data.tsv", function(d) {
+      d.date = parseTime(d.date);
+      d.close = +d.close;
+      return d;
+    },
+
+    function(error, csvData) {
+      if (error) throw error;
+
+      x.domain(d3.extent(csvData, function(d) { return d.date; }));
+      y.domain(d3.extent(csvData, function(d) { return d.close; }));
+
+      g.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+        .select(".domain")
+          .remove();
+
+      g.append("g")
+          .call(d3.axisLeft(y))
+        .append("text")
+          .attr("fill", "#000")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", "0.71em")
+          .attr("text-anchor", "end")
+          .text("Price ($)");
+
+      g.append("path")
+          .datum(csvData)
+          .attr("fill", "none")
+          .attr("stroke", "steelblue")
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
+          .attr("stroke-width", 1.5)
+          .attr("d", line);
+    });
+<<<<<<< Updated upstream
+}*/
+
+=======
+}
+>>>>>>> Stashed changes
+>>>>>>> refs/remotes/origin/master
 
 function dragended(d) {
   d3.select(this).classed("dragging", false);

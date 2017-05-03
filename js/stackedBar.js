@@ -21,12 +21,15 @@ function initialize() {
 	d3.csv("data/states.csv", function(d, i, columns) {
 
 	for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-
 	  	d.total = t;
+<<<<<<< HEAD
 		// console.log(d.total);
+=======
+>>>>>>> refs/remotes/origin/master
 	  	return d;
 	}, function(error, data) {
 	  if (error) throw error;
+	  //console.log(error);
 
 	  weave(data, function(a, b) { return b[data.columns[6]] -  a[data.columns[6]]; });
 	  x.domain(data.map(function(d) { return d.State; }));
