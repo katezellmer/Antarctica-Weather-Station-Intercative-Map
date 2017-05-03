@@ -58,6 +58,8 @@ function setMap(){
 		console.log(allCoords);
 		console.log(uwCoords);
 
+		creatLegend();
+
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
 
@@ -135,8 +137,8 @@ function setMap(){
 			.data(allCoords)
 			.enter()
 			.append("circle")
-			.attr('gid', function(d){
-				return d['gid'];
+			.attr('id', function(d){
+				return "#"+d['gid'];
 			})
 			.attr('class',function(d){
 				return d['sitename'].replace(/[ () !]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
@@ -252,6 +254,7 @@ function setMap(){
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
 		//highlight(props);
+		
 
 			//});
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
@@ -262,11 +265,11 @@ function setMap(){
 			//aws=joinData(aws,allCoords);
 			//setLabel(allCoords);
 			//highlight(props);
+
 	};
 
-	function updateMap() {
-		
-	}
+
+
 
 	/*function joinData(aws, allCoords){
 		for (var i=0;i<allCoords.length;i++){
@@ -291,7 +294,10 @@ function setMap(){
 		//var circleAttrs=
 		//console.log(stationName);
 		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","17px");
+			.attr("r","17px")
+			.style("stroke","#dce8f7")
+			.style("stroke-width","7px")
+			.style("stroke-opacity","0.6");
 		//console.log(selected);
 		
 			//.style("stroke")
@@ -300,7 +306,9 @@ function setMap(){
 
 	function dehighlight(stationName){
 		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","8px");
+			.attr("r","8px")
+			.style("stroke","#fff")
+			.style("stroke-width","1px");
 		d3.select(".infoLabel")
 			.remove();
 		//setLabel(stationName, selected);
@@ -308,9 +316,9 @@ function setMap(){
 	};
 
 	function setLabel(stationName,selected){
-		console.log(selected);
+		//console.log(selected);
 		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
-		console.log(labelAttribute);
+		//console.log(labelAttribute);
 
 
 
@@ -348,7 +356,6 @@ function setMap(){
 		//console.log(countryName);*/
 	};
 
-
 	/*function moveLabel(){
 
 		var labelWidth=d3.selectAll(".infoLabel");
@@ -375,7 +382,51 @@ function setMap(){
 	};*/
 
 
-	//function legend
+	function creatLegend(){
+
+		var colorClasses=["#e31a1c","#00441b","#fd8d3c","#3182bd","#fa9fb5","#6a51a3"];
+
+		var legendClasses=["UW AWS","European AWS","Asian AWS","Oceanian AWS","South American AWS","Other American AWS"];
+		/*function legendClass(legendClasses){
+			for (i=0;i<legendClasses.length;i++){
+				console.log(legendClasses[1]);
+				return legendClasses[i];
+			};
+		};*/
+		var legend=d3.select("body")
+			.append("svg")
+
+		legend=d3.selectAll("g.legend")
+			.data(colorClasses)
+			.enter().append("g")
+			.attr("class","legend")
+
+		var ls_w=20, ls_h=20;
+
+		legend.append("circle")
+			.attr("x",10)
+			.attr("y",function(d,i){return height-(1*ls_h)-2*ls_h;})
+			.attr("width",ls_w)
+			.attr("height",ls_h)
+			.style("fill",function(d,i){return colorClasses[i];})
+			.style("background","#d6eaf8");
+		console.log(legend);
+
+		legend.append("text")
+			.attr("x",50)
+			.attr("y",function(d,i){return height-(i*ls_h)-2*ls_h;})
+			.attr(function(d,i){
+				return legendClasses[i];
+			});
+		console.log(legendClasses[1]);
+
+
+
+		
+
+
+
+	};
 
 };
 
