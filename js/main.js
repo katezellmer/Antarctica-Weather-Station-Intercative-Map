@@ -21,12 +21,6 @@ var yearExpressed;
 var scale;
 var menuWidth = 200, menuHeight = 300;
 var menuInfoWidth = 250, menuInfoHeight = 100;
-var allCoords = "data/Trial_aws_coords_2017.csv";
-var minTempData = "data/minTemp.csv";
-var meanTempData = "data/meanTemp.csv";
-var maxTempData = "data/maxTemp.csv";
-var meanWindData = "data/meanWind.csv";
-var meanPressure = "data/meanPressure.csv";
 var numFound;
 var dateScale, sliderScale, slider;
 
@@ -78,8 +72,6 @@ function setMap(){
 		.defer(d3.csv, "data/meanPressure.csv")
 		.await(callback);
 
-	clickMenu("data/Trial_aws_coords_2017.csv");
-
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 		/*console.log(error);
@@ -119,8 +111,8 @@ function setMap(){
 
 				var csvStation = coordsCSV[i];
 				var csvLink = csvStation.sitename;
-				//console.log(csvLink);
-				//console.log(numFound);
+				console.log(csvLink);
+				console.log(numFound);
 
 				if (csvLink == 'Henry' || csvLink == 'Byrd') {
 					console.log("i'm in the if statement");
@@ -129,7 +121,7 @@ function setMap(){
 					for (var i = 0; i < csvData.length; i++) {
 						console.log(csvData[i]);
 						if (csvLink == csvData[i]) {
-
+							console.log("i'm in the tiny if statement");
 							attrObj = {};
 							for (var key in keyArray) {
 								console.log(key);
@@ -373,8 +365,6 @@ function setMap(){
 		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
 		console.log(labelAttribute);
 
-
-
 		var infoLabel=d3.select("body")
 			.append("div")
 			.attr("class","infoLabel")
@@ -451,7 +441,7 @@ function changeAttribute() {
 }
 
 function createSlider(){
-  sliderScale = d3.scale.linear().domain([0,orderedColumns.length-1]);
+  sliderScale = d3.scaleLinear().domain([0,126]);
 
   var val = slider ? slider.value() : 0;
 
@@ -522,66 +512,66 @@ function clickMenu(currData) {
 	$(".Overview").click(function(){
 		expressed = Category[0];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
 		d3.select("Overview")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');
+			.style('color', '#333333');*/
 	})
 	$(".Mean-Temp").click(function(){
 		console.log('you clicked mean temp');
 		expressed = Category[1];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
 		d3.select("Mean-Temp")
 			.style('background-color', '#9C0D08')
-			.style('color', '#fff');
+			.style('color', '#fff');*/
 	})
 	$(".Min-Temp").click(function(){
 		expressed = Category[2];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
 		d3.select("Min-Temp")
 			.style('background-color', '#CCCCCC')
 			.style('color', '#333333');
-		d3.selectAll(".circles");
+		d3.selectAll(".circles");*/
 	})
 	$(".Max-Temp").click(function(){
 		expressed = Category[3];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
-		d3.select("Max-Temp")
+		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');
+			.style('color', '#333333');*/
 		d3.selectAll(".circles");
 	})
 	$(".Mean-Wind").click(function(){
 		expressed = Category[4];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
-		d3.select("Mean-Wind")
+		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');
+			.style('color', '#333333');*/
 		d3.selectAll(".circles");
 	})
 	$(".Mean-Pressure").click(function(){
 		expressed = Category[5];
 		yearExpressed = keyArray[0];
-		d3.selectAll(".menu-options div")
+		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
 		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');
+			.style('color', '#333333');*/
 		d3.selectAll(".circles");
 	})
 }
