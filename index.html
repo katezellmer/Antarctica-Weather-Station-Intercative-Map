@@ -31,7 +31,7 @@
     <div class="collapse navbar-collapse" id="nav1">
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Enter Keyword">
+          <input type="text" class="form-control" placeholder="Enter Station Name">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -39,9 +39,84 @@
       </ul>
     </div><!-- /.navbar-collapse -->
 
-
-
 		</nav><!--end navigation bar-->
+
+		<!-- slider bar -->
+		<div id="slider-container">
+			<div id = "slider-probe">
+				
+
+			</div>
+			<div id = "slider-div" class = "d3-slider d3 slider-horizontal"
+			style="width: 500px"> 
+				<a class = "d3-slider-handle" href = "#" style = "left: 0%"></a>
+
+			</div>
+			<svg id = "axis" width = "630" height = "25">
+				<!-- 2009 -->
+				<g transform = "translate(66,0)"> 
+					<g class = "tick" transform = "translate(0,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2009 </text>
+					</g>
+					<!-- 2010 -->
+					<g class = "tick" transform = "translate(71.4285714286,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2010 </text>
+					</g>
+					<!-- 2011 -->
+					<g class = "tick" transform = "translate(142.857142857,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2011 </text>
+					</g>
+					<!-- 2012 -->
+					<g class = "tick" transform = "translate(214.285714286,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2012 </text>
+					</g>
+					<!-- 2013 -->
+					<g class = "tick" transform = "translate(285.714285714,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2013 </text>
+					</g>
+					<!-- 2014 -->
+					<g class = "tick" transform = "translate(357.142857143,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2014 </text>
+					</g>
+					<!-- 2015 -->
+					<g class = "tick" transform = "translate(428.571428571,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2015 </text>
+					</g>
+					<!-- 2016 -->
+					<g class = "tick" transform = "translate(500,0)" 
+					style ="opacity: 1"> 
+						<line y2 = "10" x2 = "0"></line>
+						<text y="13" x="0" dy = ".71em" text-anchor="end"
+						style = "text-anchor: end;"> 2016 </text>
+					</g>
+					<path class = "domain" d= "M0,10V0H500V10"></path>
+				</g>
+			</svg>
+		</div>
+		
+
+		<!-- main menu -->
 		<div class = "main-menu">
 	  	<div class="menu-inset" style="width:200px;height:100px;"></div>
 	  	 <div class="menu-options">
@@ -60,6 +135,10 @@
 	  	 </div>
 		</div>
 
+		<div class="map"> <!-- map svg is drawn in main.js -->
+		    </div>  
+		   
+
 		<script src="data/aws_coords_2017.geojson"></script>
  		<script type="text/javascript" src="lib/topojson.js"></script>
 
@@ -67,12 +146,9 @@
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/d3-slider.js"></script>
 
  		<!-- main js links-->
-
- 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
-		<script type="text/javascript" src="js/stackedBar.js"></script>
-
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 		
