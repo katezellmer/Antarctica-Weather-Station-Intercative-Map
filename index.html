@@ -48,11 +48,10 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="nav1">
       <form class="navbar-form navbar-right" role="search">
-        <div class="ui-widget">
+        <div class="">
   			<label for="tags">Search Station:</label>
   				<input id="tags">
 		</div>
-        <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
       </ul>
@@ -89,6 +88,11 @@
 					</div>
        
 				</div> 
+				
+				<div class="zoom">
+					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
+					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button>
+				</div>
 
 				<div class="left col-md-10">
 
@@ -97,13 +101,14 @@
 						<div class="col-md-12 zoomIn well"></div>
 					    <div class="col-md-12 zoomOut well"></div>
 	    			</div>		
-					<div class = "col-md-3" id="viewShowHide" style="display:none">
+					<div class = "col-md-3" id="viewShowHide" style="display:button">
 						<div class="col-md-12 viewer well"></div>
 					</div> 
 				</div>
 
 
 		</div>
+
 	   <footer class="footer">
 	      <div class="container">
 	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;

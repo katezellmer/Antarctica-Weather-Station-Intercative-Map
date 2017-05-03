@@ -1,10 +1,12 @@
 //window.onload = initialize();
 // this script will add the basemap and the data points on map
+
 window.load=setMap();
+var zoomlevel = 1;
 
 function setMap(){
-	var width=window.innerWidth*0.7,
-		height=window.innerHeight*0.9;
+	 var width=window.innerWidth*0.7,
+	 height=window.innerHeight*0.9;
 
 	var map=d3.select("body")
 		.append("svg")
@@ -26,6 +28,8 @@ function setMap(){
 
 	var path=d3.geoPath()
 		.projection(projection);
+
+
 
 	//console.log(path);
 
@@ -150,11 +154,7 @@ function setMap(){
 				
 				return projection([d['longitude'],d['latitude']])[1];
 			})
-
-			//.attr("d",path);
-			//.attr("class","station");
-		//console.log(aws);
-
+			
 			.attr("r", "6px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -242,10 +242,42 @@ function setMap(){
 			.on("mouseout",function(d){
 				dehighlight(d['sitename']);
 			});
+
+		
+		var zoom = d3.select("#zoomin") 
+			.on("click", zoomed);
+		
+
+		var zoom2 = d3.select("#zoomout")
+			.on("click", zoomedOut);
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
 		//highlight(props);
+
+		var drag = d3.select(".map")
+	    .origin(function(d) { return d; })
+	    .on("dragstart", dragstarted)
+	    .on("drag", dragged)
+	    .on("dragend", dragended);
+  
+function zoomed() {
+	if (zoomlevel < 2){
+		console.log(zoomlevel)
+		zoomlevel += 0.1
+	}
+  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
+function zoomedOut() {
+	if (zoomlevel > 1){
+		console.log(zoomlevel)
+		zoomlevel += -0.1
+	}
+		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+}
+
+
 
 	};
 
@@ -291,16 +323,18 @@ function setMap(){
 	};
 
 	function setLabel(stationName,selected){
-		console.log(selected);
+		//console.log(selected);
 		var labelAttribute="<h1>"+stationName+"</h1>"+selected.attr('mapcode');
-		console.log(labelAttribute);
+		//console.log(labelAttribute);
 
-		for (i=0; i<allCoords.length; i++) {
+		/*for (i=0; i<allCoords.length; i++) {
 			labelAttribute=allCoords[i].sitename;
 			//console.log(i);
 			//console.log(labelAttribute);
-		};
+		};*/
 		//="<h1>"+allCoords[0:169].sitename+"</h1>";
+		
+
 
 		var infoLabel=d3.select("body")
 			.append("div")
@@ -316,6 +350,11 @@ function setMap(){
 	};
 
 };
+
+
+
+
+
 
 d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
   if (error) throw error;
@@ -351,3 +390,16 @@ function autoFillForm(stations) {
   });
 };
 
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+}

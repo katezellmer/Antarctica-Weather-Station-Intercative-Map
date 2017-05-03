@@ -89,3 +89,8 @@ body {
 #nav1 {
   padding-right: 20px;
 }
+
+.zoom {
+  height: 15;
+  width: 15;
+}
