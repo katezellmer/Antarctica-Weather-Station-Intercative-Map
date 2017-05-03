@@ -58,7 +58,6 @@ function setMap(){
 
 	//console.log(path);
 
-
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
@@ -235,7 +234,6 @@ function setMap(){
 				//console.log(projection(d));
 				return projection([d['longitude'],d['latitude']])[1];
 			})
-			
 			.attr("r", "8px")
 			.attr("fill", function(d){
 				//console.log(d['mapcode']);
@@ -446,7 +444,7 @@ function createSlider(){
   var val = slider ? slider.value() : 0;
 
   slider = d3.slider()
-    .scale( sliderScale )
+    .scale(sliderScale)
     .on("slide",function(event,value){
       if ( isPlaying ){
         clearInterval(interval);
