@@ -16,21 +16,6 @@
 	<body>
 		<!--put your external script links here-->
 
-		<script src="data/aws_coords_2017.geojson"></script>
- 		<script type="text/javascript" src="lib/topojson.js"></script>
-
-
-		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
-		<script type="text/javascript" src="lib/d3.js"></script>
-		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
-
- 		<!-- main js links-->
-
- 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
-		<script type="text/javascript" src="js/stackedBar.js"></script>
-
-		<script type="text/javascript" src="js/main.js"></script>
-
 		<nav class="navbar navbar-default navbar-fixed-top main-navbar"> <!--creates navbar-->
 						<div class="navbar-header"> <!--creates the navbar header-->
 								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -54,57 +39,43 @@
       </ul>
     </div><!-- /.navbar-collapse -->
 
+
+
 		</nav><!--end navigation bar-->
-
-		<div class="container-fluid"></div>
-		<div class="container-fluid main">
-
-				<div class = "col-md-2 barWrap">
-							<!-- <div class="col-md-2 container"></div> -->
-					<div class ="col-md-12 title well">
-						<div class ="col-md-12 search"></div>
-						<div class ="col-md-4 type"></div>
-						<div class ="col-md-8 normalize"></div>
-						<div class ="col-md-4 agg"></div>
-	         	 		<div class ="col-md-8 resetter"></div>
-					</div>
-					
-					<div class="col-md-12 space"></div>					
-					
-					<div class="col-md-12 well">
-						<div class="col-md-12 icicle"></div>
-						<div class="col-md-12 filterDiv"></div>
-						<div class="col-md-12 mapDisplayShell"></div>
-
-						<div class="col-md-12 descriptionsShell"></div>
-						<div class="col-md-12 filterSelector">
-							<div class="col-md-6 yearDiv"></div>
-							<div class="col-md-6 showDiv"></div>
-						</div>
-
-					</div>
-       
-				</div> 
-
-				<div class="left col-md-10">
-
-					<div class="map"></div>
-					<div class="container zoomBox">
-						<div class="col-md-12 zoomIn well"></div>
-					    <div class="col-md-12 zoomOut well"></div>
-	    			</div>		
-					<div class = "col-md-3" id="viewShowHide" style="display:none">
-						<div class="col-md-12 viewer well"></div>
-					</div> 
-				</div>
-
+		<div class = "main-menu">
+	  	<div class="menu-inset" style="width:200px;height:100px;"></div>
+	  	 <div class="menu-options">
+	  	 	<div class="Overview" style="width:125px;height:53px;">
+                    Overview</div>
+                <div class="Mean-Temp" style="width:125px;height:53px;">
+                    Mean<br>Temperature</div>
+                <div class="Min-Temp" style="width:125px;height:53px;">
+                    Minimum<br>Temperature</div>
+                <div class="Max-Temp" style="width:125px;height:53px;">
+                    Maximum<br>Temperature</div>
+                <div class="Mean-Wind" style="width:125px;height:53px;">
+                    Mean Wind<br> Speed</div>
+                <div class="Mean-Pressure" style="width:125px;height:53px;">
+                    Mean<br>Pressure</div>
+	  	 </div>
 		</div>
-	   <footer class="footer">
-	      <div class="container">
-	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	        <a id="foot" href="abouts/help.html" target="_blank">Help</a>
-	      </div>
-		</footer>
+
+		<script src="data/aws_coords_2017.geojson"></script>
+ 		<script type="text/javascript" src="lib/topojson.js"></script>
+
+		<script src="http://d3js.org/queue.v1.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/d3.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+
+ 		<!-- main js links-->
+
+ 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
+		<script type="text/javascript" src="js/stackedBar.js"></script>
+
+		<script type="text/javascript" src="js/main.js"></script>
 	</body>
+		
+	  
 
 </html>
