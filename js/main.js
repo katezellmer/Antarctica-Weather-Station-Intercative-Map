@@ -220,6 +220,8 @@ function setMap(){
 				};
 			});
 
+		var prevStation="";
+
 		var aws=map.selectAll(".circle")
 			.data(allCoords)
 			.enter()
@@ -328,12 +330,14 @@ function setMap(){
 			.attr("stroke","#fff")
 			.on("mouseover",function(d){
 				//console.log(d['sitename']);
+				dehighlight(prevStation);
+				prevStation=d['sitename'];
 				highlight(d['sitename']);
 			})
-			.on("mouseout",function(d){
-				dehighlight(d['sitename']);
+			// .on("mouseout",function(d){
+			// 	dehighlight(d['sitename']);
 
-			})
+			// })
 			//.on("mousemove",moveLabel)
 			.transition()
 			.duration(1000);
@@ -393,6 +397,9 @@ function setMap(){
 	};
 
 	function dehighlight(stationName){
+		if (stationName.length==0){
+			return false;
+		};
 		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
 			.attr("r","8px")
 			.style("stroke","#fff")
@@ -472,38 +479,53 @@ function setMap(){
 
 	function creatLegend(){
 
-		var colorClasses=["#e31a1c","#00441b","#fd8d3c","#3182bd","#fa9fb5","#6a51a3"];
+		var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
 
-		var legendClasses=["UW AWS","European AWS","Asian AWS","Oceanian AWS","South American AWS","Other American AWS"];
+		var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
 		/*function legendClass(legendClasses){
 			for (i=0;i<legendClasses.length;i++){
 				console.log(legendClasses[1]);
 				return legendClasses[i];
 			};
 		};*/
+		var ls_w=220, ls_h=230;
 		var legend=d3.select("body")
 			.append("svg")
-
-		legend=d3.selectAll("g.legend")
-			.data(colorClasses)
-			.enter().append("g")
 			.attr("class","legend")
-
-		var ls_w=20, ls_h=20;
-
-		legend.append("circle")
-			.attr("x",10)
-			.attr("y",function(d,i){return height-(1*ls_h)-2*ls_h;})
 			.attr("width",ls_w)
 			.attr("height",ls_h)
+			.style("top","300px")
+			.style("left","390px")
+			// .attr('viewBox',"-200 -100 300 100")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+			// .attr('preserveAspectRatio',"xMidYMid meet");;
+			
+			
+
+		var legendDots=legend.selectAll("g.legend")
+			.data(colorClasses)
+			.enter().append("g")
+			.attr("class","legendDots")
+			.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
+
+		
+		var ld_h=100, ld_w=100;
+		legendDots.append("circle")
+			.attr("cx",5)
+			.attr("cy",function(d,i){
+
+				return i*31+4;
+			})
+			.attr("r","8px")
 			.style("fill",function(d,i){return colorClasses[i];})
+			.style("fill-opacity","0.9")
 			.style("background","#d6eaf8");
 		console.log(legend);
 
-		legend.append("text")
-			.attr("x",50)
-			.attr("y",function(d,i){return height-(i*ls_h)-2*ls_h;})
-			.attr(function(d,i){
+		legendDots.append("text")
+			.attr("class","legendText")
+			.attr("x",30)
+			.attr("y",function(d,i){return i*32+5;})
+			.text(function(d,i){
 				return legendClasses[i];
 			});
 		console.log(legendClasses[1]);
