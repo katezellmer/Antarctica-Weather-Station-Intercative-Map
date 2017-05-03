@@ -44,9 +44,8 @@ function setMap(){
 		.append("svg")
 		.attr("class","map")
 		.attr("width",width)
-		.attr("height",height)
-		.attr('viewBox',"0 -70 1300 700")  //the view box and preserveAspectRadio 
-		//tags allows to locate the map and preserve the ratio when resize the screen
+		.attr("height",height+30)
+		.attr('viewBox',"0 -80 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
@@ -57,6 +56,7 @@ function setMap(){
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
+	// var svg = d3.select("body").appen
 	//console.log(projection);
 
 	var path=d3.geoPath()
@@ -66,7 +66,7 @@ function setMap(){
 
 
 	d3.queue()
-		.defer(d3.csv,"data/Trial_aws_coords_2017.csv")
+		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
 		.defer(d3.json, "data/seamaskPoly.topojson")
 		.defer(d3.json,"data/coastPoly2.topojson")
@@ -215,148 +215,131 @@ function setMap(){
 				};
 			});
 
-		changeMap(allCoords);
+		var aws=map.selectAll(".circle")
+			.data(allCoords)
+			.enter()
+			.append("circle")
+			.attr('gid', function(d){
+				return d['gid'];
+			})
+			.attr('class',function(d){
+				return d['sitename'].replace(/[ () !]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
+			})
+			.attr('mapcode',function(d){
+				return d['mapcode']
+			})
+			.attr('website',function(d){
+				return d['website']
+			})
+			.attr('description',function(d){
+				return d['description']
+			})
+			.attr("cx",function(d){
+				//console.log(d['latitude']);
+				//console.log(projection(d['latitude']));
+				return projection([d['longitude'],d['latitude']])[0];
+			})
+			.attr("cy",function(d){
+				//console.log(projection(d));
+				return projection([d['longitude'],d['latitude']])[1];
+			})
+			
+			.attr("r", "8px")
+			.attr("fill", function(d){
+				//console.log(d['mapcode']);
+				if (d['mapcode']=='UW'){
+					return "#e31a1c";
+				} ;
+				if (d['mapcode']=='UW/Australia'){
+					return "#de2d26";
+				};
+				if (d['mapcode']=='UW/China'){
+					return "#fb6a4a";
+				};
+				if (d['mapcode']=='UW/France'){
+					return "#fc9272";
+				};
+				if (d['mapcode']=='UW/Japan'){
+					return "#fcbba1";
+				};
+				if (d['mapcode']=='UW/UK'){
+					return "#df65b0";
+				};
+				if (d['mapcode']=='Australia'){
+					return "#3182bd";
+				};
+				if (d['mapcode']=='New Zealand'){
+					return "#9ecae1";
+				};
+				if (d['mapcode']=='China/Australia'){
+					return "#fb8d3c";
+				};
+				if (d['mapcode']=='South Korea'){
+					return "#fecc5c";
+				};
+				if (d['mapcode']=='Japan'){
+					return "#ffffb2";
+				};
+				if (d['mapcode']=='Belgium/Netherlands'){
+					return "#00441b";
+				};
+				if (d['mapcode']=='Finland'){
+					return "#006d2c";
+				};
+				if (d['mapcode']=='France'){
+					return "#238b45";
+				};
+				if (d['mapcode']=='Germany'){
+					return "#41ab5d";
+				};
+				if (d['mapcode']=='Italy'){
+					return "#74c476";
+				};
+				if (d['mapcode']=='Netherlands'){
+					return "#a1d99b";
+				};
+				if (d['mapcode']=='Norway'){
+					return "#c7e9c0";
+				};
+				if (d['mapcode']=='Russia'){
+					return "#a8ddb5";
+				};
+				if (d['mapcode']=='United Kingdom'){
+					return "#005a32";
+				};
+				if (d['mapcode']=='Brazil'){
+					return "#fa9fb5";
+				};
+				if (d['mapcode']=='Other US program'){
+					return "#6a51a3";
+				};
+				if (d['mapcode']=='SPAWAR'){
+					return "#807dba";
+				};
+				if (d['mapcode']=='Commercial'){
+					return "#9e9ac8";
+				};
+			})
+			.attr("stroke","#fff")
+			.on("mouseover",function(d){
+				//console.log(d['sitename']);
+				highlight(d['sitename']);
+			})
+			.on("mouseout",function(d){
+				dehighlight(d['sitename']);
 
-		function changeMap(currData) {
-			if (currData == allCoords) {
-				var aws=map.selectAll(".circle")
-					.data(currData)
-					.enter()
-					.append("circle")
-					.attr('gid', function(d){
-						return d['gid'];
-					})
-					.attr('class',function(d){
-						return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
-					})
-					.attr('mapcode',function(d){
-						return d['mapcode']
-					})
-					.attr("cx",function(d){
-						//console.log(d['latitude']);
-						//console.log(projection(d['latitude']));
-						return projection([d['longitude'],d['latitude']])[0];
-					})
-					.attr("cy",function(d){
-						//console.log(projection(d));
-						return projection([d['longitude'],d['latitude']])[1];
-					})
-					.attr("r", "6px")
-					.attr("fill", function(d){
-						//console.log(d['mapcode']);
-						if (d['mapcode']=='UW'){
-							return "#e31a1c";
-						} ;
-						if (d['mapcode']=='UW/Australia'){
-							return "#de2d26";
-						};
-						if (d['mapcode']=='UW/China'){
-							return "#fb6a4a";
-						};
-						if (d['mapcode']=='UW/France'){
-							return "#fc9272";
-						};
-						if (d['mapcode']=='UW/Japan'){
-							return "#fcbba1";
-						};
-						if (d['mapcode']=='UW/UK'){
-							return "#df65b0";
-						};
-						if (d['mapcode']=='Australia'){
-							return "#3182bd";
-						};
-						if (d['mapcode']=='New Zealand'){
-							return "#9ecae1";
-						};
-						if (d['mapcode']=='China/Australia'){
-							return "#fb8d3c";
-						};
-						if (d['mapcode']=='South Korea'){
-							return "#fecc5c";
-						};
-						if (d['mapcode']=='Japan'){
-							return "#ffffb2";
-						};
-						if (d['mapcode']=='Belgium/Netherlands'){
-							return "#00441b";
-						};
-						if (d['mapcode']=='Finland'){
-							return "#006d2c";
-						};
-						if (d['mapcode']=='France'){
-							return "#238b45";
-						};
-						if (d['mapcode']=='Germany'){
-							return "#41ab5d";
-						};
-						if (d['mapcode']=='Italy'){
-							return "#74c476";
-						};
-						if (d['mapcode']=='Netherlands'){
-							return "#a1d99b";
-						};
-						if (d['mapcode']=='Norway'){
-							return "#c7e9c0";
-						};
-						if (d['mapcode']=='Russia'){
-							return "#a8ddb5";
-						};
-						if (d['mapcode']=='United Kingdom'){
-							return "#005a32";
-						};
-						if (d['mapcode']=='Brazil'){
-							return "#fa9fb5";
-						};
-						if (d['mapcode']=='Other US'){
-							return "#6a51a3";
-						};
-						if (d['mapcode']=='SPAWAR'){
-							return "#807dba";
-						};
-						if (d['mapcode']=='Commercial'){
-							return "#9e9ac8";
-						};
-					})
-					.attr("stroke","#fff")
-					.on("mouseover",function(d){
-						//console.log(d['sitename']);
-						highlight(d['sitename']);
-					})
-					.on("mouseout",function(d){
-						dehighlight(d['sitename']);
-					});
-			}
-			else {
-				map.selectAll(".circle")
-					.data(currData)
-					.enter()
-					.append("circle")
-					.attr('gid', function(d){
-						return d['gid'];
-					})
-					.attr('class',function(d){
-						return d['sitename'].replace(/[ ()]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
-					})
-					.attr('mapcode',function(d){
-						return d['mapcode']
-					})
-					.attr("cx",function(d){
-						//console.log(d['latitude']);
-						//console.log(projection(d['latitude']));
-						return projection([d['longitude'],d['latitude']])[0];
-					})
-					.attr("cy",function(d){
-						//console.log(projection(d));
-						return projection([d['longitude'],d['latitude']])[1];
-					})
-					.attr("r", "6px")
-					.attr("fill", function(d){
+			})
+			//.on("mousemove",moveLabel)
+			.transition()
+			.duration(1000);
+		//console.log(allCoords);
+		//aws=joinData(aws,allCoords);
+		//setLabel(allCoords);
+		//highlight(props);
 
-					});
-			}
-		}
-
+			//});
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
+
 
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
 			//console.log(allCoords);
@@ -368,8 +351,8 @@ function setMap(){
 	function highlight(stationName){
 		//var circleAttrs=
 		//console.log(stationName);
-		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
-			.attr("r","12px");
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","17px");
 		//console.log(selected);
 		
 			//.style("stroke")
@@ -377,36 +360,84 @@ function setMap(){
 	};
 
 	function dehighlight(stationName){
-		var selected=d3.selectAll('.'+stationName.replace(/[ ()]/g, '-'))
-			.attr("r","6px");
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","8px");
 		d3.select(".infoLabel")
 			.remove();
+		//setLabel(stationName, selected);
+		//d3.select(".infoLabel");
 	};
 
 	function setLabel(stationName,selected){
 		console.log(selected);
-		var labelAttribute="<h1>"+stationName+"</h1>"+selected.attr('mapcode');
+		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
 		console.log(labelAttribute);
 
-		/*for (i=0; i<allCoords.length; i++) {
-			labelAttribute=allCoords[i].sitename;
-			//console.log(i);
-			//console.log(labelAttribute);
-		};*/
-		//="<h1>"+allCoords[0:169].sitename+"</h1>";
+
 
 		var infoLabel=d3.select("body")
 			.append("div")
 			.attr("class","infoLabel")
 			.attr("id",selected.attr('gid'))
-			.html(labelAttribute);
+			.html(labelAttribute)
+			// .node()
+			// .getBoundingClientRect()
+			// .width;
+			//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+			//.attr('preserveAspectRatio',"xMidYMid meet");
 		//console.log(infoLabel);
 
-		var countryName=infoLabel.append("div")
-			.attr("class","countryName")
-			.html(selected.attr('mapcode'));
-		//console.log(countryName);
+		//var x=window.innerWidth-100;
+		//var y=window.innerHeight;
+		//console.log(x);
+
+		infoLabel = d3.selectAll(".infoLabel")
+			.style("width","240px")
+			.style("height", "620px")//window.innerWidth-500+"px")
+			.style("right","0px")
+			.style("top","70px");
+
+		console.log(infoLabel);
+
+		var contextContent1="<h2>Website: </h2>"+selected.attr('website');
+
+		var contextContent2="<h2>More about the station: </h2>"+selected.attr('description');
+
+		var context=infoLabel.append("div")
+			.attr("class","context")
+			.html(contextContent1+contextContent2);
+		//console.log(countryName);*/
 	};
+
+
+	/*function moveLabel(){
+
+		var labelWidth=d3.selectAll(".infoLabel");
+			.node()
+			.getBoundingClientRect()
+			.width;
+
+		console.log(labelWidth);
+
+		var x1=d3.event.clientX+10,
+			y1=d3.event.clientY-75,
+			x2=d3.event.clientX-labelWidth-10,
+			y2=d3.event.clientY+25;
+
+		var x=d3.event.clientX>window.innerWidth-labelWidth-20 ? x2 : x1;
+
+		var y=d3.event.clientY<75 ? y2 : y1;
+
+
+
+		d3.selectAll(".infoLabel")
+			.style("left",x+"px")
+			.style("right",y+"px");
+	};*/
+
+
+	//function legend
+
 };
 
 // change year
