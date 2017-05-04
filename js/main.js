@@ -1,8 +1,7 @@
 //window.onload = initialize();
-// this script will add the basemap and the data points on map
 
-window.load=setMap();
-var zoomlevel = 1;
+// this script will add the basemap and the data points on map
+/* GLOBAL VARIABLES */
 var Category = ["overview, meanTemp, minTemp, maxTemp, meanWind, meanPressure"];
 var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
 "2009_8","2009_9","2009_10","2009_11","2009_12","2010_1","2010_2","2010_3",
@@ -16,6 +15,12 @@ var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
 '2015_4','2015_5','2015_6','2015_7','2015_8','2015_9','2015_10','2015_11',
 '2015_12','2016_1','2016_2','2016_3','2016_4','2016_5','2016_6','2016_7',
 '2016_8','2016_9','2016_10','2016_11','2016_12'];
+var keyArraySimp=["2009.1","","","","","6","","","","","","","2010.1",
+"2","3","4","5","6","7","8","9","10","11","12","2011.1","2","3","4","5","6","7","8","9","10","11","12",
+"2012.1","2","3","4","5","6","7","8","9","10","11","12","2013.1","2","3","4","5","6","7","8","9","10","11","12",
+"2014.1","2","3","4","5","6","7","8","9","10","11","12","2015.1","2","3","4","5","6","7","8","9","10","11","12",
+"2016.1","2","3","4","5","6","7","8","9","10","11","12"];
+console.log(keyArraySimp.length);
 var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016']
 var expressed;
 var yearExpressed;
@@ -29,18 +34,25 @@ function circleSize(d){
   return Math.sqrt( .02 * Math.abs(d) );
 };
 
-window.onload=setMap();
 
 function setMap(){
-	 var width=window.innerWidth*0.7,
-	 height=window.innerHeight*0.9;
+
+	var width=window.innerWidth*0.7,
+	    height=window.innerHeight;
+
+	var width=window.innerWidth*0.7,
+		height=window.innerHeight*0.9;
+
 
 	var map=d3.select("body")
 		.append("svg")
 		.attr("class","map")
 		.attr("width",width)
-		.attr("height",height+30)
-		.attr('viewBox',"0 -80 1300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		.attr("height",height+250)
+		.style("top", "-230px")
+  		.style("right","180px")
+
+		.attr('viewBox',"0 -80 1200 500")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
 		.attr('preserveAspectRatio',"xMidYMid meet");
 
 	var projection=d3.geoAzimuthalEqualArea()
@@ -51,14 +63,14 @@ function setMap(){
 		.translate([width/2,height/2])
 		.rotate([0,90]);
 
+	// var svg = d3.select("body").appen
 	//console.log(projection);
 
 	var path=d3.geoPath()
 		.projection(projection);
 
-
-
 	//console.log(path);
+
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
@@ -73,26 +85,17 @@ function setMap(){
 		.await(callback);
 
 
-	clickMenu();
+
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 
-		console.log(allCoords);
-    
-		// console.log(uwCoords);
-		// console.log(seamask);
-		// console.log(coastline);
-		// console.log(iceshelf);*/
 
-		console.log(allCoords);
-		console.log(uwCoords);
-
-		creatLegend();
-
-		console.log(maxTemp);
+		creatLegend(); //call the function to create legend
+		sliderBar();
 
 		// DIFFERENT VARIABLE
+
 
 		/**** Link that data **/
 		var currAttribute;
@@ -111,7 +114,9 @@ function setMap(){
 
 		console.log(allCoords);
 
-		// loop through the csv and tie it to the coords CSV
+		var numFound = 0;
+
+				// loop through the csv and tie it to the coords CSV
 		function LinkData(coordsCSV, csvData, attribute) {
 			// loop through coords csv
 			// update this value when we add more stations
@@ -125,20 +130,25 @@ function setMap(){
 
 				// find the correct station
 				if (csvLink == 'Henry' || csvLink == 'Byrd') {
+					console.log('in if statement');
 					// connect the link with the station 
 					//console.log(attribute);
 					numFound = numFound + 1;
 					//console.log("length " + csvData.length);
 
 					for (var j = 0; j < csvData.length; j++) {
+						console.log('in j for loop');
+						console.log(csvLink);
+						console.log(csvData[i].sitename);
 						if (csvLink == csvData[i].sitename) {
+							console.log('in tiny if');
 							for (var key in keyArray) {
 
 								var attr = currAttribute + "_" + keyArray[key];
-								//console.log(csvData[i], keyArray[key]);
+								console.log(csvData[i], keyArray[key]);
 								var val = csvData[i][keyArray[key]];
-								//console.log("attr " + attr);
-								//console.log("val " + val);
+								console.log("attr " + attr);
+								console.log("val " + val);
 								
 								csvStation[attr] = val;
 							}
@@ -152,20 +162,21 @@ function setMap(){
 			return coordsCSV;
 		}
 
-		console.log(allCoords);
+		//console.log(allCoords);
 
-		////*** GENERATING MAP ***////
 		//for (var i = 0; i )
+
 		console.log(allCoords);
 	    var stations = []
 		    for (var i = 0; i < allCoords.length; i++){
 		      stations.push(allCoords[i].sitename);
 		    }
-	    autoFillForm(stations);
+	    //autoFillForm(stations);
 		// console.log(uwCoords);
 		// console.log(seamask);
 		// console.log(coastline);
 		// console.log(iceshelf);*/
+
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
 
@@ -184,7 +195,6 @@ function setMap(){
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines
 		
-
 			var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
 			land=topojson.feature(coastline,coastline.objects.ant_reg2).features,
 			ice=topojson.feature(iceshelf,iceshelf.objects.ne_50m_antarctic_ice_shelves_polys).features;
@@ -238,8 +248,8 @@ function setMap(){
 			.data(allCoords)
 			.enter()
 			.append("circle")
-			.attr('id', function(d){
-				return "#"+d['gid'];
+			.attr('gid', function(d){
+				return d['gid'];
 			})
 			.attr('class',function(d){
 				return d['sitename'].replace(/[ () !]/g, '-')//+" "+d['mapcode'].replace(/ /g, '-');
@@ -338,29 +348,23 @@ function setMap(){
 					return "#9e9ac8";
 				};
 			})
-			.attr("stroke","#fff")
+			.attr("stroke","rgb(255,250,250)")
+			.attr("stroke-width","1px")
+			.attr("stroke-opacity","1")
 			.on("mouseover",function(d){
 				//console.log(d['sitename']);
 				dehighlight(prevStation);
 				prevStation=d['sitename'];
 				highlight(d['sitename']);
 			})
+			.transition()
+			.duration(1000);
 			// .on("mouseout",function(d){
 			// 	dehighlight(d['sitename']);
 
 
-			// })
-
-
-			})
-
 			//.on("mousemove",moveLabel)
-			.transition()
-			.duration(1000)
 
-			});
-
-		
 		var zoom = d3.select("#zoomin") 
 			.on("click", zoomed);
 		
@@ -368,11 +372,13 @@ function setMap(){
 		var zoom2 = d3.select("#zoomout")
 			.on("click", zoomedOut);
 
+			//.on("mousemove",moveLabel)
+
+
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
 		//setLabel(allCoords);
 		//highlight(props);
-		
 
 			//});
 			//.attr('d', path.pointRadius(function(d) { return radius(d.properties.latitude); }));
@@ -384,294 +390,399 @@ function setMap(){
 			//setLabel(allCoords);
 			//highlight(props);
 
-		var drag = d3.select(".map")
-	    .origin(function(d) { return d; })
-	    .on("dragstart", dragstarted)
-	    .on("drag", dragged)
-	    .on("dragend", dragended);
+
+		// var drag = d3.select(".map")
+	 //    .origin(function(d) { return d; })
+	 //    .on("dragstart", dragstarted)
+	 //    .on("drag", dragged)
+	 //    .on("dragend", dragended);
   
-function zoomed() {
-	if (zoomlevel < 2){
-		console.log(zoomlevel)
-		zoomlevel += 0.1
-	}
-  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
 
-function zoomedOut() {
-	if (zoomlevel > 1){
-		console.log()
-		zoomlevel += -0.1
-	}
-		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
 
 
 
 	};
 
-
-
-
-	/*function joinData(aws, allCoords){
-		for (var i=0;i<allCoords.length;i++){
-			var csvStation=allCoords[i];
-			var csvKey=csvStation.gid;
-
-			for (var a=0; a<aws.length;i++){
-				var stationProps=aws[a].properties;
-				var stationKey=geojson.id;
-
-				if (csvKey==stationKey){
-					attrArray.forEach(function(attr){
-						var val=parseFloat(csvStation[attr]);
-						stationProps[attr]=val;
-					});
-				};
-			};
+	function zoomed() {
+		if (zoomlevel < 2){
+			console.log(zoomlevel);
+			zoomlevel += 0.1;
 		};
-	};*/
-
-
-	function highlight(stationName){
-		//var circleAttrs=
-		//console.log(stationName);
-		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","17px")
-			.style("stroke","#dce8f7")
-			.style("stroke-width","7px")
-			.style("stroke-opacity","0.6");
-		//console.log(selected);
-		
-			//.style("stroke")
-		setLabel(stationName, selected);
+	  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
 	};
 
-	function dehighlight(stationName){
-		if (stationName.length==0){
-			return false;
+	function zoomedOut() {
+		if (zoomlevel > 1){
+			console.log();
+			zoomlevel += -0.1;
 		};
-		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
-			.attr("r","8px")
-			.style("stroke","#fff")
-			.style("stroke-width","1px");
-		d3.select(".infoLabel")
-			.remove();
-
-		//setLabel(stationName, selected);
-		//d3.select(".infoLabel");
-	};
-
-	function setLabel(stationName,selected){
-		//console.log(selected);
-		var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
-		//console.log(labelAttribute);
-
-		var infoLabel=d3.select("body")
-			.append("div")
-			.attr("class","infoLabel")
-			.attr("id",selected.attr('gid'))
-			.html(labelAttribute)
-			// .node()
-			// .getBoundingClientRect()
-			// .width;
-			//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
-			//.attr('preserveAspectRatio',"xMidYMid meet");
-		//console.log(infoLabel);
-
-		//var x=window.innerWidth-100;
-		//var y=window.innerHeight;
-		//console.log(x);
-
-		infoLabel = d3.selectAll(".infoLabel")
-			.style("width","240px")
-			.style("height", "620px")//window.innerWidth-500+"px")
-			.style("right","0px")
-			.style("top","70px");
-
-		//console.log(infoLabel);
-
-		var contextContent1="<h2>Website: </h2>"+selected.attr('website');
-
-		var contextContent2="<h2>More about the station: </h2>"+selected.attr('description');
-
-		var context=infoLabel.append("div")
-			.attr("class","context")
-			.html(contextContent1+contextContent2);
-		//console.log(countryName);*/
-	};
-
-	/*function moveLabel(){
-
-		var labelWidth=d3.selectAll(".infoLabel");
-			.node()
-			.getBoundingClientRect()
-			.width;
-
-		console.log(labelWidth);
-
-		var x1=d3.event.clientX+10,
-			y1=d3.event.clientY-75,
-			x2=d3.event.clientX-labelWidth-10,
-			y2=d3.event.clientY+25;
-
-		var x=d3.event.clientX>window.innerWidth-labelWidth-20 ? x2 : x1;
-
-		var y=d3.event.clientY<75 ? y2 : y1;
-
-
-
-		d3.selectAll(".infoLabel")
-			.style("left",x+"px")
-			.style("right",y+"px");
-	};*/
-
-
-	function creatLegend(){
-
-		var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
-
-		var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
-		/*function legendClass(legendClasses){
-			for (i=0;i<legendClasses.length;i++){
-				console.log(legendClasses[1]);
-				return legendClasses[i];
-			};
-		};*/
-		var ls_w=220, ls_h=230;
-		var legend=d3.select("body")
-			.append("svg")
-			.attr("class","legend")
-			.attr("width",ls_w)
-			.attr("height",ls_h)
-			.style("top","300px")
-			.style("left","390px")
-			// .attr('viewBox',"-200 -100 300 100")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
-			// .attr('preserveAspectRatio',"xMidYMid meet");;
-			
-			
-
-		var legendDots=legend.selectAll("g.legend")
-			.data(colorClasses)
-			.enter().append("g")
-			.attr("class","legendDots")
-			.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
-
-		
-		var ld_h=100, ld_w=100;
-		legendDots.append("circle")
-			.attr("cx",5)
-			.attr("cy",function(d,i){
-
-				return i*31+4;
-			})
-			.attr("r","8px")
-			.style("fill",function(d,i){return colorClasses[i];})
-			.style("fill-opacity","0.9")
-			.style("background","#d6eaf8");
-		console.log(legend);
-
-		legendDots.append("text")
-			.attr("class","legendText")
-			.attr("x",30)
-			.attr("y",function(d,i){return i*32+5;})
-			.text(function(d,i){
-				return legendClasses[i];
-			});
-		console.log(legendClasses[1]);
-
-
+			d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
 	};
 
 };
 
+function creatLegend(){
+
+	var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
+
+	var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
+	/*function legendClass(legendClasses){
+		for (i=0;i<legendClasses.length;i++){
+			console.log(legendClasses[1]);
+			return legendClasses[i];
+		};
+	};*/
+	var legendTop="465px", legendLeft="0px";
+	var ls_w=220, ls_h=230;
+	var legend=d3.select("body")
+		.append("svg")
+		.attr("class","legend")
+		.attr("width",ls_w)
+		.attr("height",ls_h)
+		.style("top",legendTop)
+		.style("left",legendLeft);
+		// .attr('viewBox',"-200 -100 300 100")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		// .attr('preserveAspectRatio',"xMidYMid meet");;
+		
+		
+
+	var legendDots=legend.selectAll("g.legend")
+		.data(colorClasses)
+		.enter().append("g")
+		.attr("class","legendDots")
+		.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
+
+	
+	var ld_h=100, ld_w=100;
+	legendDots.append("circle")
+		.attr("cx",5)
+		.attr("cy",function(d,i){
+
+			return i*31+4;
+		})
+		.attr("r","8px")
+		.style("fill",function(d,i){return colorClasses[i];})
+		.style("fill-opacity","0.9")
+		.style("background","#d6eaf8");
+	console.log(legend);
+
+	legendDots.append("text")
+		.attr("class","legendText")
+		.attr("x",30)
+		.attr("y",function(d,i){return i*32+5;})
+		.text(function(d,i){
+			return legendClasses[i];
+		})
+		//.attr("fill","white");
+	console.log(legendClasses[1]);
+
+
+};
+
+function highlight(stationName){
+
+		//console.log(stationName);
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","14px")
+			.style("stroke","#dce8f7")
+			.style("stroke-width","14px")
+			.style("stroke-opacity","0.6");
+
+
+
+		//console.log(selected);
+		
+			//.style("stroke")
+		setLabel(stationName, selected);
+};
+
+
+function dehighlight(stationName){
+	if (stationName.length==0){
+		return false;
+
+
+	var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+		.attr("r","8px");
+	d3.select(".infoLabel")
+		.remove();
+	//setLabel(stationName, selected);
+	//d3.select(".infoLabel");
+};
+
+function setLabel(stationName,selected){
+	console.log(selected);
+	var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
+	console.log(labelAttribute);
+
+	var infoLabel=d3.select("body")
+		.append("div")
+		.attr("class","infoLabel")
+		.attr("id",selected.attr('gid'))
+		.html(labelAttribute)
+		// .node()
+		// .getBoundingClientRect()
+		// .width;
+		//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		//.attr('preserveAspectRatio',"xMidYMid meet");
+	//console.log(infoLabel);
+
+	//var x=window.innerWidth-100;
+	//var y=window.innerHeight;
+	//console.log(x);
+
+	infoLabel = d3.selectAll(".infoLabel")
+		.style("width","240px")
+		.style("height", "620px")//window.innerWidth-500+"px")
+		.style("right","0px")
+		.style("top","70px");
+
+	console.log(infoLabel);
+
+	var contextContent1="<h2>Website: </h2>"+selected.attr('website');
+
+	var contextContent2="<h2>More about the station: </h2>"+selected.attr('description');
+
+	var context=infoLabel.append("div")
+		.attr("class","context")
+		.html(contextContent1+contextContent2);
+	//console.log(countryName);*/
+
+
+};
+
+
+	/*function moveLabel(){
+>>>>>>> origin/master
+
+function setLabel(stationName,selected){
+	//console.log(selected);
+	var labelAttribute="<h1>"+stationName+"</h1>"+"<h2><b>operated by "+selected.attr('mapcode')+"</b></h2>";
+	//console.log(labelAttribute);
+
+	var infoLabel=d3.select("body")
+		.append("div")
+		.attr("class","infoLabel")
+		.attr("id",selected.attr('gid'))
+		.html(labelAttribute);
+
+
+	infoLabel = d3.selectAll(".infoLabel")
+		.style("width","240px")
+		.style("height", "605px")//window.innerWidth-500+"px")
+		.style("right","0px")
+		.style("top","70px");
+
+	//console.log(infoLabel);
+
+	var contextContent1="<h2>Website: </h2>"+selected.attr('website');
+
+	var contextContent2="<h2>More about the station: </h2>"+selected.attr('description');
+
+	var context=infoLabel.append("div")
+		.attr("class","context")
+		.html(contextContent1+contextContent2);
+	//console.log(countryName);*/
+};
+
+
 // change year
-function changeYear() {
+function changeYear() {};
+
+function creatLegend(){
+	var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
+
+	var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
+	/*function legendClass(legendClasses){
+		for (i=0;i<legendClasses.length;i++){
+			console.log(legendClasses[1]);
+			return legendClasses[i];
+		};
+	};*/
+	var ls_w=220, ls_h=230;
+	var legend=d3.select("body")
+		.append("svg")
+		.attr("class","legend")
+		.attr("width",ls_w)
+		.attr("height",ls_h)
+		.style("top","450px")
+		.style("left","0px")
+		// .attr('viewBox',"-200 -100 300 100")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		// .attr('preserveAspectRatio',"xMidYMid meet");;
+		
+		
+
+	var legendDots=legend.selectAll("g.legend")
+		.data(colorClasses)
+		.enter().append("g")
+		.attr("class","legendDots")
+		.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
+		.attr("r","8px")
+		.style("fill",function(d,i){return colorClasses[i];})
+		.style("fill-opacity","0.9")
+		.style("background","#d6eaf8");
+	console.log(legend);
+
+	legendDots.append("text")
+		.attr("class","legendText")
+		.attr("x",30)
+		.attr("y",function(d,i){return i*32+5;})
+		.text(function(d,i){
+			return legendClasses[i];
+		});
+	console.log(legendClasses[1]);
+	};
+
+};
 
 
-}
 
+function sliderBar(){
+
+	var sliderSvgWidth=1500, sliderSvgHeight=50;
+	var svg=d3.select("body").append("svg")
+		.attr("class","sliderSVG")
+		.attr("width",sliderSvgWidth)
+		.attr("height",sliderSvgHeight)
+		.style("background-color","white");
+		
+
+	var x = d3.scaleLinear()
+	    .domain(keyArraySimp)
+	    .range([0, sliderSvgWidth-50])
+	    .clamp(true);
+
+	var slider = svg.append("g")
+	    .attr("class", "slider")
+	    .attr("transform", "translate(" + 30 + "," + sliderSvgHeight / 2 + ")");
+
+	slider.append("line")
+	    .attr("class", "track")
+	    .attr("x1", x.range()[0])
+	    .attr("x2", x.range()[1])
+	  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+	    .attr("class", "track-inset")
+	  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+	    .attr("class", "track-overlay")
+	    .call(d3.drag()
+	        .on("start.interrupt", function() { slider.interrupt(); })
+	        .on("start drag", function() { hue(x.invert(d3.event.x)); }));
+
+	slider.insert("g",".track-overlay")
+		.attr("class","ticks")
+		.attr("transform","translate(0,"+18+")")
+	  .selectAll("text")
+	  .data(x.ticks(96))
+	  .enter().append("text")
+	    .attr("x",x)
+	    .attr("text-anchor","middle")
+	    .text(function(d){
+	    	console.log(d);
+	    	return d;
+	    });
+
+	var handle=slider.insert("circle",".track-overlay")
+		.attr("class","handle")
+		.attr("r",9);
+
+	slider.transition() // Gratuitous intro!
+	    .duration(750)
+	    .tween("hue", function() {
+	       var i = d3.interpolate(0, 70);
+	       return function(t) { hue(i(t)); };
+	     });
+
+	 function hue(h) {
+	   handle.attr("cx", x(h));
+	   svg.style("background-color", d3.rgb(0, 0, 0,0));
+	 };
+
+};
 
 // change attribute
 function changeAttribute() {
 
-}
 
-// create Slider
-function createSlider(){
-  sliderScale = d3.scaleLinear().domain([0,126]);
+};
 
-  var val = slider ? slider.value() : 0;
+// function createSlider(){
+//   sliderScale = d3.scaleLinear().domain([0,126]);
 
-  slider = d3.slider()
-    .scale( sliderScale )
-    .on("slide",function(event,value){
-      if ( isPlaying ){
-        clearInterval(interval);
-      }
-      currentFrame = value;
-      drawMonth( orderedColumns[value], d3.event.type != "drag" );
-    })
-    .on("slideend",function(){
-      if ( isPlaying ) animate();
-      d3.select("#slider-div").on("mousemove",sliderProbe)
-    })
-    .on("slidestart",function(){
-      d3.select("#slider-div").on("mousemove",null)
-    })
-    .value(val);
+//   var val = slider ? slider.value() : 0;
 
-  d3.select("#slider-div").remove();
+//   slider = d3.slider()
+//     .scale(sliderScale)
+//     .on("slide",function(event,value){
+//       if ( isPlaying ){
+//         clearInterval(interval);
+//       }
+//       currentFrame = value;
+//       drawMonth( orderedColumns[value], d3.event.type != "drag" );
+//     })
+//     .on("slideend",function(){
+//       if ( isPlaying ) animate();
+//       d3.select("#slider-div").on("mousemove",sliderProbe)
+//     })
+//     .on("slidestart",function(){
+//       d3.select("#slider-div").on("mousemove",null)
+//     })
+//     .value(val);
 
-  d3.select("#slider-container")
-    .append("div")
-    .attr("id","slider-div")
-    .style("width",dateScale.range()[1] + "px")
-    .on("mousemove",sliderProbe)
-    .on("mouseout",function(){
-      d3.select("#slider-probe").style("display","none");
-    })
-    .call( slider );
+//   d3.select("#slider-div").remove();
 
-  d3.select("#slider-div a").on("mousemove",function(){
-    d3.event.stopPropagation();
-  })
+//   d3.select("#slider-container")
+//     .append("div")
+//     .attr("id","slider-div")
+//     .style("width",dateScale.range()[1] + "px")
+//     .on("mousemove",sliderProbe)
+//     .on("mouseout",function(){
+//       d3.select("#slider-probe").style("display","none");
+//     })
+//     .call( slider );
 
-  var sliderAxis = d3.svg.axis()
-    .scale( dateScale )
-    .tickValues( dateScale.ticks(orderedColumns.length).filter(function(d,i){
-      // ticks only for beginning of each year, plus first and last
-      return d.getMonth() == 0 || i == 0 || i == orderedColumns.length-1;
-    }))
-    .tickFormat(function(d){
-      // abbreviated year for most, full month/year for the ends
-      if ( d.getMonth() == 0 ) return "'" + d.getFullYear().toString().substr(2);
-      return months[d.getMonth()] + " " + d.getFullYear();
-    })
-    .tickSize(10)
+//   d3.select("#slider-div a").on("mousemove",function(){
+//     d3.event.stopPropagation();
+//   })
 
-  d3.select("#axis").remove();
+//   var sliderAxis = d3.svg.axis()
+//     .scale( dateScale )
+//     .tickValues( dateScale.ticks(orderedColumns.length).filter(function(d,i){
+//       // ticks only for beginning of each year, plus first and last
+//       return d.getMonth() == 0 || i == 0 || i == orderedColumns.length-1;
+//     }))
+//     .tickFormat(function(d){
+//       // abbreviated year for most, full month/year for the ends
+//       if ( d.getMonth() == 0 ) return "'" + d.getFullYear().toString().substr(2);
+//       return months[d.getMonth()] + " " + d.getFullYear();
+//     })
+//     .tickSize(10)
 
-  d3.select("#slider-container")
-    .append("svg")
-    .attr("id","axis")
-    .attr("width",dateScale.range()[1] + sliderMargin*2 )
-    .attr("height",25)
-    .append("g")
-      .attr("transform","translate(" + (sliderMargin+1) + ",0)")
-      .call(sliderAxis);
+//   d3.select("#axis").remove();
 
-  d3.select("#axis > g g:first-child text").attr("text-anchor","end").style("text-anchor","end");
-  d3.select("#axis > g g:last-of-type text").attr("text-anchor","start").style("text-anchor","start");
-}
+//   d3.select("#slider-container")
+//     .append("svg")
+//     .attr("id","axis")
+//     .attr("width",dateScale.range()[1] + sliderMargin*2 )
+//     .attr("height",25)
+//     .append("g")
+//       .attr("transform","translate(" + (sliderMargin+1) + ",0)")
+//       .call(sliderAxis);
+
+//   d3.select("#axis > g g:first-child text").attr("text-anchor","end").style("text-anchor","end");
+//   d3.select("#axis > g g:last-of-type text").attr("text-anchor","start").style("text-anchor","start");
+// }
 
 
 // create side menu to change to different attributes
-function clickMenu() {
+function clickMenu(currData) {
 	$(".Overview").click(function(){
 		expressed = Category[0];
 		yearExpressed = keyArray[0];
+
 		console.log('you clicked overview');
+		setMap();
+		creatLegend();
+
 		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
 		 .style('color', '#9C0D08');
@@ -689,24 +800,8 @@ function clickMenu() {
 		d3.select("Mean-Temp")
 			.style('background-color', '#9C0D08')
 			.style('color', '#fff');*/
-		d3.selectAll(".circle")
-			.append("circle")
-			.attr('meanTemp_2009_1', function(d){
-				return d['meanTemp_2009_1'];
-			})
-			.attr("r", "20px")
-			.attr("cx",function(d){
-				//console.log(d['latitude']);
-				//console.log(projection(d['latitude']));
-				return projection([d['longitude'],d['latitude']])[0];
-			})
-			.attr("cy",function(d){
-				//console.log(projection(d));
-				return projection([d['longitude'],d['latitude']])[1];
-			});
 	})
 	$(".Min-Temp").click(function(){
-		console.log('you clicked min temp');
 		expressed = Category[2];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -714,11 +809,10 @@ function clickMenu() {
 		 .style('color', '#9C0D08');
 		d3.select("Min-Temp")
 			.style('background-color', '#CCCCCC')
-			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+			.style('color', '#333333');
+		d3.selectAll(".circles");*/
 	})
 	$(".Max-Temp").click(function(){
-		console.log('you clicked max temp');
 		expressed = Category[3];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
@@ -727,11 +821,34 @@ function clickMenu() {
 		d3.select("Mean-Pressure")
 			.style('background-color', '#CCCCCC')
 			.style('color', '#333333');*/
-		d3.selectAll(".circle");
+		d3.selectAll(".circles");
 	})
 	$(".Mean-Wind").click(function(){
-		console.log('you clicked mean wind');
 		expressed = Category[4];
+		yearExpressed = keyArray[0];
+		/*d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Mean-Pressure")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');*/
+		d3.selectAll(".circles");
+	})
+	$(".Mean-Pressure").click(function(){
+		expressed = Category[5];
+		yearExpressed = keyArray[0];
+		/*d3.selectAll(".menu-options div")
+		 .style('background-color', '#fff')
+		 .style('color', '#9C0D08');
+		d3.select("Mean-Pressure")
+			.style('background-color', '#CCCCCC')
+			.style('color', '#333333');*/
+		d3.selectAll(".circles");
+	})
+
+	$(".About").click(function(){
+		console.log('you clicked about');
+		expressed = Category[6];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
@@ -741,9 +858,9 @@ function clickMenu() {
 			.style('color', '#333333');*/
 		d3.selectAll(".circle");
 	})
-	$(".Mean-Pressure").click(function(){
-		console.log('you clicked mean pressure');
-		expressed = Category[5];
+	$(".Help").click(function(){
+		//console.log('you clicked mean pressure');
+		expressed = Category[7];
 		yearExpressed = keyArray[0];
 		/*d3.selectAll(".menu-options div")
 		 .style('background-color', '#fff')
@@ -759,8 +876,56 @@ function circleSize(d){
   return Math.sqrt( .02 * Math.abs(d) );
 };
 
-/*function createLineGraph(csvData) {
 
+d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
+  if (error) throw error;
+
+
+});
+
+function initialize() {
+	// stacked bar chart
+	var svg = d3.select("svg"),
+	    width = +svg.attr("width"),
+	    height = +svg.attr("height"),
+	    innerRadius = 180,
+	    outerRadius = Math.min(width, height) * 0.77,
+	    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height * 0.78 + ")");
+
+	var x = d3.scaleBand()
+	    .range([0, 2 * Math.PI])
+	    .align(0);
+
+	var y = d3.scaleRadial()
+	    .range([innerRadius, outerRadius]);
+
+	var z = d3.scaleOrdinal()
+	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+ 
+
+}
+
+// function autoFillForm(stations) {
+//   $("#tags").autocomplete({
+//     source: stations
+//   });
+// };
+
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+};
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+};
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+};
+
+/*function createLineGraph(csvData) {
     var height = 200;
     var width = 500;
     var svg = d3.select("svg"),
@@ -818,53 +983,5 @@ function circleSize(d){
           .attr("stroke-width", 1.5)
           .attr("d", line);
     });
-
 }*/
 
-d3.text("/data/q1h/1997/dc2199701q1h.txt", function(error, text) {
-  if (error) throw error;
-
-
-});
-
-function initialize() {
-	// stacked bar chart
-	var svg = d3.select("svg"),
-	    width = +svg.attr("width"),
-	    height = +svg.attr("height"),
-	    innerRadius = 180,
-	    outerRadius = Math.min(width, height) * 0.77,
-	    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height * 0.78 + ")");
-
-	var x = d3.scaleBand()
-	    .range([0, 2 * Math.PI])
-	    .align(0);
-
-	var y = d3.scaleRadial()
-	    .range([innerRadius, outerRadius]);
-
-	var z = d3.scaleOrdinal()
-	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
- 
-
-}
-
-function autoFillForm(stations) {
-  $("#tags").autocomplete({
-    source: stations
-  });
-};
-
-
-function dragstarted(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
-
-function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-}
-
-function dragended(d) {
-  d3.select(this).classed("dragging", false);
-}
