@@ -75,73 +75,76 @@ function setMap(){
 
 	function callback(error,allCoords,uwCoords,seamask,coastline,iceshelf, 
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
-		/*console.log(error);
-		console.log(allCoords);
-		console.log(uwCoords);
-		console.log(seamask);
-		console.log(coastline);
-		console.log(iceshelf);*/
-
-		console.log(minTemp);
-		console.log(meanTemp);
-		console.log(maxTemp);
-		console.log(meanWind);
-		console.log(meanPressure);
 
 		// DIFFERENT VARIABLE
 
 		/**** Link that data **/
+		var currAttribute;
 		// create array w/ csv's loaded
 		var csvArray = [meanTemp, minTemp, maxTemp, meanWind, meanPressure];
 		// names for the overall label
 		var attributeNames = ["meanTemp", "minTemp", "maxTemp", 
 		"meanWind", "meanPressure"];
 
+		var linkStations = ["Henry", "Byrd"];
+
 		for (csv in csvArray) {
-			LinkData(allCoords, csvArray[csv], attributeNames[csv]); 
+			currAttribute = attributeNames[csv];
+			allCoords = LinkData(allCoords, csvArray[csv], attributeNames[csv]); 
 		}
 
-		numFound = 0;
-		// loop through the csv and tie it to the coords CSV
+		console.log(allCoords);
+
+		var numFound = 0;
+
+				// loop through the csv and tie it to the coords CSV
 		function LinkData(coordsCSV, csvData, attribute) {
-			console.log(coordsCSV);
 			// loop through coords csv
 			// update this value when we add more stations
 			for (var i = 0; i < 2; i++) {
 				// create a property to hold csvData
-
+				console.log("i = " + i);
 				var csvStation = coordsCSV[i];
+				console.log(coordsCSV[i]);
+				//console.log(csvStation);
 				var csvLink = csvStation.sitename;
-				console.log(csvLink);
-				console.log(numFound);
 
+				// find the correct station
 				if (csvLink == 'Henry' || csvLink == 'Byrd') {
-					console.log("i'm in the if statement");
+					console.log('in if statement');
+					// connect the link with the station 
+					//console.log(attribute);
 					numFound = numFound + 1;
-					console.log("length " + csvData.length);
-					for (var i = 0; i < csvData.length; i++) {
-						console.log(csvData[i]);
-						if (csvLink == csvData[i]) {
-							console.log("i'm in the tiny if statement");
-							attrObj = {};
+					//console.log("length " + csvData.length);
+
+					for (var j = 0; j < csvData.length; j++) {
+						console.log('in j for loop');
+						console.log(csvLink);
+						console.log(csvData[i].sitename);
+						if (csvLink == csvData[i].sitename) {
+							console.log('in tiny if');
 							for (var key in keyArray) {
-								console.log(key);
-								var attr = keyArray[key];
-								var val = csvStation[attr];
-								console.log(val);
-								console.log(attr);
-								attrObj[attr] = val;
+
+								var attr = currAttribute + "_" + keyArray[key];
+								console.log(csvData[i], keyArray[key]);
+								var val = csvData[i][keyArray[key]];
+								console.log("attr " + attr);
+								console.log("val " + val);
+								
+								csvStation[attr] = val;
 							}
 						}
-					
 					}
 				}
 				if (numFound == 2) {
 					break;
 				}
-				// loop through stations and assign data to right station
 			}
+			return coordsCSV;
 		}
+
+		console.log(allCoords);
+
 		//for (var i = 0; i )
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
@@ -435,7 +438,6 @@ function setMap(){
 	};*/
 
 	function creatLegend(){
-
 		var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
 
 		var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
@@ -486,8 +488,6 @@ function setMap(){
 				return legendClasses[i];
 			});
 		console.log(legendClasses[1]);
-
-
 	};
 
 };
