@@ -37,7 +37,7 @@ function setMap(){
 	 var width=window.innerWidth*0.7,
 	 height=window.innerHeight*0.9;
 
-	var map=d3.select("body")
+	var map=d3.select(".mapdiv")
 		.append("svg")
 		.attr("class","map")
 		.attr("width",width)
@@ -87,7 +87,7 @@ function setMap(){
     for (var i = 0; i < allCoords.length; i++){
       stations.push(allCoords[i].sitename);
     }
-    autoFillForm(stations);
+    autoFillForm(stations)
 
     
 		// console.log(uwCoords);
@@ -346,15 +346,20 @@ function setMap(){
 			})
 			//.on("mousemove",moveLabel)
 			.transition()
-			.duration(1000);
+			.duration(1000)
 
-		
+			
 		var zoom = d3.select("#zoomin")
 			.on("click", zoomed);
-		
+			console.log(zoom)
+			
 
 		var zoom2 = d3.select("#zoomout")
 			.on("click", zoomedOut);
+
+	// var resetMap = d3.select("#reset")
+	// 	.on("click", resetZoom);
+
 
 		//console.log(allCoords);
 		//aws=joinData(aws,allCoords);
@@ -371,13 +376,6 @@ function setMap(){
 			//aws=joinData(aws,allCoords);
 			//setLabel(allCoords);
 			//highlight(props);
-
-		var drag = d3.select(".map")
-	    .origin(function(d) { return d; })
-	    .on("dragstart", dragstarted)
-	    .on("drag", dragged)
-	    .on("dragend", dragended);
-  
 
 
 };
@@ -543,6 +541,7 @@ function setMap(){
 
 
 	};
+
 
 // change year
 function changeYear() {
@@ -787,22 +786,28 @@ function autoFillForm(stations) {
   $("#tags").autocomplete({
     source: stations
   });
-};
+}
 
 function zoomed() {
-	if (zoomlevel < 2){
+	if (zoomlevel < 2) {
+		zoomlevel += 0.1
 		console.log(zoomlevel)
 	}
-  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
-}
+  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.1) + ", " + (-355.5*0.1) + ")"); 
+};
+
 
 function zoomedOut() {
 	if (zoomlevel > 1){
-		console.log()
 		zoomlevel += -0.1
 	}
-		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+		d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.1) + ", " + (-355.5*0.1) + ")"); 
 }
+
+function resetZoom() {
+	d3.select(".map").attr("transform", "scale(" + 1 + " " + 1 + ") translate(" + (-956.2*0.1) + ", " + (-355.5*0.1) + ")"); 
+}
+
 
 
 function dragstarted(d) {
