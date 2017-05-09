@@ -8,6 +8,7 @@
 		<link rel="shortcut icon" href="assets/aws-logo.png">
 
 		<!--put your external stylesheet links here-->
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet"> 
@@ -18,7 +19,7 @@
 
  		<script type="text/javascript" src="lib/topojson.js"></script>
 
-
+ 		<script type="text/javascript" src="lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
@@ -31,235 +32,115 @@
 		<script type="text/javascript" src="js/main.js"></script>
 
 		<nav class="navbar navbar-default navbar-fixed-top main-navbar"> <!--creates navbar-->
-						<div class="navbar-header"> <!--creates the navbar header-->
-								<img class="logo" src="assets/aws-logo2.png">
-								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-										<span class="sr-only">Toggle navigation</span><!--used for screen readers for accessibility-->
-										<span class="glyphicon glyphicon-menu-hamburger"></span>
-										<span class="menu">Menu</span>
-								</button> <!--hamburger button for smaller devices-->
-								<a class="navbar-brand" href="index.html">Automatic Weather Stations</a><!--our website brand name-->
-								<h5 class="navbar-text">A Visualization for Antarctic AWS meterological data<br> from 2002-2017</h5>
-						</div>
-						
-						<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="navbar-header"> <!--creates the navbar header-->
+					<img class="logo" src="assets/aws-logo2.png">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+								<span class="sr-only">Toggle navigation</span><!--used for screen readers for accessibility-->
+								<span class="glyphicon glyphicon-menu-hamburger"></span>
+								<span class="menu">Menu</span>
+						</button> <!--hamburger button for smaller devices-->
+					<a class="navbar-brand" href="index.html">Automatic Weather Stations</a><!--our website brand name-->
+					<h5 class="navbar-text">A Visualization for Antarctic AWS meterological data<br> from 2002-2017</h5>
+			</div>
+			
+			<!-- Collect the nav links, forms, and other content for toggling -->
 
-					    <div class="collapse navbar-collapse" id="nav1">
-					      <form class="navbar-form navbar-right" role="search">
-					        <div class="ui-widget">
-					  			<label for="tags">Search Station:</label>
-					  				<input id="tags">
-							</div>
-					        <button type="submit" class="btn btn-default">Submit</button>
-					      </form>
-					      <ul class="nav navbar-nav navbar-right">
-					      </ul>
-					    </div><!-- /.navbar-collapse -->
-
-    <div class="collapse navbar-collapse" id="nav1">
-      <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Enter Station Name">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-      </ul>
-    </div><!-- /.navbar-collapse -->
-
+		    <div class="collapse navbar-collapse" id="nav1">
+		      	<form class="navbar-form navbar-right" role="search">
+			        <div class="ui-widget">
+			  			<label for="tags">Search Station:</label>
+			  				<input id="tags">
+					</div>
+			        <button type="submit" class="btn btn-default">Submit</button>
+		      	</form>
+		      	<ul class="nav navbar-nav navbar-right"></ul>
+		      
+		    </div><!-- /.navbar-collapse -->
 
 		</nav><!--end navigation bar-->
 
-		<!-- </nav><!--end navigation bar-->
+
+
 		<div class = "main-menu">
-		  	<div class="menu-inset" style="width:200px;height:100px;"></div>
-		  	 <div class="menu-options" style = "width:170px">
-		  	 		<div class="Overview" style="width:170px;height:53px;">
-		  	 			<img class="icon" src="assets/overview.png">
-	                    Overview</div>
-	                <div class="Mean-Temp" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/tempclip.png">
-	                    Mean<br>Temperature</div>
-	                <div class="Min-Temp" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/tempMin.png">
-	                    Minimum<br>Temperature</div>
-	                <div class="Max-Temp" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/tempMax.png">
-	                    Maximum<br>Temperature</div>
-	                <div class="Mean-Wind" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/windclip.png">
-	                    Mean Wind<br> Speed</div>
-	                <div class="Mean-Pressure" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/letterP.png">
-	                    Mean<br>Pressure</div>
+			<div class="col-sm-2 sidenav">
+			  	<div class="menu-inset" style="width:200px;height:100px;"></div>
+			  	 	<div class="menu-options" style = "width:170px">
+			  	 		<ul class="Overview" style="width:170px;height:44px;">
+			  	 			<img class="icon" src="assets/overview.png">
+			  	 			<a href="index.html">Overview</a>
+		                </ul>
+		                <div class="Mean-Temp" style="width:170px;height:53px;">
+		                	<img class="icon" src="assets/tempclip.png">
+		                    Mean<br>Temperature</div>
+		                <div class="Min-Temp" style="width:170px;height:53px;">
+		                	<img class="icon" src="assets/tempMin.png">
+		                    Minimum<br>Temperature</div>
+		                <div class="Max-Temp" style="width:170px;height:53px;">
+		                	<img class="icon" src="assets/tempMax.png">
+		                    Maximum<br>Temperature</div>
+		                <div class="Mean-Wind" style="width:170px;height:53px;">
+		                	<img class="icon" src="assets/windclip.png">
+		                    Mean Wind<br> Speed</div>
+		                <div class="Mean-Pressure" style="width:170px;height:53px;">
+		                	<img class="icon" src="assets/letterP.png">
+		                    Mean<br>Pressure</div>
 
-	                <div class="About" style="width:170px;height:48px;">
-	                	<img class="icon" src="assets/about.png">
-	                    About</div>
-	                <div class="Help" style="width:170px;height:53px;">
-	                	<img class="icon" src="assets/help.png">
-	                    Help</div>
-		  	 </div>
-		</div>
-
-
-		<!-- slider bar -->
-		<div id="slider-container">
-			<div id = "slider-probe">
-
+		                
+		                <ul class="About" style="width:170px;height:48px;">
+		                	<img class="icon" src="assets/about.png">
+		                	<a href="about.html">About</a>
+		              	</ul>
+		                <ul class="Help" style="width:170px;height:38px;">
+		                	<img class="icon" src="assets/help.png">
+		                	<a href="help.html">Help</a>
+		              	</ul>
+		            </div>
+			  	</div>
 			</div>
-			<div id = "slider-div" class = "d3-slider d3 slider-horizontal"
-			style="width: 500px"> 
-				<a class = "d3-slider-handle" href = "#" style = "left: 0%"></a>
+		</div>
 
+
+
+			<div class="col-sm-2 sidediiv">
+					<div class = "legend"></div>
 			</div>
-			<svg id = "axis" width = "630" height = "25">
-				<!-- 2009 -->
-				<g transform = "translate(66,0)"> 
-					<g class = "tick" transform = "translate(0,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2009 </text>
-					</g>
-					<!-- 2010 -->
-					<g class = "tick" transform = "translate(71.4285714286,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2010 </text>
-					</g>
-					<!-- 2011 -->
-					<g class = "tick" transform = "translate(142.857142857,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2011 </text>
-					</g>
-					<!-- 2012 -->
-					<g class = "tick" transform = "translate(214.285714286,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2012 </text>
-					</g>
-					<!-- 2013 -->
-					<g class = "tick" transform = "translate(285.714285714,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2013 </text>
-					</g>
-					<!-- 2014 -->
-					<g class = "tick" transform = "translate(357.142857143,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2014 </text>
-					</g>
-					<!-- 2015 -->
-					<g class = "tick" transform = "translate(428.571428571,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2015 </text>
-					</g>
-					<!-- 2016 -->
-					<g class = "tick" transform = "translate(500,0)" 
-					style ="opacity: 1"> 
-						<line y2 = "10" x2 = "0"></line>
-						<text y="13" x="0" dy = ".71em" text-anchor="end"
-						style = "text-anchor: end;"> 2016 </text>
-					</g>
-					<path class = "domain" d= "M0,10V0H500V10"></path>
-				</g>
-			</svg>
-		</div>
-		
 
-		<!-- main menu -->
+			<div class="zoom">
+					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
+					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button>
+					<button type = 'button' id = 'reset'>Reset Map</button>
+			</div>
 
-    <!-- <div class="collapse navbar-collapse" id="nav1">
-      <form class="navbar-form navbar-right" role="search">
-        <div class="">
-  			<label for="tags">Search Station:</label>
-  				<input id="tags">
-		</div>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-      </ul>
-    </div> --><!-- /.navbar-collapse
+			<div class="mapdiv"></div>
 
-		
-		 <!-- <div class="map"></div>
-
-		
- 		<script type="text/javascript" src="lib/topojson.js"></script>
- 		 
-=======
-		<div class = "main-menu">
-	  	<div class="menu-inset" style="width:200px;height:100px;"></div>
-	  	 <div class="menu-options" style = "width:125px">
-	  	 	<div class="Overview" style="width:125px;height:53px;">
-                    Overview</div>
-                <div class="Mean-Temp" style="width:125px;height:53px;">
-                    Mean<br>Temperature</div>
-                <div class="Min-Temp" style="width:125px;height:53px;">
-                    Minimum<br>Temperature</div>
-                <div class="Max-Temp" style="width:125px;height:53px;">
-                    Maximum<br>Temperature</div>
-                <div class="Mean-Wind" style="width:125px;height:53px;">
-                    Mean Wind<br> Speed</div>
-                <div class="Mean-Pressure" style="width:125px;height:53px;">
-                    Mean<br>Pressure</div>
-	  	 </div>
-		</div>
-		<div class = "legend"></div>
-
-		<div class="map"> <!-- map svg is drawn in main.js -->
-		    </div>  
-		   
- 		<script type="text/javascript" src="lib/topojson.js"></script>
+			<div class="slider-container"></div>
+<!-- 			<div class="col-sm-12 col-lg-offset-1">
+				<div class="mapdiv"></div> 
+			</div> -->
+	  
+		<script type="text/javascript" src="lib/topojson.js"></script>
 
 		<script src="http://d3js.org/queue.v1.min.js"></script>
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="lib/d3-slider.js"></script>
+		<script type="text/javascript" src="js/d3.slider.js"></script>
+	
 
- 		<!-- main js links
-		// <script type="text/javascript" src="js/main.js"></script>
-
-
-				
-				<!-- <div class="zoom">
-					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
-					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button>
-				</div>  -->
-
- 		<!-- main js links-->
-
-
-					<!-- <div class="map"></div>
-					<div class="container zoomBox">
-						<div class="col-md-12 zoomIn well"></div>
-					    <div class="col-md-12 zoomOut well"></div>
-	    			</div>		
-					<div class = "col-md-3" id="viewShowHide" style="display:button">
-						<div class="col-md-12 viewer well"></div>
-					</div>  --> 
-
-	   <footer class="footer">
-	      <div class="container">
-	        <a id="foot" href="abouts/about.html" target="_blank">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-	        <a id="foot" href="abouts/help.html" target="_blank">Help</a>
-	      </div>
-		</footer>
-
-
-
- 		<!-- main js links-->
-		<script type="text/javascript" src="js/main.js"></script>
+		<!-- <div class="col-lg-12 ">
+			<div id="footerwrap">
+				<div class="jumbotron">
+					<div class="container">
+						<div class="row centered">	
+			                    <center>
+								<h6>UW Automatic Weather Station Data Visualization 2017</h6>
+			                    </center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 	</body>
+
 </html>
