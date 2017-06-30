@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 // Author Kate Zellmer, Mengyu Liang, and Laura Scott
 // This script set the basemap, add the functionality and designs to the AWS interactive map
 
 
 (function(){
 //initialize the gloabl varibales
+=======
+// this script will add the basemap and the data points on map
+/* GLOBAL VARIABLES */
+>>>>>>> origin/master
 var zoomlevel = 1;
 var categoryArray = ["overview", "meanTemp", "minTemp", "maxTemp", "meanWind", "meanPressure"];
 var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
@@ -18,6 +23,7 @@ var keyArray = ["2009_1","2009_2","2009_3","2009_4","2009_5","2009_6","2009_7",
 '2015_4','2015_5','2015_6','2015_7','2015_8','2015_9','2015_10','2015_11',
 '2015_12','2016_1','2016_2','2016_3','2016_4','2016_5','2016_6','2016_7',
 '2016_8','2016_9','2016_10','2016_11','2016_12'];
+<<<<<<< HEAD
 var keyArraySimp=["2009_1","09_2","09_3","09_4","09_5","09_6","09_7","09_8","09_9","09_10","09_11","09_12","2010_1",
 "10_2","10_3","10_4","10_5","10_6","10_7","10_8","10_9","10_10","10_11","10_12","2011_1","11_2","11_3","11_4","11_5","11_6","11-7","11-8","11-9","11-10","11-11","11-12",
 "2012_1","12_2","12_3","12_4","12_5","12_6","12_7","12_8","12_9","12_10","12_11","12_12","2013_1","13_2","13_3","13_4","14_5","14_6","14_7","14_8","14_9","14_10","14_11","14_12",
@@ -27,6 +33,16 @@ var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016'];
 
 var months_full = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 var fullMonths;
+=======
+var keyArraySimp=["2009-1","09-2","09-3","09-4","09-5","09-6","09-7","09-8","09-9","09-10","09-11","09-12","2010-1",
+"10-2","10-3","10-4","10-5","10-6","10-7","10-8","10-9","10-10","10-11","10-12","2011-1","11-2","11-3","11-4","11-5","11-6","11-7","11-8","11-9","11-10","11-11","11-12",
+"2012-1","12-2","12-3","12-4","12-5","12-6","12-7","12-8","12-9","12-10","12-11","12-12","2013-1","13-2","13-3","13-4","14-5","14-6","14-7","14-8","14-9","14-10","14-11","14-12",
+"2014-1","14-2","14-3","14-4","14-5","14-6","14-7","14-8","14-9","14-10","14-11","14-12","2015-1","15-2","15-3","15-4","15-5","15-6","15-7","15-8","15-9","15-10","15-11","15-12",
+"2016-1","16-2","16-3","16-4","16-5","16-6","16-7","16-8","16-9","16-10","16-11","16-12"];
+var years = ['2009', '2010','2011','2012', '2013', '20104', '2015', '2016'];
+var months_full = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var fullMonths
+>>>>>>> origin/master
 var fullCategory = ["Overview", "Mean Temperature", "Minimum Temperature", "Maximum Temperature", "Mean Wind Speed", "Mean Air Pressure"];
 var yearExpressed;
 var scale;
@@ -40,7 +56,11 @@ var highlighted;
 var xStart = 0;
 var yStart = 0;
 
+<<<<<<< HEAD
 //set the map when window is loaded
+=======
+
+>>>>>>> origin/master
 window.onload=setMap();
 
 //fucniton to set the map svg
@@ -79,7 +99,12 @@ function setMap(){
 	//call the function to create legend
 	// creatLegend();
 
+<<<<<<< HEAD
 	//load in the dataset
+=======
+
+
+>>>>>>> origin/master
 	d3.queue()
 		.defer(d3.csv,"data/aws_coords_with_links.csv")
 		.defer(d3.csv,"data/uw_aws_coords_2017.csv")
@@ -99,11 +124,17 @@ function setMap(){
 		minTemp, meanTemp, maxTemp, meanWind, meanPressure){
 		// DIFFERENT VARIABLE
 
+<<<<<<< HEAD
 		//initalize vairbales for this function
 		categoryExpressed = "overview";
 		var stations = [];
 		var stationlat = [];
 		var stationlong = [];
+=======
+		var stations = []
+		var stationlat = []
+		var stationlong = []
+>>>>>>> origin/master
 	    for (var i = 0; i < allCoords.length; i++){
 	     	stations.push(allCoords[i].sitename);
 	     	stationlat.push(allCoords[i].latitude);
@@ -171,6 +202,7 @@ function setMap(){
 
 		console.log(allCoords);
 
+<<<<<<< HEAD
 		//call the functions to craete map objects
 		clickMenu(allCoords);
 		
@@ -181,13 +213,14 @@ function setMap(){
 		//create graticules and gratilines, but later decided it is not actually necessary
 		var graticule = d3.geoGraticule()
             .step([30, 30]);
+=======
+		clickMenu(allCoords);
+>>>>>>> origin/master
 
-        var gratBackground = map.append("path")
-            .datum(graticule.outline()) //bind graticule background
-            .attr("class", "gratBackground") //assign class for styling
-            .attr("d", path)
-            .attr("fill","black"); //project graticule
+		sliderBar(allCoords);
+		creatLegend();
 
+<<<<<<< HEAD
         //console.log(gratBackground);
 
         var gratLines = map.selectAll(".gratLines") //select graticule elements that will be created
@@ -196,6 +229,36 @@ function setMap(){
             .append("path") //append each element to the svg as a path element
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines
+=======
+		console.log(allCoords);
+	    // var stations = [];
+		   //  for (var i = 0; i < allCoords.length; i++){
+		   //    stations.push(allCoords[i].sitename);
+		   //  };
+	    //autoFillForm(stations);
+		// console.log(uwCoords);
+		// console.log(seamask);
+		// console.log(coastline);
+		// console.log(iceshelf);*/
+
+		// var graticule = d3.geoGraticule()
+  //           .step([30, 30]);
+
+  //       var gratBackground = map.append("path")
+  //           .datum(graticule.outline()) //bind graticule background
+  //           .attr("class", "gratBackground") //assign class for styling
+  //           .attr("d", path)
+  //           .attr("fill","black"); //project graticule
+
+  //       console.log(gratBackground);
+
+  //       var gratLines = map.selectAll(".gratLines") //select graticule elements that will be created
+  //           .data(graticule.lines()) //bind graticule lines to each element to be created
+  //           .enter() //create an element for each datum
+  //           .append("path") //append each element to the svg as a path element
+  //           .attr("class", "gratLines") //assign class for styling
+  //           .attr("d", path); //project graticule lines
+>>>>>>> origin/master
 		
 		//convert the topojson objects to geojson
 			var sea=topojson.feature(seamask,seamask.objects.ne_50m_ocean).features, 
@@ -355,16 +418,20 @@ function setMap(){
 					return "#9e9ac8";
 				};
 			})
-			.attr("stroke","#fff")
+			.attr("stroke","white")
+			.attr("stroke-width","1px")
+			.attr("stroke-opacity","1")
 			.on("mouseover",function(d){
 				//console.log(d['sitename']);
 				dehighlight(prevStation);
 				prevStation=d['sitename'];
 				highlight(d['sitename'], allCoords);
 			})
-			// .on("mouseout",function(d){
-			// 	dehighlight(d['sitename']);
+			.transition()
+			.duration(1000);
 
+
+<<<<<<< HEAD
 			//.on("mousemove",moveLabel)
 			.transition()
 			.duration(1000);
@@ -445,13 +512,170 @@ function dehighlight(stationName){
 			.enter().append("g")
 			.attr("class","legendDots")
 			.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
-
+=======
+		var zoom = d3.select("#zoomin") 
+			.on("click", zoomed);
 		
-		var ld_h=100, ld_w=100;
-		legendDots.append("circle")
-			.attr("cx",5)
-			.attr("cy",function(d,i){
 
+		var zoom2 = d3.select("#zoomout")
+			.on("click", zoomedOut);
+
+			//.on("mousemove",moveLabel)
+
+
+		//console.log(allCoords);
+		//aws=joinData(aws,allCoords);
+		//setLabel(allCoords);
+		//highlight(props);
+
+
+		// var drag = d3.select(".map")
+	 //    .origin(function(d) { return d; })
+	 //    .on("dragstart", dragstarted)
+	 //    .on("drag", dragged)
+	 //    .on("dragend", dragended);
+  
+
+
+	};
+
+	function zoomed() {
+		if (zoomlevel < 2){
+			console.log(zoomlevel);
+			zoomlevel += 0.1;
+		};
+	  	d3.select(".map").attr("transform", "scale("+ zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+	};
+
+	function zoomedOut() {
+		if (zoomlevel > 1){
+			console.log();
+			zoomlevel += -0.1;
+		};
+			d3.select(".map").attr("transform", "scale(" + zoomlevel + " " + zoomlevel + ") translate(" + (-956.2*0.08) + ", " + (-355.5*0.08) + ")"); 
+	};
+
+};
+
+function creatLegend(){
+
+	var colorClasses=["#e31a1c","#fa9fb5","#fd8d3c","#00441b","#3182bd","#6a51a3"];
+
+	var legendClasses=["UW AWS","South American AWS","Oceanian AWS","European AWS","Asian AWS","Other American AWS"];
+	/*function legendClass(legendClasses){
+		for (i=0;i<legendClasses.length;i++){
+			console.log(legendClasses[1]);
+			return legendClasses[i];
+		};
+	};*/
+	var legendTop="520px", legendLeft="-20px";
+	var ls_w=220, ls_h=240;
+	var legend=d3.select("body")
+		.append("svg")
+		.attr("class","legend")
+		.attr("width",ls_w)
+		.attr("height",ls_h)
+		.style("top",legendTop)
+		.style("left",legendLeft);
+		// .attr('viewBox',"-200 -100 300 100")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		// .attr('preserveAspectRatio',"xMidYMid meet");;
+		
+		
+
+	var legendDots=legend.selectAll("g.legend")
+		.data(colorClasses)
+		.enter().append("g")
+		.attr("class","legendDots")
+		.attr("transform","translate("+ls_w/6+" "+ls_h/6+")");
+
+	
+	var ld_h=100, ld_w=100;
+	legendDots.append("circle")
+		.attr("cx",0)
+		.attr("cy",function(d,i){
+
+			return i*31+4;
+		})
+		.attr("r","8px")
+		.style("fill",function(d,i){return colorClasses[i];})
+		.style("fill-opacity","0.9")
+		.style("background","#d6eaf8");
+	console.log(legend);
+
+	legendDots.append("text")
+		.attr("class","legendText")
+		.attr("x",30)
+		.attr("y",function(d,i){return i*32;})
+		.text(function(d,i){
+			return legendClasses[i];
+		})
+		//.attr("fill","white");
+	console.log(legendClasses[1]);
+
+
+};
+
+function highlight(stationName){
+
+		//console.log(stationName);
+		var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+			.attr("r","14px")
+			.style("stroke","#dce8f7")
+			.style("stroke-width","14px")
+			.style("stroke-opacity","0.6");
+
+		//console.log(selected);
+		
+			//.style("stroke")
+		setLabel(stationName, selected);
+};
+
+
+function dehighlight(stationName){
+	if (stationName.length==0){
+		return false;
+	};
+	var selected=d3.selectAll('.'+stationName.replace(/[ () !]/g, '-'))
+		.attr("r","8px")
+		.style("stroke","white")
+		.style("stroke-width","1px");
+	d3.select(".infoLabel")
+		.remove();
+	//setLabel(stationName, selected);
+	//d3.select(".infoLabel");
+};
+>>>>>>> origin/master
+
+function setLabel(stationName,selected){
+	console.log(selected);
+	var labelAttribute="<h1>"+stationName+"</h1>"+"<h2>Operated by <b>"+selected.attr('mapcode')+"</b></h2>";
+	console.log(labelAttribute);
+
+	var infoLabel=d3.select("body")
+		.append("div")
+		.attr("class","infoLabel")
+		.attr("id",selected.attr('gid'))
+		.html(labelAttribute);
+		// .node()
+		// .getBoundingClientRect()
+		// .width;
+		//.attr('viewBox',"900 -700 300 700")  //the view box and preserveAspectRadio tags allows to locate the map and preserve the ratio whenresize the screen
+		//.attr('preserveAspectRatio',"xMidYMid meet");
+	//console.log(infoLabel);
+
+	//var x=window.innerWidth-100;
+	//var y=window.innerHeight;
+	//console.log(x);
+
+	infoLabel = d3.selectAll(".infoLabel")
+		.style("width","300px")
+		.style("height", "620px")//window.innerWidth-500+"px")
+		.style("right","0px")
+		.style("top","70px");
+
+	console.log(infoLabel);
+
+<<<<<<< HEAD
 				return i*31+4;
 			})
 			.attr("r","8px")
@@ -534,6 +758,25 @@ function getTitle(currAttribute){
 
 	label= month +  year + " " + properAtt;
 	return label;
+=======
+
+	// var img=document.createElement("img");
+	// img.setAttribute("src","assets/marker.png");
+	// infoLabel.appendChild(img);
+
+	url=selected.attr('website');
+	console.log(url);
+	
+
+
+	var contextContent2="<h2>About the station: </h2>"+selected.attr('description');
+	var contextContent1="<h2>Data URL: </h2>"+"<a href='"+url+"' target='_blank'>"+url+"</a>";
+
+	var context=infoLabel.append("div")
+		.attr("class","context")
+		.html(contextContent2+contextContent1);
+	//console.log(countryName);*/
+>>>>>>> origin/master
 };
 //chnages the circles size based on the attribue values
 function circleSize(d, attribute){
@@ -589,9 +832,99 @@ function changeAttribute(attribute, csvData) {
 			};
 		});
 
+<<<<<<< HEAD
 	
 	d3.select("#date").html(setTitleBox(getTitle));
 	//setLabel();
+=======
+function getTitle(attribute){
+	var labelArray = attribute.split("_");
+	console.log(labelArray);
+	var month;
+	var year = labelArray[1];
+	var properAtt;
+	var label;
+
+	if (labelArray[2] == 1) month = "January ";
+	if (labelArray[2] == 2) month = "February ";
+	if (labelArray[2] == 3) month = "March ";
+	if (labelArray[2] == 4) month = "April ";
+	if (labelArray[2] == 5) month = "May ";
+	if (labelArray[2] == 6) month = "June ";
+	if (labelArray[2] == 7) month = "July ";
+	if (labelArray[2] == 8) month = "August ";
+	if (labelArray[2] == 9) month = "September ";
+	if (labelArray[2] == 10) month = "October ";
+	if (labelArray[2] == 11) month = "November ";
+	if (labelArray[2] == 12) month = "December ";
+
+	if (labelArray[0] == "minTemp") {
+		properAtt =  fullCategory[2] + ":";
+	}
+	if (labelArray[0] == "maxTemp") {
+		properAtt =  fullCategory[3] + ":";
+	}
+	if (labelArray[0] == "meanTemp") {
+		properAtt =  fullCategory[1] + ":";
+	}
+	if (labelArray[0] == "meanPressure") {
+		properAtt =  fullCategory[5]+ ":";
+	}
+	if (labelArray[0] == "meanWind") {
+		properAtt =  fullCategory[4]+ ":";
+	}
+
+	label= month +  year + " " + properAtt;
+	return label;
+};
+
+function circleSize(d, attribute){
+	//console.log(d[attribute]);
+	if ( isNaN(d[attribute]) ) {
+		d[attribute] = 0;
+	}
+	//console.log(parseFloat(d[attribute]));
+	var value = Math.sqrt(Math.abs(d[attribute]) + 100 );
+	//value = d[attribute] + 45;
+	var radius = value + "px";
+	console.log(radius);
+  	return radius;
+};
+
+// change attribute
+function changeAttribute(attribute, csvData) {
+	console.log(d3.selectAll("circle"));
+	console.log(attribute);
+	var aws = d3.selectAll("circle")
+		.transition()
+		.duration(800)
+		.attr("fill", function (d, i){
+			if (typeof d == "undefined") return "black";
+			if (isNaN(parseFloat(d[attribute]))) {
+				return "grey";
+			}
+			else {
+				return "#e31a1c";
+			}
+		})
+		.attr("r", function(d){
+			// console.log(d[attribute]);
+			var foo;
+			if (typeof d != "undefined"){
+				if (typeof d[attribute] == 'undefined' || isNaN(parseFloat(d[attribute]))) {
+				
+				foo = 0+"px";
+			}
+			else {
+				//console.log(d[attribute]);
+				//console.log(circleSize(d, attribute));
+				foo = circleSize(d, attribute);
+			}
+			console.log(foo);
+			return foo;
+			};
+		});
+>>>>>>> origin/master
 		//sliderBar(csvData);
 	//console.log(aws);
 };
@@ -604,6 +937,10 @@ function clickMenu(currData) {
 	$(".Overview").click(function(){
 		categoryExpressed = categoryArray[0];
 		yearExpressed = keyArray[66];
+<<<<<<< HEAD
+=======
+		creatLegend();
+>>>>>>> origin/master
 		d3.selectAll("circle")
 			.transition()
 			.duration(800)
@@ -684,10 +1021,15 @@ function clickMenu(currData) {
 				if (d['mapcode']=='Commercial'){
 					return "#9e9ac8";
 				};
+<<<<<<< HEAD
 			});
 		creatLegend();
 	});
 	//reset the proportional symbol map after each time the tab get clciked
+=======
+			})
+	})
+>>>>>>> origin/master
 	$(".Mean-Temp").click(function(){
 		categoryExpressed = categoryArray[1];
 		yearExpressed = keyArray[0];
@@ -696,7 +1038,11 @@ function clickMenu(currData) {
 		console.log(expressed);
 		changeAttribute(currAttribute, currData);
 		//sliderBar(currData);
+<<<<<<< HEAD
 	});
+=======
+	})
+>>>>>>> origin/master
 	$(".Min-Temp").click(function(){
 		categoryExpressed = categoryArray[2];
 		yearExpressed = keyArray[0];
@@ -704,7 +1050,11 @@ function clickMenu(currData) {
 		expressed = currAttribute;
 		changeAttribute(currAttribute, currData);
 		//sliderBar(currData);
+<<<<<<< HEAD
 	});
+=======
+	})
+>>>>>>> origin/master
 	$(".Max-Temp").click(function(){
 		categoryExpressed = categoryArray[3];
 		yearExpressed = keyArray[0];
@@ -712,7 +1062,11 @@ function clickMenu(currData) {
 		expressed = currAttribute;
 		changeAttribute(currAttribute, currData);
 		//sliderBar(currData);
+<<<<<<< HEAD
 	});
+=======
+	})
+>>>>>>> origin/master
 
 	$(".Mean-Wind").click(function(){
 		categoryExpressed = categoryArray[4];
@@ -721,7 +1075,11 @@ function clickMenu(currData) {
 		expressed = currAttribute;
 		changeAttribute(currAttribute, currData);
 		//sliderBar(currData);
+<<<<<<< HEAD
 	});
+=======
+	})
+>>>>>>> origin/master
 	$(".Mean-Pressure").click(function(){
 		categoryExpressed = categoryArray[5];
 		yearExpressed = keyArray[0];
@@ -733,6 +1091,7 @@ function clickMenu(currData) {
 };
 
 
+<<<<<<< HEAD
 // the function creates the slider bar to the bottom of the page; it functions when other vairbales are clicked to be visualized
 
 
@@ -781,9 +1140,277 @@ function dragged() {
 //this sets the state after the dragging action
 function dragended() {
   d3.select(this).classed("active", false);
+=======
+
+
+
+
+// function sliderBar(csvData){
+
+// 	var sliderSvgWidth=window.innerWidth-220, sliderSvgHeight=100;
+// 	var svg=d3.select("body").append("svg")
+// 	.attr("class","sliderSVG")
+// 	.attr("width",sliderSvgWidth)
+// 	.attr("height",sliderSvgHeight)
+// 	.style("background-color","white")
+// 	.style("position","relative")
+// 	.style("top","650px");
+// 	console.log(keyArraySimp);
+// 	var x = d3.scalePoint()
+// 	   .domain(keyArraySimp)
+// 	   .range([0, sliderSvgWidth-50]);
+// 	   //.clamp(true);
+// 	   console.log(x.domain());
+
+// 	var quantX=d3.scaleQuantile()
+// 	.domain([0, sliderSvgWidth-50])
+// 	.range(keyArraySimp);
+
+// 	var slider = svg.append("g")
+// 	   .attr("class", "slider")
+// 	   .attr("transform", "translate(" + 30 + "," + sliderSvgHeight / 2 + ")");
+
+// 	slider.append("line")
+// 	   .attr("class", "track")
+// 	   .attr("x1", x.range()[0])
+// 	   .attr("x2", x.range()[1])
+// 	 .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+// 	   .attr("class", "track-inset")
+// 	 .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+// 	   .attr("class", "track-overlay")
+// 	   .call(d3.drag()
+// 		      .on("start.interrupt", function() { slider.interrupt() })
+// 		      .on("start drag", function() { 
+		      
+// 					//console.log(x.range(), quantX.domain(), quantX.range(), d3.event.x);
+					      
+// 					var year=quantX(d3.event.x);
+					      
+// 					//console.log(year);
+
+// 					// add call attribute here
+					
+// 					//var year;
+					      
+					
+// 					console.log(x(year));
+
+// 					if (year.length<6){
+// 						var toExpressed = categoryExpressed + "_20" + year;
+// 						changeAttribute(toExpressed, csvData);
+
+// 						//handle.attr("cx", x(year)+"px");
+// 					} else {
+// 						var toExpressed = categoryExpressed + "_" + year;
+// 						changeAttribute(toExpressed, csvData);
+
+// 						//handle.attr("cx", x(year)+"px");
+// 					}
+
+
+					
+// 		      }));
+
+// 	var handle=slider.insert("circle",".track-overlay")
+// 		.attr("class","handle")
+// 		.attr("r",7);
+
+
+// 	slider.insert("g",".track-overlay")
+// 	.attr("class","ticks")
+// 	.attr("transform","translate(0,"+18+")")
+// 	 .selectAll("text")
+// 	 .data(keyArraySimp)
+// 	 .enter().append("text")
+// 	   .attr("y",function(d){
+// 	   	console.log(d);
+
+// 	   	return x(d);
+// 	   })
+	  
+// 	   // .attr('transform','rotate(-90)')
+	   
+// 	   .text(function(d){
+// 	   	//console.log(d);
+// 	   	return d;
+// 	   })
+// 	 // .selectAll("text")
+// 	   .attr('transform','rotate(-90) translate(0 4)')
+// 	   .style("text-anchor","end");
+
+	
+// 	slider.transition() // Gratuitous intro!
+// 	   .duration(750)
+// 	   .tween("hue", function() {
+// 	      var i = d3.interpolate(0, 70);
+// 	      return function(t) { hue(i(t)); };
+// 	    });
+
+// 	function hue(h) {
+// 	  handle.attr("cx", x(h));
+// 	  svg.style("background-color", d3.rgb(0, 0, 0,0));
+// 	};
+
+//};
+
+// slider bar
+function sliderBar(csvData){
+		var sliderSvgWidth=window.innerWidth-220, sliderSvgHeight=100;
+
+		var svg=d3.select(".slider-container").append("svg")
+			.attr("class","sliderSVG")
+			.attr("width",sliderSvgWidth)
+			.attr("height",sliderSvgHeight)
+			.style("background-color","white");
+			console.log(keyArraySimp);
+
+		var x = d3.scalePoint()
+		  .domain(keyArraySimp)
+		  .range([0, sliderSvgWidth-50]);
+		  //.clamp(true);
+		  console.log(x.domain());
+
+		var quantX=d3.scaleQuantile()
+			.domain([0, sliderSvgWidth-50])
+			.range(keyArraySimp);
+
+		var slider = svg.append("g")
+		  .attr("class", "slider")
+		  .attr("transform", "translate(" + 30 + "," + sliderSvgHeight / 2 + ")");
+
+		
+
+		slider.append("line")
+		  .attr("class", "track")
+		  .attr("x1", x.range()[0])
+		  .attr("x2", x.range()[1])
+			.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+		  .attr("class", "track-inset")
+			.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+		  .attr("class", "track-overlay")
+		  .call(d3.drag()
+		      .on("start.interrupt", function() { slider.interrupt() })
+		      .on("start drag", function() { 
+		      
+					//console.log(x.range(), quantX.domain(), quantX.range(), d3.event.x);
+					      
+					var year=quantX(d3.event.x);
+					      
+					
+					if (year.length<6){
+						var toExpressed = categoryExpressed + "_20" + year;
+						changeAttribute(toExpressed, csvData);
+
+						//handle.attr("cx", x(year)+"px");
+					} else {
+						var toExpressed = categoryExpressed + "_" + year;
+						changeAttribute(toExpressed, csvData);
+
+						//handle.attr("cx", x(year)+"px");
+					};
+
+
+
+					handle.attr("cx", x(year)+"px");
+		      }));
+
+		var handle=slider.insert("circle",".track-overlay")
+			.attr("class","handle")
+			.attr("r",9);
+
+		slider.insert("g",".track-overlay")
+			.attr("class","ticks")
+			.attr("transform","translate(0,"+18+")")
+			.selectAll("text")
+			.data(keyArraySimp)
+			.enter().append("text")
+			.attr("y",function(d){
+			  
+				//console.log(d);
+					  
+				return x(d);
+			})
+			.text(function(d){  
+			//console.log(d);
+				return d;
+			})
+			// .selectAll("text")
+			.attr('transform','rotate(-90) translate(0 3)')
+			.style("text-anchor","end");
+
+		slider.transition() // Gratuitous intro!
+		  .duration(750)
+		  .tween("hue", function() {
+		     var i = d3.interpolate(0, 70);
+		     return function(t) { hue(i(t)); };
+		   });
+
+		function hue(h) {
+		 // handle.attr("cx", x(h));
+		 svg.style("background-color", d3.rgb(0, 0, 0,0));
+		};
+};
+
+function getTitle(attribute){
+	var labelArray = attribute.split("_");
+	console.log(labelArray);
+	var month;
+	var year = labelArray[1];
+	var properAtt;
+	var label;
+
+	if (labelArray[2] == 1) month = "January ";
+	if (labelArray[2] == 2) month = "February ";
+	if (labelArray[2] == 3) month = "March ";
+	if (labelArray[2] == 4) month = "April ";
+	if (labelArray[2] == 5) month = "May ";
+	if (labelArray[2] == 6) month = "June ";
+	if (labelArray[2] == 7) month = "July ";
+	if (labelArray[2] == 8) month = "August ";
+	if (labelArray[2] == 9) month = "September ";
+	if (labelArray[2] == 10) month = "October ";
+	if (labelArray[2] == 11) month = "November ";
+	if (labelArray[2] == 12) month = "December ";
+
+	if (labelArray[0] == "minTemp") {
+	properAtt =  fullCategory[2] + ":";
+	}
+	if (labelArray[0] == "maxTemp") {
+	properAtt =  fullCategory[3] + ":";
+	}
+	if (labelArray[0] == "meanTemp") {
+	properAtt =  fullCategory[1] + ":";
+	}
+	if (labelArray[0] == "meanPressure") {
+	properAtt =  fullCategory[5]+ ":";
+	}
+	if (labelArray[0] == "meanWind") {
+	properAtt =  fullCategory[4]+ ":";
+	}
+
+	label= month +  year + " " + properAtt;
+	console.log(label);
+	return label;
+>>>>>>> origin/master
 };
 
 
 
+<<<<<<< HEAD
+=======
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+};
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+};
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+};
+>>>>>>> origin/master
 
 })();
