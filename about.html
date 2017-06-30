@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+
+		<title>UW Automatic Weather Station Data Portal</title>
+		<link rel="shortcut icon" href="assets/aws-logo2.png">
+
+		<!--put your external stylesheet links here-->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet"> 
+	</head>
+
+	<body>
+		<!--put your external script links here-->
+
+ 		<script type="text/javascript" src="lib/topojson.js"></script>
+
+
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/d3.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+ 		<!-- main js links-->
+
+ 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
+
+
+		
+
+		<div class="container" id="head">
+
+	      <img class="logo" src="assets/aws-logo2.png" >
+	      	<div class="container" id="title" >
+		        <h5>Automatic Weather Stations</h5>
+		    </div>
+		    <div class="container" id="subtitle">
+				<h3>A Visualization of Active Antarctic Automatic Weather Stations</h3>
+			</div>
+	    </div>
+
+		<!-- </nav>nd navigation bar-->
+		<div class = "main-menu">
+			  	<div class="menu-inset" style="width:40px;"></div>
+			  	 	<div class="menu-options" style = "width:40px">
+
+		                <button type = 'button' id="over" style="width:40px;height:40px;"><a href="index.html"><img src="assets/home.png"></a></button>
+
+						<button type = 'button' id = 'about' style="width:40px;height:40px;"><a href="about.html"><img src ="assets/about.png"></a></button>
+						<button type = 'button' id = 'help' style="width:40px;height:40px;"><a href="help.html"><img src ="assets/help.png"></a></button>
+		              	 
+		         	</div>
+		         </div>
+
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-1">
+                    	<h3>About Data</h3>
+
+                    <div class="col-md-6">
+						<div class="datadisclaimer">
+
+								<p>
+								Crediting AMRC and AWS data, data displays and information, please use the following when utilizing AMRC and/or AWS data, data displays, or information by using the following acknowledgement: 
+								"The authors appreciate the support of the Automatic Weather Station Program and/or Antarctic Meteorological Research Center for the data set, data display, information, etc. (Matthew Lazzara, [and other AMRC/AWS staff member], NSF grants number ARC-0713843, ANT-0944018, and/or ANT-1141908)"
+								or if space does not allow: "AMRC, SSEC, UW-Madison".
+								</p>
+							
+
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<img src="assets/aws-logo3.png"  alt="logo" class="img-responsive inline-block" id="logo2" width="50%" height="50%" />
+					</div>
+				
+
+                </div>
+			</div>
+
+		</div>
+
+
+
+
+
+		<div class="container">
+			<div class="row">
+				
+                    <div class="col-md-12 col-md-offset-1">
+                    	<h3>About the Authors</h3>
+					
+	                    <img src="assets/kate.png" alt="profile" class="img-responsive inline-block" id="profile" />
+	                     <img src="assets/mengyu.png" alt="profile" class="img-responsive inline-block" id="profile2" />
+	                     <img src="assets/laura.png" alt="profile" class="img-responsive inline-block" id="profile3" />
+
+                    </div>
+                <br></br>
+                </center>
+
+					<div class="col-md-3 col-md-offset-1">
+						
+							<div id='ar1'>
+								<p>
+								Kate Zellmer is a rising senior at UW-Madison 
+								majoring in Computer Science and History, 
+								with a passionate side interest in Cartography.
+								She has completed internships at Microsoft and 
+								Salesforce, and teaches a weekly Girls Who Code
+								club throughout the school year. Kate enjoys 
+								drawing, traveling, yoga, and getting super 
+								excited about typefaces. To view her portoflio, 
+								please visit: <a href="http://katezellmer.github.io" target="blank">
+								katezellmer.github.io.</a>
+								</p>
+								
+								
+
+							</div>
+						
+					</div>
+					
+					<div class="col-md-3 col-md-offset-1">
+						
+							<div id='ar2'>
+								<p>
+								Mengyu Liang just graduated from UW-Madison with a 
+								Degree in Geography and Cartography/GIS in May 2017. 
+								She is interested in approaching large dataset 
+								visualization problems through aesthetic mapping. 
+								She also has a passion for remote sensing applications, 
+								such as using satellite imagery to study the Land Cover 
+								Land Use Change in remote regions on Earth. To view her portoflio, 
+								please visit: <a href="http://mliang8.github.io" target="blank">
+								mliang8.github.io.</a>
+								</p>
+								
+
+							</div>
+						
+					</div>
+
+						
+					<div class="col-md-3 col-md-offset-1">
+							<div id='ar3'>
+								<p>
+								Laura Scott earned her Bachelor’s degree in Geography
+								at the University of Wisconsin-Platteville.  She is currently enrolled in the GIS Certificate Program at the University of Wisconsin-Madison.  In her free time Laura like reading, running, and spending time with her daughter. 
+								</p>
+			
+
+							</div>
+						
+					</div>
+			</div>
+		</div>
+
+		
+
+		<div id="footerwrap">
+			
+				<div class="container">
+					<div class="row centered">	
+		                    <center>
+							<h6>UW-MADISON AMRC & AWS 2017</h6>
+		                    </center>
+					</div>
+				</div>
+			
+		</div>
+
+		
+
+
+ 		<script type="text/javascript" src="lib/topojson.js"></script>
+
+		<script src="http://d3js.org/queue.v1.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/d3.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/d3-slider.js"></script>
+
+
+
+
+
+
+
+
+
+	</body>
+</html>

@@ -4,18 +4,28 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width">
 
-		<title>UW Automatic Weather Station Data Visualization</title>
+		<title>UW Automatic Weather Station Data Portal</title>
 		<link rel="shortcut icon" href="assets/aws-logo2.png">
 
-		<!--linking to the external stylesheet  here-->
+		<!--put your external stylesheet links here-->
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet"> 
 	</head>
 
 	<body>
-		<!--create the nav bar-->
+		<!--put your external script links here-->
+
+ 		<script type="text/javascript" src="lib/topojson.js"></script>
+
+
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/d3.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+ 		<!-- main js links-->
+
+ 		<script type="text/javascript" src="js/d3-scale-radial.js"></script>
 
 		<div class="container" id="head">
 
@@ -27,29 +37,14 @@
 				<h3>A Visualization of Active Antarctic Automatic Weather Stations</h3>
 			</div>
 	    </div>
-<!-- 
-	 <nav class="navbar navbar-default navbar-fixed-top main-navbar"> 
-			<div class="navbar-header"> 
-			<img class="logo" src="assets/aws-logo2.png">
-			<h1 class="navbar-brand" >Automatic Weather Stations</h1>
-			<h5 class="navbar-text">A Visualization of Active Antarctic Automatic Weather Stations</h5>
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			<span class="sr-only">Toggle navigation</span>used for screen readers for accessibility
-			<span class="glyphicon glyphicon-menu-hamburger"></span>
-			<span class="menu">Menu</span>
-			</button> 
-			</div>
 
-	</nav> 
- -->
-		<!-- create the  click manu on the left -->
+		<!-- </nav><!--end navigation bar-->
 		<div class = "main-menu">
 			  	<div class="menu-inset" style="width:40px;"></div>
 			  	 	<div class="menu-options" style = "width:40px">
 
 		                <button type = 'button' id="over" style="width:40px;height:40px;"><a href="index.html"><img src="assets/home.png"></a></button>
-		                <button type = 'button' id = 'zoomin' style="width:40px;height:40px;"><img src ="assets/Zoomin.png"></button>
-						<button type = 'button' id = 'zoomout' style="width:40px;height:40px;"><img src ="assets/Zoomout.png"></button>
+		                
 						<button type = 'button' id = 'download' style="width:40px;height:40px;"><a href="ftp://amrc.ssec.wisc.edu/pub/aws/q1h/" target='_blank'><img src ="assets/download.png" ></a></button>
 
 						<button type = 'button' id = 'about' style="width:40px;height:40px;"><a href="about.html"><img src ="assets/about.png"></a></button>
@@ -58,50 +53,84 @@
 		         </div>
 
 			</div>
-		<div class = "legend"></div>
 
 
+
+
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-lg-offset-1">
+					<br></br>
+                    	<h3>
+								<b>To use this data visualization:<b></h3>
+
+                    <div class="col-lg-8">
+						<div class="useguide">
+								<br></br>
+
+
+								<p>
+									<b>Hover or move the mouse</b> over  each station to retrieve or access more information on the AWS station as well as the URL to datasets. 
+								</p>
+							
+								<p>
+									<b>Pan and zoom</b> on the map to explore the AWS stations in Antarctica, specifically in the research-intensive Ross Ice Shelf region.
+
+								</p>
+									<p>
+									<b>Click</b> the tabs on the left panel to view the visualization for different variables. "About" page includes more information on citing data and the bios of the authors.
+								</p>
+								
+								<p>
+									<b>Move the slider bar handle</b> to sequence from January 2009 through December 2012 and view the changes of meteorological variables on stations with valid data.
+								</p>
+
+								
+								
+								<br></br>
+
+			
 		
+						</div>
+					</div>
 
+				
 
-		<div class="map"></div>
-		
+                </div>
+			</div>
 
-		<!-- <div class="zoom">
-					<button type = 'button' id = 'zoomin'><img src ="img/Zoomin.png" height = "15" width = "15"></button>
-					<button type = 'button' id = 'zoomout'><img src ="img/Zoomout.png" height = "15" width = "15"></button> -->
-					<!-- <button type = 'button' id = 'reset'>Reset Map</button> -->
-					<!-- <button type = 'button' id = 'download'><a href="ftp://amrc.ssec.wisc.edu/pub/aws/q1h/" target='_blank'><img src ="img/download.png" height = "15" width = "15"></a></button>
 		</div>
- -->
 
-		 <!-- map svg is drawn in main.js -->
-		     
-
-			<!-- slider bar -->
 		<div id="footerwrap">
 			
 				<div class="container">
 					<div class="row centered">	
 		                    <center>
-							<h6>UW-MADISON  AMRC & AWS 2017</h6>
+							<h6>UW-MADISON AMRC & AWS 2017</h6>
 		                    </center>
 					</div>
 				</div>
 			
 		</div>
-		   
-		<!-- <script src="data/aws_coords_2017.geojson"></script>-->
+		
+
+
  		<script type="text/javascript" src="lib/topojson.js"></script>
- 		
+
 		<script src="http://d3js.org/queue.v1.min.js"></script>
 		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
-		<script type="text/javascript" src="lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="lib/d3-slider.js"></script>
 
- 		<!-- main js links-->
-		<script type="text/javascript" src="js/new-main.js"></script>
+
+
+
+
+
+
+
+
 	</body>
 </html>
